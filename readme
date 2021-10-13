@@ -1,0 +1,81 @@
+# -*- mode: org -*-
+# Created 2021-10-13 Wed 03:18
+#+TITLE: config
+#+AUTHOR: ellis
+#+ID:       9d7999d3-b66e-4ea2-8586-2ef9c27e8f4b
+* home
+:PROPERTIES:
+:ID:       ce071cdb-15e2-4fa6-ab06-f96ef88df22a
+:END:
+Unix system user configuration. Similar in spirit to =etc/skel=. This
+doesn't do much right now, but will serve as a template for
+bootstrapping new users with sensible defaults.
+* hgweb
+:PROPERTIES:
+:ID:       f6e3e514-7bec-496c-9d36-3af7d13c0462
+:END:
+The files in this project can be used to bootstrap a Mercurial public
+server configuration. The theme is a bit messy and will be remedied
+some time in the future, likely following styles similiar to [[https://hg.rwest.io/rwest_io][rwest_io]]
+(currently BulmaCSS-based).
+* etc
+:PROPERTIES:
+:ID:       f0a4ee3f-2763-4c21-8b78-53073cfdfde4
+:END:
+Unix system configuration files.
+* emacs
+:PROPERTIES:
+:ID:       903f8087-e0af-48f2-a5a6-f8d7f080464a
+:END:
+- what ⇐ Configuration for the superior editor.
+- version ⇐ 2.1
+- [[https://hg.rwest.io/config/emacs][src]] ⇐
+** Abstract
+:PROPERTIES:
+:ID:       937b83dd-233b-44cb-9a0b-d5536f7d9db3
+:END:
+I've been using Emacs since 2016 as my primary editor. I started with
+Spacemacs, used Doom for a while, then started rolling my own
+configurations. Configuring the Emacs editor requires learning the
+Emacs language - emacs-lisp. It is a dialect of Common Lisp which can
+be a bit tricky to adapt to for non-Lisp programmers, but it is built
+specifically for Emacs.
+
+This meta covers my Emacs modules, configurations, scripts, and other
+code written in emacs-lisp. I have a main configuration which is
+thousands of lines, but lately I've been experimenting with running
+multiple smaller isolated emacs servers, with their own unique
+configs.
+** config.org
+:PROPERTIES:
+:ID:       6782d0a9-1915-4b3e-85fb-3dd5e7ec917e
+:END:
+The (old) main configuration file. A lot of this is getting moved to
+our =notes=. The resulting files will be refactored. Despite being
+messy, it's still very effective (see [[id:005d2a6e-d34f-45ee-a169-f26fc264c916][Screenshots]]).
+** Screenshots
+:PROPERTIES:
+:ID:       005d2a6e-d34f-45ee-a169-f26fc264c916
+:END:
+- themes \\
+  [[https://cdn.rwest.io/img/abyss-theme-emacs.png][https://cdn.rwest.io/img/abyss-theme-emacs.png]]
+  [[https://cdn.rwest.io/img/sanityinc-theme-emacs.png][https://cdn.rwest.io/img/sanityinc-theme-emacs.png]]
+  [[https://cdn.rwest.io/img/wheatgrass-theme-emacs.png][https://cdn.rwest.io/img/wheatgrass-theme-emacs.png]]
+  [[https://cdn.rwest.io/img/leuven-theme-emacs.png][https://cdn.rwest.io/img/leuven-theme-emacs.png]]
+- org-mode \\
+  [[https://cdn.rwest.io/img/olivetti-emacs.png][https://cdn.rwest.io/img/olivetti-emacs.png]]
+- programming \\
+  [[https://cdn.rwest.io/img/rust-development-emacs.png][https://cdn.rwest.io/img/rust-development-emacs.png]]
+  [[https://cdn.rwest.io/img/rust-tests-emacs.png][https://cdn.rwest.io/img/rust-tests-emacs.png]]
+- email \\
+  [[https://cdn.rwest.io/img/email-emacs.png][https://cdn.rwest.io/img/email-emacs.png]]
+- eww \\
+  The Emacs Web Wowser
+  [[https://cdn.rwest.io/img/eww-emacs.png][https://cdn.rwest.io/img/eww-emacs.png]]
+* nix
+:PROPERTIES:
+:ID:       e2f62a1e-8f54-4bf6-ab88-86872e49f71d
+:END:
+Poorman's distributed =nix= config has fallen into disrepair, but I
+keep it around for old-time's sake. It might come in handy in the
+future, depending on how the Nix ecosystem progresses.
