@@ -1,0 +1,16 @@
+# .notmuch-config --- Configuration file for the notmuch mail system
+#
+# For more information about notmuch, see https://notmuchmail.org
+[database]
+path=shed/data/mail
+[user]
+name=Richard Westhaver
+primary_email=ellis@rwest.io
+other_email=demon@rwest.io;
+[new]
+tags=new
+ignore=
+[search]
+exclude_tags=del;spam;
+[maildir]
+synchronize_flags=true

@@ -1,0 +1,47 @@
+[ui]
+username = ellis <ellis@rwest.io>
+
+[alias]
+erc = !$EDITOR `$HG root`/.hg/hgrc
+
+[hooks]
+#outgoing.notify = python:hgext.notify.hook
+
+[email]
+from = demon <demon@rwest.io>
+
+[extensions]
+gpg = 
+fsmonitor = 
+#hgext.convert = 
+#histedit =
+#rebase =
+#uncommit =
+clonebundles = 
+highlight = 
+notify = 
+git = 
+hggit = ~/.hgext/hg-git/hggit
+#strip =
+#commitsigs = hgext/commitsigs/commitsigs.py
+logtoprocess = 
+
+[subrepos]
+subrepos.allowed = true
+hg:allowed = true
+git:allowed = true
+svn:allowed = true
+
+[fsmonitor]
+mode = on
+warn_when_unused = false
+
+
+[gpg]
+key = ellis
+
+[logtoprocess]
+commandexception = echo "$MSG1" > ~/shed/data/log/mercurial_exceptions.log
+
+[web]
+baseurl = https://hg.rwest.io

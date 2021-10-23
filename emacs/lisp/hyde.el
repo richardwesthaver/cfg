@@ -147,19 +147,23 @@ env: USER_EMAIL"
 
 (setq elfeed-db-directory "~/shed/data/emacs/elfeed")
 
+;;;; Music 
+(require 'emms-setup)
+(emms-all)
+(emms-default-players)
+(setq emms-source-file-default-directory "~/shed/stash/music")
 ;;;; Programming 
-;; LSP
 (require 'lsp-mode)
 (require 'lsp-ui)
 (require 'lsp-ui-doc)
 (require 'lsp-ui-util)
 (require 'lsp-ui-sideline)
 (require 'lsp-headerline)
-;; Configs
+
 (require 'ron-mode)
 (require 'toml-mode)
 (require 'yaml-mode)
-;; APLs
+
 (require 'dyalog-mode)
 (require 'bqn-mode)
 (require 'k-mode)
