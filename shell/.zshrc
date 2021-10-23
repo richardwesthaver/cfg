@@ -1,3 +1,4 @@
+# .zshrc --- zsh configuration file
 echo '--++--~ anticorp/ak48 2021 ~--++--'
 
 # Set prompt

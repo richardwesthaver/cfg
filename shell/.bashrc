@@ -1,4 +1,4 @@
-# ~/.bashrc --- bash configuration 
+# .bashrc --- bash configuration 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 # Set prompt
