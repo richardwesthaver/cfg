@@ -1,4 +1,6 @@
 # .zprofile --- zsh profile
+emulate sh -c '. ~/.profile'
+export ESHELL=/usr/bin/zsh
 if type brew &>/dev/null; then
     for COMPLETION in $(brew --prefix)/etc/bash_completion.d/*
     do

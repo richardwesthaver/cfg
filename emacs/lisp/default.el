@@ -45,7 +45,7 @@
 
   ;; Hooks
   (add-hook 'after-init-hook (lambda () (run-with-idle-timer 4 nil #'cleanup-gc)))
-  (add-hook 'after-init-hook 'demon-keys-mode)
+  (add-hook 'after-init-hook 'default-keys-mode)
   (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
   (add-hook 'shell-mode-hook 'set-no-process-query-on-exit))
 
@@ -233,7 +233,7 @@ buffer."
       org-preview-latex-image-directory "~/.config/emacs/.cache/ltximg"
       org-latex-image-default-width "8cm")
 
-;;;;; babel
+;;;;; org-babel
 (setq org-structure-template-alist
       '(("s" . "src")
 	("e" . "src emacs-lisp")
@@ -805,10 +805,13 @@ buffer, otherwise just change the current paragraph."
   "base-keys-mode prefix key"
   :group 'default-keys)
 
-;; custom commands for el-related modes
-(define-key lisp-interaction-mode-map (kbd "C-c C-c") 'eval-last-sexp)
+;;;;; Global keys 
+(global-set-key (kbd "C-x C-b") #'ibuffer)
+(global-set-key "\C-c l" #'org-store-link)
+(global-set-key "\C-c L" #'org-insert-link-global)
+(global-set-key "\C-c o" #'org-open-at-point-global)
 
-(define-minor-mode demon-keys-mode "Global minor mode containing useful keybinds."
+(define-minor-mode default-keys-mode "Global minor mode containing useful keybinds."
   :lighter " DmK"
   :global t
   :keymap `(
@@ -926,12 +929,6 @@ buffer, otherwise just change the current paragraph."
 	    (,(kbd "C-c e g t") . tetris)
 	    (,(kbd "C-c e g z") . zone)
 	    (,(kbd "C-c e g s") . snake)))
-
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key "\C-c l" #'org-store-link)
-(global-set-key "\C-c L" #'org-insert-link-global)
-(global-set-key "\C-c o" #'org-open-at-point-global)
-
 ;;;; pkg
 (provide 'default)
 ;;; default.el ends here

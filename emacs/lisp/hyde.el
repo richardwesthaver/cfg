@@ -191,12 +191,15 @@ env: USER_EMAIL"
   "Initialize settings and packages for hd-prog modes"
   ;; betta bites
   (setq hexl-bits 16)
-
+  ;; auto-indent newlines
+  (electric-indent-mode)
   ;; lsp config
   (setq lsp-ui-doc-position "bottom"
 	lsp-ui-doc-show-with-cursor nil
 	lsp-ui-doc-show-with-mouse t)
 
+  (setq python-indent-offset 2
+	ron-indent-offset 2)
   ;; auto-mode-alist setup
   (dolist (m hd-prog-auto-mode-alist)
     (push m auto-mode-alist))
