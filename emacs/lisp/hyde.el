@@ -200,13 +200,18 @@ env: USER_EMAIL"
 
   (setq python-indent-offset 2
 	ron-indent-offset 2)
+
+  ;; populate org-babel
+  (org-babel-do-load-languages
+   ;; TODO 2021-10-24: bqn, apl, k
+   'org-babel-load-languages '((rust . t)
+			       (lua . t)))
   ;; auto-mode-alist setup
   (dolist (m hd-prog-auto-mode-alist)
     (push m auto-mode-alist))
 
   ;; hooks
   (hook-modes hd-prog-auto-mode-alist)
-
   ;; custom
   (hd-elisp-setup))
 
@@ -225,9 +230,10 @@ env: USER_EMAIL"
 (require 'lispy)
 
 ;; setup
+;;;###autoload
 (defun hd-elisp-setup ()
-  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-    (add-hook hook #'(lambda () (lispy-mode 1)))))
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook minibuffer-mode-hook))
+    (add-hook hook #'(lambda () (conditionally-enable-lispy)))))
 
 
 ;;;###autoload

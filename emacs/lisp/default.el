@@ -1,5 +1,12 @@
 ;;; default.el --- default settings -*- lexical-binding: t -*-
 ;; 
+;; Copyright (C) 2021  ellis
+;; 
+;; Author: ellis <ellis@rwest.io>
+;; Version: 0.1.0
+;; Package-Requires: ((emacs "28"))
+;; Keywords: convenience
+;; 
 ;;; Commentary:
 ;; 
 ;; This package is used to set default values for a vanilla Emacs28
@@ -812,7 +819,7 @@ buffer, otherwise just change the current paragraph."
 (global-set-key "\C-c o" #'org-open-at-point-global)
 
 (define-minor-mode default-keys-mode "Global minor mode containing useful keybinds."
-  :lighter " DmK"
+  :lighter " dk"
   :global t
   :keymap `(
 	    ;; Registers
