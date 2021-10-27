@@ -229,10 +229,9 @@ env: USER_EMAIL"
 ;;;;; Elisp
 (require 'lispy)
 
-;; setup
 ;;;###autoload
 (defun hd-elisp-setup ()
-  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook minibuffer-mode-hook))
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook #'(lambda () (conditionally-enable-lispy)))))
 
 
