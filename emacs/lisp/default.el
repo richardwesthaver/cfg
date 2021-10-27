@@ -23,7 +23,6 @@
   (setq gc-cons-threshold  67108864)	;64M
   (setq gc-cons-percentage 0.1)		;original value
   (garbage-collect))
-
 ;;;###autoload
 (defun default-setup ()
   "Setup defaults"
@@ -45,6 +44,7 @@
 	shr-max-image-proportion 0.6
 	shr-image-animate nil
 	shr-discard-aria-hidden t
+	tab-always-indent 'complete
 	shr-cookie-policy nil
 	browse-url-browser-function 'eww-browse-url
 	eww-search-prefix "https://duckduckgo.com/html?q="
@@ -55,6 +55,14 @@
   (add-hook 'after-init-hook 'default-keys-mode)
   (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
   (add-hook 'shell-mode-hook 'set-no-process-query-on-exit))
+
+;;;; Settings
+(defgroup default nil
+  "default settings")
+
+(defcustom default-website "https://rwest.io/"
+  "default website homepage. don't forget the slash!"
+  :group 'default)
 
 ;;;; Macros
 (defmacro hook-modes (modes &rest body)
@@ -174,15 +182,9 @@ buffer."
   "Default Org-mode extensions"
   :group 'default)
 
-(defun join-paths (root &rest dirs)
-  "helper function for joining strings to a path"
-  (let ((result root))
-    (cl-loop for dir in dirs do
-             (setq result (concat (file-name-as-directory result) dir)))
-    result))
-
-(defvar org-dir (expand-file-name org-directory)
+(defvar org-dir '(expand-file-name org-directory)
   "custom directory for user org files")
+
 ;;;; Programming
 (defgroup default-prog ()
           "basic programming extensions"
@@ -347,6 +349,12 @@ will be bound to default-skel-NAME."
   "Default Abbrev table"
   :parents (list default-skel-abbrev-table))
 
+(default-skel-define web
+    "Adds a link to 'default-website' while prompting for a possible
+  extension."
+  "path: "
+  default-website str "")
+
 ;;;;; Shells 
 ;; Don't whine if there is a terminal open.
 (defun set-no-process-query-on-exit ()
@@ -439,6 +447,13 @@ With optional N, search in the Nth line from point."
   (with-temp-buffer
     (insert-file-contents file)
     (read (current-buffer))))
+
+(defun join-paths (root &rest dirs)
+  "helper function for joining strings to a path"
+  (let ((result root))
+    (cl-loop for dir in dirs do
+             (setq result (concat (file-name-as-directory result) dir)))
+    result))
 
 ;;;;; Formatting 
 (defvar flex-fill-paragraph-column nil
@@ -552,7 +567,7 @@ buffer, otherwise just change the current paragraph."
 	    (,(kbd"C-c r f") . frameset-to-register)
 	    (,(kbd"C-c r SPC") . point-to-register)
 	    ;; Completion
-	    (,(kbd "M-TAB") . company-complete)
+	    (,(kbd "M-TAB") . corfu-complete)
 	    ;; Commands
 	    (,(kbd "C-c c r") . rustic-popup)
 	    ;; Outlines
@@ -631,8 +646,6 @@ buffer, otherwise just change the current paragraph."
 	    ;; (,(kbd "C-c x r") . org-clock-report)
 
 	    (,(kbd "C-c i") . new-scratch)
-	    ;; Quick-links
-	    (,(kbd "C-c 1") . log-file)
 	    ;; Modes
 	    (,(kbd "C-c m v") . global-visual-line-mode)
 	    (,(kbd "C-c m h") . global-hl-line-mode)
@@ -640,7 +653,7 @@ buffer, otherwise just change the current paragraph."
 	    (,(kbd "C-c m a") . gpm-mouse-mode)
 	    (,(kbd "C-c m r") . refill-mode)
 	    (,(kbd "C-c m k") . which-key-mode)
-	    (,(kbd "C-c m c") . global-company-mode)
+	    (,(kbd "C-c m c") . global-corfu-mode)
 	    (,(kbd "C-c m R") . global-auto-revert-mode)
 	    (,(kbd "C-c m t") . toggle-frame-tab-bar)
 	    (,(kbd "C-c m d") . toggle-debug-on-error)

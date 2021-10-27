@@ -59,6 +59,8 @@
 (require 'marginalia)
 (require 'orderless)
 (require 'embark)
+(require 'corfu)
+(corfu-global-mode 1)
 (marginalia-mode 1)
 (setq completion-styles '(orderless))
 
@@ -152,6 +154,34 @@ env: USER_EMAIL"
 (emms-all)
 (emms-default-players)
 (setq emms-source-file-default-directory "~/shed/stash/music")
+
+(defun track-title-from-file-name (file)
+  "For using with EMMS description functions. Extracts the track
+title from the file name FILE, which just means a) taking only
+the file component at the end of the path, and b) removing any
+file extension."
+  (with-temp-buffer
+    (save-excursion (insert (file-name-nondirectory (directory-file-name file))))
+    (ignore-error 'search-failed
+      (search-forward-regexp (rx "." (+ alnum) eol))
+      (delete-region (match-beginning 0) (match-end 0)))
+    (buffer-string)))
+
+(defun hd-emms-track-description (track)
+  "Return a description of TRACK, for EMMS, but try to cut just
+the track name from the file name, and just use the file name too
+rather than the whole path."
+  (let ((artist (emms-track-get track 'info-artist))
+        (title (emms-track-get track 'info-title)))
+    (cond ((and artist title)
+           (concat artist " - " title))
+          (title title)
+          ((eq (emms-track-type track) 'file)
+           (track-title-from-file-name (emms-track-name track)))
+          (t (emms-track-simple-description track)))))
+
+(setq emms-track-description-function 'hd-emms-track-description)
+
 ;;;; Programming 
 (require 'lsp-mode)
 (require 'lsp-ui)
@@ -199,13 +229,22 @@ env: USER_EMAIL"
 	lsp-ui-doc-show-with-mouse t)
 
   (setq python-indent-offset 2
+	python-guess-indent nil
 	ron-indent-offset 2)
 
   ;; populate org-babel
   (org-babel-do-load-languages
    ;; TODO 2021-10-24: bqn, apl, k
    'org-babel-load-languages '((rust . t)
+			       (shell . t)
+			       (sed . t)
+			       (awk . t)
+			       (dot . t)
+			       (js . t)
+			       (C . t)
+			       (python . t)
 			       (lua . t)))
+  (setq org-confirm-babel-evaluate nil)
   ;; auto-mode-alist setup
   (dolist (m hd-prog-auto-mode-alist)
     (push m auto-mode-alist))
@@ -231,7 +270,7 @@ env: USER_EMAIL"
 
 ;;;###autoload
 (defun hd-elisp-setup ()
-  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
     (add-hook hook #'(lambda () (conditionally-enable-lispy)))))
 
 
