@@ -185,6 +185,141 @@ buffer."
 (defvar org-dir '(expand-file-name org-directory)
   "custom directory for user org files")
 
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "RESEARCH(r)" "HACK(h)" "FIXME(f)" "REVIEW(R)" "NOTE(n)" "GOTO(g)" "NEXT(N)"
+		  "|" "DONE(d@)" "KILL(k@)")))
+
+;;;;; org-crypt
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt"))) ;; prevent nested crypts
+(setq org-crypt-key nil) ;; Either a GPG Key ID or set to nil to use symmetric encryption.
+
+;;;;; todos
+(defun org-todo-at-date (date)
+  "create a todo entry for a given date."
+  (interactive (list (org-time-string-to-time (org-read-date))))
+  (cl-flet ((org-current-effective-time (&rest r) date)
+            (org-today (&rest r) (time-to-days date)))
+    (cond ((eq major-mode 'org-mode) (org-todo))
+          ((eq major-mode 'org-agenda-mode) (org-agenda-todo)))))
+
+
+(setq org-structure-template-alist
+      '(("s" . "src")
+	("e" . "src emacs-lisp")
+	("x" . "src shell")
+	("h" . "export html")
+	("p" . "src python")
+	("r" . "src rust")
+	("E" . "example")
+	("q" . "quote")
+	("c" . "center")
+	("C" . "comment")
+	("v" . "verse")))
+
+(setq org-refile-use-cache t
+      org-refile-allow-creating-parent-nodes 'confirm
+      org-refile-targets '((nil :maxlevel . 3)
+			   (org-agenda-files :maxlevel . 3))
+      org-src-fontify-natively t
+      org-src-tabs-act-natively t
+      org-src-tabs-act-natively t
+      org-startup-indented t
+      org-imenu-depth 6
+      org-outline-path-complete-in-steps nil
+      org-preview-latex-image-directory "~/.config/emacs/.cache/ltximg"
+      org-latex-image-default-width "8cm")
+
+;;;###autoload
+(defun src-block-tags (src-block)
+  "Return tags for SRC-BLOCK (an org element)."
+  (let* ((headers (-flatten
+                   (mapcar 'org-babel-parse-header-arguments
+                           (org-element-property :header src-block))))
+         (tags (cdr (assoc :tags headers))))
+    (when tags
+      (split-string tags))))
+
+;;;;; properties
+(progn
+  (setq org-global-properties
+        '(quote (("EFFORT_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+                 ("STYLE_ALL" . "habit")))))
+
+;;;;; org-export
+;;;###autoload
+(defun org-export-headings-to-org ()
+  "Export all subtrees that are *not* tagged with :noexport: to
+separate files.
+
+Subtrees that do not have the :EXPORT_FILE_NAME: property set
+are exported to a filename derived from the headline text."
+  (interactive)
+  (save-buffer)
+  (let ((modifiedp (buffer-modified-p)))
+    (save-excursion
+      (goto-char (point-min))
+      (goto-char (re-search-forward "^*"))
+      (set-mark (line-beginning-position))
+      (goto-char (point-max))
+      (org-map-entries
+       (lambda ()
+         (let ((export-file (org-entry-get (point) "EXPORT_FILE_NAME")))
+           (unless export-file
+             (org-set-property
+              "EXPORT_FILE_NAME"
+              (replace-regexp-in-string " " "_" (nth 4 (org-heading-components)))))
+           (deactivate-mark)
+           (org-org-export-to-org nil t)
+           (unless export-file (org-delete-property "EXPORT_FILE_NAME"))
+           (set-buffer-modified-p modifiedp)))
+       "-noexport" 'region-start-level))))
+
+;;;;; agenda
+(defvar org-agenda-overriding-header)
+(defvar org-agenda-sorting-strategy)
+(defvar org-agenda-restrict)
+(defvar org-agenda-restrict-begin)
+(defvar org-agenda-restrict-end)
+
+;;;###autoload
+(defun org-agenda-current-subtree-or-region (only-todos)
+  "Display an agenda view for the current subtree or region.
+ With prefix, display only TODO-keyword items."
+  (interactive "P")
+  (let ((starting-point (point))
+        header)
+    (with-current-buffer (or (buffer-base-buffer (current-buffer))
+                             (current-buffer))
+      (if (use-region-p)
+          (progn
+            (setq header "Region")
+            (put 'org-agenda-files 'org-restrict (list (buffer-file-name (current-buffer))))
+            (setq org-agenda-restrict (current-buffer))
+            (move-marker org-agenda-restrict-begin (region-beginning))
+            (move-marker org-agenda-restrict-end
+                         (save-excursion
+                           ;; If point is at beginning of line, include
+                           ;; heading on that line by moving forward 1.
+                           (goto-char (1+ (region-end)))
+                           (org-end-of-subtree))))
+        ;; No region; restrict to subtree.
+        (save-excursion
+          (save-restriction
+            ;; In case the command was called from an indirect buffer, set point
+            ;; in the base buffer to the same position while setting restriction.
+            (widen)
+            (goto-char starting-point)
+            (setq header "Subtree")
+            (org-agenda-set-restriction-lock))))
+      ;; NOTE: Unlike other agenda commands, binding `org-agenda-sorting-strategy'
+      ;; around `org-search-view' seems to have no effect.
+      (let ((org-agenda-sorting-strategy '(priority-down timestamp-up))
+            (org-agenda-overriding-header header))
+        (org-search-view (if only-todos t nil) "*"))
+      (org-agenda-remove-restriction-lock t)
+      (message nil))))
+
 ;;;; Programming
 (defgroup default-prog ()
           "basic programming extensions"
@@ -192,7 +327,7 @@ buffer."
 
 ;;;;; Comments 
 (defcustom default-prog-comment-keywords
-  '("TODO" "NOTE" "XXX" "REVIEW" "FIXME")
+  '("TODO" "NOTE" "REVIEW" "FIXME" "HACK" "RESEARCH")
   "List of strings with comment keywords."
   :group 'default-prog)
 
@@ -429,6 +564,17 @@ With optional N, search in the Nth line from point."
       (push (+ (cl-random (- max min)) min) list))
     list))
 
+;;;###autoload
+(defun os-path-join (a &rest ps)
+  (let ((path a))
+    (while ps
+      (let ((p (pop ps)))
+        (cond ((string-prefix-p "/" p)
+               (setq path p))
+              ((or (not path) (string-suffix-p "/" p))
+               (setq path (concat path p)))
+              (t (setq path (concat path "/" p))))))
+    path))
 
 ;;;###autoload
 (defun int-to-binary-string (i)
