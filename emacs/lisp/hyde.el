@@ -28,33 +28,22 @@
 ;; mercurial, etc).
 ;; 
 ;;; Code:
-;;;; Packages
-(require 'package-x)
 ;;;; Themes 
-(require 'abyss-theme)
-(require 'color-theme-sanityinc-tomorrow)
-(setq custom-theme-directory "~/shed/data/emacs/themes")
-(defvar light-theme 'leuven)
-(defvar dark-theme 'wheatgrass)
-(defvar demon-theme 'abyss)
-(defvar ps-theme 'sanityinc-tomorrow-blue)
-(defvar luv-theme 'sanityinc-tomorrow-bright)
-(defvar current-theme luv-theme)
+;; (setq custom-theme-directory "~/shed/data/emacs/themes")
+(defvar current-theme 'modus-operandi "the current theme")
+
 (defun next-theme (theme)
-  (disable-theme current-theme)
-  (load-theme theme t)
+  (load-theme theme)
   (setq current-theme theme))
 
 ;;;###autoload
 (defun toggle-theme ()
   (interactive)
-  (cond
-   ((eq current-theme light-theme) (next-theme dark-theme))
-   ((eq current-theme dark-theme) (next-theme demon-theme))
-   ((eq current-theme demon-theme) (next-theme luv-theme))
-   ((eq current-theme luv-theme) (next-theme light-theme))))
+  (cond ((eq current-theme 'modus-operandi) (next-theme 'modus-vivendi))
+	((eq current-theme 'modus-vivendi) (next-theme 'modus-operandi))))
 
-(add-hook 'after-init-hook (lambda () (load-theme current-theme t)))
+(add-hook 'after-init-hook (lambda () (load-theme current-theme)))
+
 ;;;; Completion 
 (require 'marginalia)
 (require 'orderless)
@@ -81,6 +70,7 @@
 (require 'avy)
 (require 'swiper)
 (require 'rg)
+
 (global-set-key (kbd "C-'") 'avy-goto-char)
 (global-set-key (kbd "C-\"") 'avy-goto-char-2)
 (global-set-key (kbd "C-c s l") 'avy-goto-line)
@@ -198,6 +188,8 @@ rather than the whole path."
 (require 'bqn-mode)
 (require 'k-mode)
 
+(require 'ob-async)
+
 (defgroup hd-prog ()
   "hyde programming extensions"
   :group 'hyde)
@@ -212,6 +204,7 @@ rather than the whole path."
    ("\\.yaml\\.yml\\'" . yaml-mode)
    ("\\.apl\\'" . dyalog-mode)
    ("\\.bqn$" . bqn-mode)
+   ("\\.k$" . k-mode)
    ("\\.rs$" . rustic-mode))
   "list of (REGEX . MODE) to append to auto-mode-alist"
   :group 'hd-prog)
@@ -219,8 +212,7 @@ rather than the whole path."
 ;;;###autoload
 (defun hd-prog-setup ()
   "Initialize settings and packages for hd-prog modes"
-  ;; betta bites
-  (setq hexl-bits 16)
+  (setq hexl-bits 8)
   ;; auto-indent newlines
   (electric-indent-mode)
   ;; lsp config
@@ -237,6 +229,8 @@ rather than the whole path."
    ;; TODO 2021-10-24: bqn, apl, k
    'org-babel-load-languages '((rust . t)
 			       (shell . t)
+			       (emacs-lisp . t)
+			       (eshell . t)
 			       (sed . t)
 			       (awk . t)
 			       (dot . t)
@@ -271,13 +265,8 @@ rather than the whole path."
 ;;;###autoload
 (defun hd-elisp-setup ()
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
-    (add-hook hook #'(lambda () (conditionally-enable-lispy)))))
+    (add-hook hook #'(lambda () (lispy-mode 1)))))
 
-
-;;;###autoload
-(defun conditionally-enable-lispy ()
-  (when (eq this-command 'eval-expression)
-    (lispy-mode 1)))
 
 ;;;;; Rust 
 (require 'rustic)

@@ -1,16 +1,15 @@
 ;;; init.el --- Emacs init -*- lexical-binding: t -*-
-(add-to-list 'load-path "~/.config/emacs/lisp/")
-(let ((default-directory  "~/shed/src/contrib/el/"))
+(defvar lisp-data "~/shed/data/emacs/lisp/")
+(add-to-list 'load-path lisp-data)
+(let ((default-directory (concat  lisp-data "contrib/")))
   (normal-top-level-add-subdirs-to-load-path))
-
 ;;;; install
-(require 'default (concat user-emacs-directory "lisp/default.el"))
-(require 'hyde (concat user-emacs-directory "lisp/hyde.el"))
-(require 'babel (concat (file-name-as-directory (getenv "SHED")) "src/babel/babel.el"))
-(require 'shed (concat (file-name-as-directory (getenv "SHED")) "src/shed/lisp/shed.el"))
+(require 'default)
+(require 'hyde)
+(require 'shed)
+(require 'babel)
+(setq package-user-dir (expand-file-name "~/shed/data/emacs/elpa"))
 ;;;; config
-(setq org-directory "~/shed/org")
-
 (default-setup)
-
+(setq org-directory "~/shed/org")
 (hd-prog-setup)

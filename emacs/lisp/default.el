@@ -17,45 +17,7 @@
 ;; 
 ;;; Code:
 (eval-when-compile (require 'cl-lib))
-;;;; Startup 
-(defun cleanup-gc ()
-  "Perform garbage collection with a threshold of 64M and and default `gc-cons-percentage` (0.1)."
-  (setq gc-cons-threshold  67108864)	;64M
-  (setq gc-cons-percentage 0.1)		;original value
-  (garbage-collect))
-;;;###autoload
-(defun default-setup ()
-  "Setup defaults"
-  ;; default settings
-  (setq make-backup-files nil
-	confirm-kill-emacs nil
-	confirm-kill-process nil
-	use-short-answers t
-	display-time-format "%Y-%m-%d : %H:%M"
-	ring-bell-function 'ignore
-	gc-cons-percentage 0.6
-	gc-cons-threshold most-positive-fixnum
-	;; Completion
-	completion-styles '(basic partial-completion emacs22)
-	completion-ignore-case t
-	;; Web
-	shr-use-colors nil
-	shr-use-fonts nil
-	shr-max-image-proportion 0.6
-	shr-image-animate nil
-	shr-discard-aria-hidden t
-	tab-always-indent 'complete
-	shr-cookie-policy nil
-	browse-url-browser-function 'eww-browse-url
-	eww-search-prefix "https://duckduckgo.com/html?q="
-	url-privacy-level '(email agent cookies lastloc))
-
-  ;; Hooks
-  (add-hook 'after-init-hook (lambda () (run-with-idle-timer 4 nil #'cleanup-gc)))
-  (add-hook 'after-init-hook 'default-keys-mode)
-  (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
-  (add-hook 'shell-mode-hook 'set-no-process-query-on-exit))
-
+(require 'package-x)
 ;;;; Settings
 (defgroup default nil
   "default settings")
@@ -64,6 +26,8 @@
   "default website homepage. don't forget the slash!"
   :group 'default)
 
+;;;;; data
+(defvar default-data-dir (expand-file-name "~/shed/data/emacs"))
 ;;;; Macros
 (defmacro hook-modes (modes &rest body)
   (declare (indent 1))
@@ -186,8 +150,7 @@ buffer."
   "custom directory for user org files")
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "RESEARCH(r)" "HACK(h)" "FIXME(f)" "REVIEW(R)" "NOTE(n)" "GOTO(g)" "NEXT(N)"
-		  "|" "DONE(d@)" "KILL(k@)")))
+      '((sequence "TODO(t)" "RESEARCH(r)" "HACK(h)" "FIXME(f)" "REVIEW(R)" "NOTE(n)" "GOTO(g)" "NEXT(N)" "|" "DONE(d@)" "KILL(k@)")))
 
 ;;;;; org-crypt
 (org-crypt-use-before-save-magic)
@@ -274,6 +237,38 @@ are exported to a filename derived from the headline text."
            (unless export-file (org-delete-property "EXPORT_FILE_NAME"))
            (set-buffer-modified-p modifiedp)))
        "-noexport" 'region-start-level))))
+
+;;;;; links 
+(require 'ox-publish)
+  (setq org-link-abbrev-alist
+        '(("google"    . "http://www.google.com/search?q=")
+          ("gmap"      . "http://maps.google.com/maps?q=%s")
+          ("omap"      . "http://nominatim.openstreetmap.org/search?q=%s&polygon=1")
+          ("ads"       . "https://ui.adsabs.harvard.edu/search/q=%20author%3A\"%s\"")
+          ("rw" . "https://rwest.io/%s")
+          ("src" . "https://hg.rwest.io/%s")
+          ("contrib" . "https://hg.rwest.io/contrib/%s")
+          ("cdn" . "https://rwest.io/a/%s")))
+
+(defvar yt-iframe-format
+  (concat "<iframe width=\"480\""
+          " height=\"360\""
+          " src=\"https://www.youtube.com/embed/%s\""
+          " frameborder=\"0\""
+          " allowfullscreen>%s</iframe>"))
+
+(org-add-link-type
+ "yt"
+ (lambda (handle)
+   (browse-url
+    (concat "https://www.youtube.com/embed/"
+            handle)))
+ (lambda (path desc backend)
+   (cl-case backend
+     (html (format yt-iframe-format
+                   path (or desc "")))
+     (latex (format "\href{%s}{%s}"
+                    path (or desc "video"))))))
 
 ;;;;; agenda
 (defvar org-agenda-overriding-header)
@@ -668,7 +663,6 @@ buffer, otherwise just change the current paragraph."
 
 ;;;; Registry
 (setq bookmark-default-file "~/shed/data/emacs/bookmarks")
-
 ;;;; Viper
 ;; It is sometimes convenient to have vi-style editing available. In
 ;; Emacs this is provided with the `viper` package. I find myself
@@ -690,11 +684,18 @@ buffer, otherwise just change the current paragraph."
 
 ;;;; Keys
 (defgroup default-keys nil
-  "base keys"
+  "default keys"
   :group 'default)
 
-(defcustom base-keys-prefix ()
-  "base-keys-mode prefix key"
+(defcustom cmd-keys-prefix ()
+  "cmd-keys prefix"
+  :group 'default-keys)
+
+(defcustom mode-keys-prefix ()
+  "mode-keys prefix"
+  :group 'default-keys)
+(defcustom default-keys-prefix ()
+  "default-keys-mode prefix key"
   :group 'default-keys)
 
 ;;;;; Global keys 
@@ -712,12 +713,10 @@ buffer, otherwise just change the current paragraph."
 	    (,(kbd"C-c r j") . jump-to-register)
 	    (,(kbd"C-c r f") . frameset-to-register)
 	    (,(kbd"C-c r SPC") . point-to-register)
-	    ;; Completion
-	    (,(kbd "M-TAB") . corfu-complete)
 	    ;; Commands
 	    (,(kbd "C-c c r") . rustic-popup)
 	    ;; Outlines
-	    (,(kbd "C-c TAB") . outline-cycle)
+	    (,(kbd "M-TAB") . outline-cycle)
 	    (,(kbd "C-c C-n") . outline-next-visible-heading)
 	    (,(kbd "C-c C-p") . outline-previous-visible-heading)
 	    ;; Windows
@@ -742,8 +741,8 @@ buffer, otherwise just change the current paragraph."
 	    (,(kbd "C-c t T") . eshell)
 
 	    ;; Search
-	    (,(kbd "C-c s w") . search-web)
-	    (,(kbd "C-c s r") . rg)
+	    (,(kbd "M-s w") . search-web)
+	    (,(kbd "M-s r") . rg)
 	    (,(kbd "C-c s R") . rg-dwim-current-dir)
 	    (,(kbd "C-c ? d") . apropos-documentation)
 	    (,(kbd "C-c ? k") . apropos-variable)
@@ -819,6 +818,49 @@ buffer, otherwise just change the current paragraph."
 	    (,(kbd "C-c e g t") . tetris)
 	    (,(kbd "C-c e g z") . zone)
 	    (,(kbd "C-c e g s") . snake)))
-;;;; pkg
+;;;; Setup
+;;;###autoload
+(defun default-setup ()
+  "Setup defaults"
+  ;; default settings
+  (setq package-enable-at-startup nil
+
+	make-backup-files nil
+	auto-save-list-file-prefix (concat default-data-dir "auto-save/.")
+
+	confirm-kill-emacs nil
+	confirm-kill-process nil
+	use-short-answers t
+
+	display-time-format "%Y-%m-%d--%H:%M"
+	ring-bell-function 'ignore
+	gc-cons-percentage 0.6
+	gc-cons-threshold most-positive-fixnum
+	;; Completion
+	completion-ignore-case t
+	;; Web
+	shr-use-colors nil
+	shr-use-fonts nil
+	shr-max-image-proportion 0.6
+	shr-image-animate nil
+	shr-discard-aria-hidden t
+	tab-always-indent 'complete
+	shr-cookie-policy nil
+	browse-url-browser-function 'eww-browse-url
+	eww-search-prefix "https://duckduckgo.com/html?q="
+	url-privacy-level '(email agent cookies lastloc))
+
+  ;; Hooks
+  (add-hook 'after-init-hook 'default-keys-mode)
+  (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
+  (add-hook 'shell-mode-hook 'set-no-process-query-on-exit)
+
+  ;; init custom package archive
+  (setq package-archives '(("contrib" . "/home/ellis/shed/data/emacs/contrib/")
+			   ("local" . "/home/ellis/shed/data/emacs/lisp/")))
+  (package-initialize)
+  )
+
+;;;; provide
 (provide 'default)
 ;;; default.el ends here
