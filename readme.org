@@ -1,0 +1,81 @@
+# Created 2021-10-30 Sat 08:24
+#+title: cfg
+#+author: ellis
+- what -> my config files
+  - emacs
+  - mail
+  - shell
+  - term
+  - tmux
+  - vc
+  - virt
+  - wm
+
+I have a relatively small set of config files, but they get a lot
+done. The sections below cover configuration of a certain category or
+individual application such as =shell= or =emacs= respectively.
+
+The top-level makefile is used for basic deployment and publishing,
+but these files are generally intended to be loaded into a user
+environment via the =shed= development tool.
+* emacs
+- what -- Configuration for the superior editor.
+- version -- 2.1
+** Abstract
+I've been using Emacs since 2016 as my primary editor. I started with
+Spacemacs, used Doom for a while, then started rolling my own
+configurations. Configuring the Emacs editor requires learning the
+Emacs language - emacs-lisp. It is a dialect of Common Lisp which can
+be a bit tricky to adapt to for non-Lisp programmers, but it is built
+specifically for Emacs.
+
+This meta covers my Emacs modules, configurations, scripts, and other
+code written in emacs-lisp. I have a main configuration which is
+thousands of lines, but lately I've been experimenting with running
+multiple smaller isolated emacs servers, with their own unique
+configs.
+** config.org
+The (old) main configuration file. A lot of this is getting moved to
+our =notes=. The resulting files will be refactored. Despite being
+messy, it's still very effective (see [[id:005d2a6e-d34f-45ee-a169-f26fc264c916][Screenshots]]).
+** Screenshots
+- themes \\
+  [[https://rwest.io/a/img/abyss-theme-emacs.png][https://rwest.io/a/img/abyss-theme-emacs.png]]
+  [[https://rwest.io/a/img/sanityinc-theme-emacs.png][https://rwest.io/a/img/sanityinc-theme-emacs.png]]
+  [[https://rwest.io/a/img/wheatgrass-theme-emacs.png][https://rwest.io/a/img/wheatgrass-theme-emacs.png]]
+  [[https://rwest.io/a/img/leuven-theme-emacs.png][https://rwest.io/a/img/leuven-theme-emacs.png]]
+- org-mode \\
+  [[https://rwest.io/a/img/olivetti-emacs.png][https://rwest.io/a/img/olivetti-emacs.png]]
+- programming \\
+  [[https://rwest.io/a/img/rust-development-emacs.png][https://rwest.io/a/img/rust-development-emacs.png]]
+  [[https://rwest.io/a/img/rust-tests-emacs.png][https://rwest.io/a/img/rust-tests-emacs.png]]
+- email \\
+  [[https://rwest.io/a/img/email-emacs.png][https://rwest.io/a/img/email-emacs.png]]
+- eww \\
+  The Emacs Web Wowser
+  [[https://rwest.io/a/img/eww-emacs.png][https://rwest.io/a/img/eww-emacs.png]]
+* mail
+- what -- mail configs
+  - notmuch
+  - offlineimap
+* shell
+- what -- shell configs
+  - bash
+  - zsh
+* term
+- what -- terminal emulator configs
+  - kitty
+* tmux
+- what -- tmux config
+* vc
+- what -- Version Control configs
+  - mercurial
+  - git
+* virt
+- what -- virtual machine and container configs
+  - lxd | lxc
+* wm
+- what -- X11 configs
+  - 2bwm
+  - conky
+  - lemonbar
