@@ -1,4 +1,4 @@
-# Created 2021-10-30 Sat 09:43
+# Created 2021-10-31 Sun 05:06
 #+title: cfg
 - what -> my config files
   - emacs

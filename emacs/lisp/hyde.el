@@ -120,6 +120,8 @@ env: USER_EMAIL"
                                "offlineimap -o")
   (notmuch-refresh-all-buffers))
 
+;;;; Org 
+(require 'org-web-tools)
 ;;;; News 
 (require 'elfeed)
 
@@ -170,14 +172,11 @@ rather than the whole path."
            (track-title-from-file-name (emms-track-name track)))
           (t (emms-track-simple-description track)))))
 
-(setq emms-track-description-function 'hd-emms-track-description)
+(setq emms-track-description-function #'hd-emms-track-description)
 
 ;;;; Programming 
 (require 'lsp-mode)
 (require 'lsp-ui)
-(require 'lsp-ui-doc)
-(require 'lsp-ui-util)
-(require 'lsp-ui-sideline)
 (require 'lsp-headerline)
 
 (require 'ron-mode)
@@ -271,16 +270,16 @@ rather than the whole path."
 ;;;;; Rust 
 (require 'rustic)
 (require 'lsp-rust)
-
-(add-to-list 'auto-mode-alist '("\\.rs\\'" . rustic-mode))
 (setq rustic-indent-offset 2
       rustic-babel-format-src-block t
       rustic-babel-display-compilation-buffer t)
+(setq lsp-rust-analyzer-cargo-watch-command "clippy")
+(remove-hook 'rustic-mode-hook 'flycheck-mode)
 
 ;;;; Demos 
 (require 'frameshot)
 (require 'keycast)
 
-;;;; pkg 
+;;;; provide
 (provide 'hyde)
 ;;; hyde.el ends here

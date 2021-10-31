@@ -27,7 +27,8 @@
   :group 'default)
 
 ;;;;; data
-(defvar default-data-dir (expand-file-name "~/shed/data/emacs"))
+(defvar default-data-dir (expand-file-name "~/shed/data/emacs/"))
+
 ;;;; Macros
 (defmacro hook-modes (modes &rest body)
   (declare (indent 1))
@@ -146,18 +147,10 @@ buffer."
   "Default Org-mode extensions"
   :group 'default)
 
-(defvar org-dir '(expand-file-name org-directory)
-  "custom directory for user org files")
-
+;;;;; todos
 (setq org-todo-keywords
       '((sequence "TODO(t)" "RESEARCH(r)" "HACK(h)" "FIXME(f)" "REVIEW(R)" "NOTE(n)" "GOTO(g)" "NEXT(N)" "|" "DONE(d@)" "KILL(k@)")))
 
-;;;;; org-crypt
-(org-crypt-use-before-save-magic)
-(setq org-tags-exclude-from-inheritance (quote ("crypt"))) ;; prevent nested crypts
-(setq org-crypt-key nil) ;; Either a GPG Key ID or set to nil to use symmetric encryption.
-
-;;;;; todos
 (defun org-todo-at-date (date)
   "create a todo entry for a given date."
   (interactive (list (org-time-string-to-time (org-read-date))))
@@ -166,6 +159,15 @@ buffer."
     (cond ((eq major-mode 'org-mode) (org-todo))
           ((eq major-mode 'org-agenda-mode) (org-agenda-todo)))))
 
+;;;;; capture templates 
+(setq org-capture-templates
+      '(("t" "task" entry (file "t.org") "* %?" :prepend t)
+	("l" "log" entry (file+headline "i.org" "Log") "- %U %?" :prepend t)))
+
+;;;;; org-crypt
+(org-crypt-use-before-save-magic)
+(setq org-tags-exclude-from-inheritance (quote ("crypt"))) ;; prevent nested crypts
+(setq org-crypt-key nil) ;; Either a GPG Key ID or set to nil to use symmetric encryption.
 
 (setq org-structure-template-alist
       '(("s" . "src")
