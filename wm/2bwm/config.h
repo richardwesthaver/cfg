@@ -44,7 +44,7 @@ static const char *menucmd[] = {"rofi","-show","run", NULL};
 static const char *emacs[] = {"emacsclient","-c","-a=", NULL};
 static const char *firefox[] = {"firefox", NULL};
 static const char *chromium[] = {"chromium", NULL};
-static const char *terminal[] = {"kitty", NULL};
+static const char *terminal[] = {"urxvt", NULL};
 static const char *click1[] = {"xdotool","click", "1", NULL};
 static const char *click2[] = {"xdotool","click", "2", NULL};
 static const char *click3[] = {"xdotool","click", "3", NULL};

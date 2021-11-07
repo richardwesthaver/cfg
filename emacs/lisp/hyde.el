@@ -96,6 +96,7 @@ env: USER_EMAIL"
   "list of initialized mailboxes to query"
   :group 'hyde-mail)
 
+(define-key keys-map (kbd "C-c e m") #'notmuch)
 ;; setup the mail address and use name
 (setq mail-user-agent 'message-user-agent)
 
@@ -237,7 +238,6 @@ rather than the whole path."
 			       (C . t)
 			       (python . t)
 			       (lua . t)))
-  (setq org-confirm-babel-evaluate nil)
   ;; auto-mode-alist setup
   (dolist (m hd-prog-auto-mode-alist)
     (push m auto-mode-alist))

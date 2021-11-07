@@ -1,2 +1,2 @@
 exec 2bwm
-xset r rate 200 40
+xset r rate 200 50

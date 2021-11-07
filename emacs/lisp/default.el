@@ -17,7 +17,7 @@
 ;; 
 ;;; Code:
 (eval-when-compile (require 'cl-lib))
-(require 'package-x)
+;; (require 'package-x)
 ;;;; Settings
 (defgroup default nil
   "default settings")
@@ -27,7 +27,7 @@
   :group 'default)
 
 ;;;;; data
-(defvar default-data-dir (expand-file-name "~/shed/data/emacs/"))
+(defvar user-data-dir (expand-file-name "~/shed/data/emacs/"))
 
 ;;;; Macros
 (defmacro hook-modes (modes &rest body)
@@ -45,7 +45,7 @@ choice's name, and the rest of which is its body forms."
   (cl-assert (or (not (fboundp name))
                  (get name :define-lambda-choice)))
   (let* ((choice-names (mapcar #'car choices))
-         (choice-list (--map (cons (car it) `(lambda (&rest args)
+         (choice-list (--map (cons (car it) #'(lambda (&rest args)
                                                ,@(cdr it)))
                              choices))
          (prompt (format "Choose %s: " name))
@@ -59,10 +59,115 @@ choice's name, and the rest of which is its body forms."
        (put ',name :define-lambda-choice t))))
 
 
+;;;; Keys
+(global-set-key (kbd "C-x C-b") #'ibuffer)
+(global-set-key "\C-c l" #'org-store-link)
+(global-set-key "\C-c L" #'org-insert-link-global)
+(global-set-key "\C-c o" #'org-open-at-point-global)
+
+(define-minor-mode keys
+  "Global minor mode containing useful keybinds."
+  :lighter " Kz"
+  :global t
+  :group 'default
+  :keymap `(
+	    ;; Viper
+	    (,(kbd "C-c SPC") . toggle-viper-mode)
+	    ;; Registers
+	    (,(kbd "C-c M-y") . copy-to-register)
+	    (,(kbd"C-c M-j") . jump-to-register)
+	    (,(kbd"C-c M-f") . frameset-to-register)
+	    (,(kbd"C-c M-SPC") . point-to-register)
+	    ;; Outlines
+	    (,(kbd "M-TAB") . outline-cycle)
+	    (,(kbd "M-n") . outline-next-visible-heading)
+	    (,(kbd "M-p") . outline-previous-visible-heading)
+	    ;; Windows
+	    (,(kbd "C-x -") . split-window-vertically)
+	    (,(kbd "C-x =") . split-window-horizontally)
+	    ;; Speedbar  
+	    (,(kbd "C-c c s") . speedbar)
+	    ;; Embark
+	    (,(kbd "C-c a") . embark-act)
+	    ;; Version Control
+	    (,(kbd "C-c v v") . vc-next-action)
+	    (,(kbd "C-c v .") . vc-dir)
+	    ;; Shell
+	    (,(kbd "C-c t x") . async-shell-command)
+	    (,(kbd "C-c t t") . vterm)
+	    (,(kbd "C-c t T") . eshell)
+	    ;; Search
+	    (,(kbd "M-s w") . search-web)
+	    (,(kbd "M-s r") . rg)
+	    (,(kbd "C-c s R") . rg-dwim-current-dir)
+	    (,(kbd "C-c ? d") . apropos-documentation)
+	    (,(kbd "C-c ? k") . apropos-variable)
+	    (,(kbd "C-c ? c") . apropos-command)
+	    (,(kbd "C-c ? l") . apropos-library)
+	    (,(kbd "C-c ? u") . apropos-user-option)
+	    (,(kbd "C-c ? v") . apropos-value)
+	    ;; UI
+	    (,(kbd "C-c w b") . balance-windows)
+	    (,(kbd "C-c w i") . enlarge-window)
+	    (,(kbd "C-c w j") . shrink-window-horizontally)
+	    (,(kbd "C-c w k") . shrink-window)
+	    (,(kbd "C-c w l") . enlarge-window-horizontally)
+	    (,(kbd "C-c w s") . switch-window-then-swap-buffer)
+	    (,(kbd "C-c w t") . toggle-theme)
+	    (,(kbd "C-c w T") . modus-themes-toggle)
+	    (,(kbd "C-c w w") . winum-select-window-by-number)
+	    ;; Org
+	    (,(kbd "C-c n c") . org-capture)
+	    (,(kbd "C-c n a") . org-agenda)
+	    (,(kbd "C-c n t t") . org-timer)
+	    (,(kbd "C-c n t p") . org-timer-pause-or-continue)
+	    (,(kbd "C-c n t s") . org-timer-set-timer)
+	    (,(kbd "C-c n t t") . org-timer-show-remaining-time)
+	    (,(kbd "C-c n 1") . org-timer-start)
+	    (,(kbd "C-c n 2") . org-timer-stop)
+	    (,(kbd "C-c l") . org-store-link)
+	    ;; Org Web Tools
+	    (,(kbd "C-c n l") . org-web-tools-insert-link-for-url)
+	    (,(kbd "C-c n w") . org-web-tools-read-url-as-org)
+	    (,(kbd "C-c n L") . org-web-tools-insert-web-page-as-entry)
+	    (,(kbd "C-c n C-l") . org-web-tools-convert-links-to-page-entries)
+	    ;; Org Clock
+	    ;; (,(kbd "C-c x c") . org-clock-cancel)
+	    ;; (,(kbd "C-c x d") . org-clock-display)
+	    ;; (,(kbd "C-c x e") . org-clock-modify-effort-estimate)
+	    ;; (,(kbd "C-c x i") . org-clock-in)
+	    ;; (,(kbd "C-c x j") . org-clock-goto)
+	    ;; (,(kbd "C-c x o") . org-clock-out)
+	    ;; (,(kbd "C-c x r") . org-clock-report)
+	    (,(kbd "C-c i") . new-scratch)
+	    ;; Modes
+	    (,(kbd "C-c m v") . global-visual-line-mode)
+	    (,(kbd "C-c m h") . global-hl-line-mode)
+	    (,(kbd "C-c m l") . display-line-numbers-mode)
+	    (,(kbd "C-c m L") . global-display-line-numbers-mode)
+	    (,(kbd "C-c m a") . gpm-mouse-mode)
+	    (,(kbd "C-c m r") . refill-mode)
+	    (,(kbd "C-c m k") . which-key-mode)
+	    (,(kbd "C-c m R") . global-auto-revert-mode)
+	    (,(kbd "C-c m t") . toggle-frame-tab-bar)
+	    (,(kbd "C-c m d") . toggle-debug-on-error)
+	    ;; Etc
+	    (,(kbd "C-c e w") . eww)
+	    (,(kbd "C-c e C-w") . webjump)
+	    (,(kbd "C-c e W") . browse-url)
+	    (,(kbd "C-c e C-e") . notmuch-exec-offlineimap)
+	    (,(kbd "C-c e i") . ielm)
+	    (,(kbd "C-c e f") . load-file)
+	    (,(kbd "C-c e l") . load-library) 
+	    (,(kbd "C-c e k") . server-shutdown)
+	    ;; Fun & Games
+	    (,(kbd "C-c e g t") . tetris)
+	    (,(kbd "C-c e g z") . zone)
+	    (,(kbd "C-c e g s") . snake)))
 ;;;; Scratch
 (defcustom default-scratch-buffer-mode 'lisp-interaction-mode
-    "Default major mode for new scratch buffers"
-    :group 'default)
+      "Default major mode for new scratch buffers"
+      :group 'default)
 
 ;; Adapted from the `scratch.el' package by Ian Eure.
 (defun default-scratch-list-modes ()
@@ -142,14 +247,175 @@ buffer."
     (lisp-interaction-mode)))
 
 ;;;; VC
-;;;; Org 
-(defgroup default-org ()
-  "Default Org-mode extensions"
-  :group 'default)
+;;;; Registers 
+(defcustom registers-save-file (expand-file-name ".registers.el" user-data-dir)
+  "The place where the contents of the registers should be saved."
+  :group 'default
+  :type '(file))
 
-;;;;; todos
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "RESEARCH(r)" "HACK(h)" "FIXME(f)" "REVIEW(R)" "NOTE(n)" "GOTO(g)" "NEXT(N)" "|" "DONE(d@)" "KILL(k@)")))
+(defun jump-to-register-action (register &optional delete)
+  "Do what is the most sane thing to do for the thing stored in
+   register Either insert text (evt. a rectangle), move point to
+   location stored in a register, a buffer stored in a register,
+   a file stored in register, or run a macro saved in a register.
+   If the register contains a file name, find that file. Or
+   restore a saved window/frame configuration."
+  (let ((val (get-register register)))
+    (cond
+     ((registerv-p val)
+      (cl-assert (registerv-jump-func val) nil
+                 "Don't know how to jump to register %s"
+                 (single-key-description register))
+      (funcall (registerv-jump-func val) (registerv-data val)))
+     ((and (consp val) (frame-configuration-p (car val)))
+      (set-frame-configuration (car val) (not delete))
+      (goto-char (cadr val)))
+     ((and (consp val) (window-configuration-p (car val)))
+      (set-window-configuration (car val))
+      (goto-char (cadr val)))
+     ((markerp val)
+      (or (marker-buffer val)
+          (error "That register's buffer no longer exists"))
+      (switch-to-buffer (marker-buffer val))
+      (goto-char val))
+     ((and (consp val) (eq (car val) 'file))
+      (find-file (cdr val)))
+     ((and (consp val) (eq (car val) 'buffer))
+      (switch-to-buffer (cdr val)))
+     ((and (consp val) (eq (car val) 'macro))
+                                        ;appearently the only way to run a macro is by putting them in
+                                        ;last-kbd-macro (named keyboard macros can only (as far as I
+                                        ;know) be called interactively, but this works quite
+                                        ;unproblematically).
+      (let ((old-macro last-kbd-macro))
+        (setq last-kbd-macro (cdr val))
+        (call-last-kbd-macro)
+        (setq last-kbd-macro old-macro)))
+     ((and (consp val) (eq (car val) 'file-query))
+      (or (find-buffer-visiting (nth 1 val))
+          (y-or-n-p (format "Visit file %s again? " (nth 1 val)))
+          (error "Register access aborted"))
+      (find-file (nth 1 val))
+      (goto-char (nth 2 val)))
+     ((or (stringp val)
+          (consp val)
+          (numberp val)
+          (and (markerp val)
+               (marker-position val)))
+      (insert-register register))
+     (t
+      (error "Register doesn't contain a buffer, buffer position, macro, file, text, rectangle or configuration")))))
+
+;; overwrite default
+(defun jump-to-register (register &optional delete)
+  (interactive (list (register-read-with-preview "Jump to register: ")
+                     current-prefix-arg))
+  (jump-to-register-action register delete))
+
+(defun save-registers-hook ()
+  (add-hook 'kill-emacs-hook
+            #'(lambda ()
+               (better-registers-save-registers))))
+
+(defun save-registers (&optional filename queryp)
+  "Print the contents of all registers to a file as loadable data.
+   Cannot save window/frame configuration.
+   But it works with keyboard macros, text, buffernames,
+   filenames and rectangles.
+
+   If filename is non-nil and queryp is nil, use that, otherwise
+   use the default filename.  If queryp is non-nil (a prefix
+   argument is given), query interactively for the file-name."
+  (interactive "i\nP")
+  (when queryp
+    (setq filename (read-file-name nil registers-save-file)))
+  (let ((fn (or filename registers-save-file))
+        (print-level nil) ;Let us write anything
+        (print-length nil)
+        (b (generate-new-buffer "*registers*")))
+    (set-buffer b)
+    (dolist (i register-alist)
+      (let ((char (car i))
+            (contents (cdr i)))
+        (cond
+         ((stringp contents)
+          (insert (format "%S\n"
+                          `(set-register
+                            ,char
+                            ,contents))))
+         ((numberp contents) ;numbers are printed non-quotes
+          (insert (format "%S\n" `(set-register ,char ,contents))))
+         ((markerp contents)
+          (insert (format
+                   "%S\n"
+                   `(set-register
+                     ,char
+                     '(file-query
+                       ,(buffer-file-name (marker-buffer contents))
+                       ,(marker-position contents))))))
+         ((bufferp (cdr contents))
+          (insert (format "%s\n"
+                          `(set-register ,char
+                                         ',(buffer-name (cdr contents))))))
+         (t (when (and contents ; different from nil
+                       (not (or (window-configuration-p (car contents))
+                                (frame-configuration-p (car contents)))))
+              (insert (format "%S\n"
+                              `(set-register ,char (quote ,contents)))))))))
+    (write-file fn)
+    (kill-buffer b)))
+
+(defun put-buffer-in-register (register &optional delete)
+  "Put current buffername in register - this would also work for
+  just buffers, as switch-to-buffer can use both, but it
+  facilitates for easier saving/restoring of registers."
+  (interactive "cPut current buffername in register: \nP.")
+  (set-register register (cons 'buffer (buffer-name (current-buffer)))))
+
+(defun put-buffer-filename-in-register (register &optional delete)
+  "This is better than put-buffer-in-register for file-buffers, because a closed
+   file can be opened again, but does not work for no-file-buffers."
+  (interactive "cPut the filename of current buffer in register: \nP")
+  (set-register register (cons 'file (buffer-file-name (current-buffer)))))
+
+(defun put-keyboard-macro-in-register (register &optional delete)
+  "Save the contents of the last keyboard macro to the given register.
+   can be played again by jump-to-register."
+  (interactive "cPut last keyboard-macro in register: \nP")
+  (set-register register (cons 'macro last-kbd-macro)))
+
+(defun decrement-register (number register)
+  "Subtract NUMBER from the contents of register REGISTER.
+Interactively, NUMBER is the prefix arg."
+  (interactive "p\ncDecrement register: ")
+  (increment-register (- number) register))
+
+(defun toggle-macro-recording ()
+  (interactive)
+  (message "hej")
+  (if defining-kbd-macro
+      (end-kbd-macro)
+    (start-kbd-macro nil)))
+
+(defun play-macro-if-not-playing ()
+  (interactive)
+  (if defining-kbd-macro
+      (end-kbd-macro)
+    (call-last-kbd-macro)))
+
+;;;; Org 
+(defun org-keys ()
+  "add default keys to 'org-mode-map'"
+  (define-key org-mode-map (kbd "C-c M-i") 'org-toggle-inline-images)
+  (define-key org-mode-map (kbd "C-c M-a") 'org-agenda-current-subtree-or-region)
+  (define-key org-mode-map (kbd "C-c n i") 'org-id-get-create)
+  (define-key org-mode-map (kbd "C-c M-p e") 'set-effort-prop)
+  (define-key org-mode-map (kbd "C-c M-n e") 'org-encrypt-entry)
+  (define-key org-mode-map (kbd "C-c M-n E") 'org-encrypt-entries)
+  (define-key org-mode-map (kbd "C-c M-n d") 'org-decrypt-entry)
+  (define-key org-mode-map (kbd "C-c M-n D") 'org-decrypt-entries)
+  (define-key org-mode-map (kbd "C-c M-h") 'src-block-tags))
+
 
 (defun org-todo-at-date (date)
   "create a todo entry for a given date."
@@ -159,41 +425,60 @@ buffer."
     (cond ((eq major-mode 'org-mode) (org-todo))
           ((eq major-mode 'org-agenda-mode) (org-agenda-todo)))))
 
-;;;;; capture templates 
-(setq org-capture-templates
-      '(("t" "task" entry (file "t.org") "* %?" :prepend t)
-	("l" "log" entry (file+headline "i.org" "Log") "- %U %?" :prepend t)))
+(defun org-ask-location ()
+  "prompt for a location\"\""
+  (let* ((org-refile-targets '((nil :maxlevel . 9)))
+         (hd (condition-case nil
+                 (car (org-refile-get-location))
+               (error (car org-refile-history)))))
+    (goto-char (point-min))
+    (outline-next-heading)
+    (if (re-search-forward
+         (format org-complex-heading-regexp-format (regexp-quote hd))
+         nil t)
+        (goto-char (point-at-bol))
+      (goto-char (point-max))
+      (or (bolp) (insert "\n"))
+      (insert "* " hd "\n")))
+  (end-of-line))
 
-;;;;; org-crypt
-(org-crypt-use-before-save-magic)
-(setq org-tags-exclude-from-inheritance (quote ("crypt"))) ;; prevent nested crypts
-(setq org-crypt-key nil) ;; Either a GPG Key ID or set to nil to use symmetric encryption.
+(defun org-capture-fileref-snippet (f type headers func-name)
+  (let* ((code-snippet
+          (buffer-substring-no-properties (mark) (- (point) 1)))
+         (file-name   (buffer-file-name))
+         (file-base   (file-name-nondirectory file-name))
+         (line-number (line-number-at-pos (region-beginning)))
+         (initial-txt (if (null func-name)
+                          (format "From [[file:%s::%s][%s]]:"
+                                  file-name line-number file-base)
+                        (format "From ~%s~ (in [[file:%s::%s][%s]]):"
+                                func-name file-name line-number
+                                file-base))))
+    (format "
+    %s
+    #+BEGIN_%s %s
+ %s
+    #+END_%s" initial-txt type headers code-snippet type)))
 
-(setq org-structure-template-alist
-      '(("s" . "src")
-	("e" . "src emacs-lisp")
-	("x" . "src shell")
-	("h" . "export html")
-	("p" . "src python")
-	("r" . "src rust")
-	("E" . "example")
-	("q" . "quote")
-	("c" . "center")
-	("C" . "comment")
-	("v" . "verse")))
+(defun org-capture-clip-snippet (f)
+  "Given a file, F, this captures the currently selected text
+     within an Org EXAMPLE block and a backlink to the file."
+  (with-current-buffer (find-buffer-visiting f)
+    (org-capture-fileref-snippet f "EXAMPLE" "" nil)))
 
-(setq org-refile-use-cache t
-      org-refile-allow-creating-parent-nodes 'confirm
-      org-refile-targets '((nil :maxlevel . 3)
-			   (org-agenda-files :maxlevel . 3))
-      org-src-fontify-natively t
-      org-src-tabs-act-natively t
-      org-src-tabs-act-natively t
-      org-startup-indented t
-      org-imenu-depth 6
-      org-outline-path-complete-in-steps nil
-      org-preview-latex-image-directory "~/.config/emacs/.cache/ltximg"
-      org-latex-image-default-width "8cm")
+(defun org-capture-code-snippet (f)
+  "Given a file, F, this captures the currently selected text
+     within an Org SRC block with a language based on the current mode
+     and a backlink to the function and the file."
+  (with-current-buffer (find-buffer-visiting f)
+    (let ((org-src-mode (replace-regexp-in-string "-mode" "" (format "%s" major-mode)))
+          (func-name (which-function)))
+      (org-capture-fileref-snippet f "SRC" org-src-mode func-name))))
+
+(defun region-to-clocked-task (start end)
+  "Copies the selected text to the currently clocked in org-mode task."
+  (interactive "r")
+  (org-capture-string (buffer-substring-no-properties start end) "3"))
 
 ;;;###autoload
 (defun src-block-tags (src-block)
@@ -205,13 +490,10 @@ buffer."
     (when tags
       (split-string tags))))
 
-;;;;; properties
-(progn
   (setq org-global-properties
         '(quote (("EFFORT_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
-                 ("STYLE_ALL" . "habit")))))
+                 ("STYLE_ALL" . "habit"))))
 
-;;;;; org-export
 ;;;###autoload
 (defun org-export-headings-to-org ()
   "Export all subtrees that are *not* tagged with :noexport: to
@@ -240,39 +522,8 @@ are exported to a filename derived from the headline text."
            (set-buffer-modified-p modifiedp)))
        "-noexport" 'region-start-level))))
 
-;;;;; links 
 (require 'ox-publish)
-  (setq org-link-abbrev-alist
-        '(("google"    . "http://www.google.com/search?q=")
-          ("gmap"      . "http://maps.google.com/maps?q=%s")
-          ("omap"      . "http://nominatim.openstreetmap.org/search?q=%s&polygon=1")
-          ("ads"       . "https://ui.adsabs.harvard.edu/search/q=%20author%3A\"%s\"")
-          ("rw" . "https://rwest.io/%s")
-          ("src" . "https://hg.rwest.io/%s")
-          ("contrib" . "https://hg.rwest.io/contrib/%s")
-          ("cdn" . "https://rwest.io/a/%s")))
 
-(defvar yt-iframe-format
-  (concat "<iframe width=\"480\""
-          " height=\"360\""
-          " src=\"https://www.youtube.com/embed/%s\""
-          " frameborder=\"0\""
-          " allowfullscreen>%s</iframe>"))
-
-(org-add-link-type
- "yt"
- (lambda (handle)
-   (browse-url
-    (concat "https://www.youtube.com/embed/"
-            handle)))
- (lambda (path desc backend)
-   (cl-case backend
-     (html (format yt-iframe-format
-                   path (or desc "")))
-     (latex (format "\href{%s}{%s}"
-                    path (or desc "video"))))))
-
-;;;;; agenda
 (defvar org-agenda-overriding-header)
 (defvar org-agenda-sorting-strategy)
 (defvar org-agenda-restrict)
@@ -317,29 +568,117 @@ are exported to a filename derived from the headline text."
       (org-agenda-remove-restriction-lock t)
       (message nil))))
 
-;;;; Programming
-(defgroup default-prog ()
-          "basic programming extensions"
-          :group 'default)
+;;;;; Setup 
+;;;###autoload
+(defun org-setup ()
+  "setup Org-mode"
+  ;; keys
+  (eval-after-load 'org #'(progn (org-keys)))
+  ;; outline
+  (setq org-startup-indented t
+	org-imenu-depth 6
+	org-outline-path-complete-in-steps nil)
+  ;; todos
+  (setq org-todo-keywords
+	'((sequence "TODO(t)" "RESEARCH(r)" "HACK(h)" "FIXME(f)" "REVIEW(R)" "NOTE(n)" "GOTO(g)" "NEXT(N)" "|" "DONE(d@)" "KILL(k@)")))
+  ;; captures
+  (setq org-capture-templates
+	'(("t" "task" entry (file "t.org") "* %?\n- %U" :prepend t)
+	  ("1" "current-task-item" item (clock) "%i%?")
+	  ("2" "current-task-checkbox" checkitem (clock) "%i%?")
+	  ("3" "current-task-region" plain (clock) "%i" :immediate-finish t :empty-lines 1)
+	  ("4" "current-task-kill" plain (clock) "%c" :immediate-finish t :empty-lines 1)
+	  ("l" "log" item (file+headline "i.org" "log") "%U %?" :prepend t)
+	  ("s" "secret" table-line (file+headline "i.org" "secret") "| %^{key} | %^{val} |" :immediate-finish t)
+	  ("m" "meta" item (file+function "~/shed/src/meta/m.org" org-ask-location) "%?")
+	  ("n" "note" item (file+function "~/shed/src/meta/n.org" org-ask-location) "%?")))
 
+  ;; crypto
+  (org-crypt-use-before-save-magic)
+  (setq org-tags-exclude-from-inheritance '("crypt")
+	org-crypt-key nil)
+
+  ;; src
+  (setq org-structure-template-alist
+	'(("s" . "src")
+	  ("e" . "src emacs-lisp")
+	  ("x" . "src shell")
+	  ("h" . "export html")
+	  ("p" . "src python")
+	  ("r" . "src rust")
+	  ("E" . "example")
+	  ("q" . "quote")
+	  ("c" . "center")
+	  ("C" . "comment")
+	  ("v" . "verse")))
+
+  (setq org-confirm-babel-evaluate nil)
+
+  (setq org-src-fontify-natively t
+	org-src-tabs-act-natively t
+	org-src-tabs-act-natively t)
+
+  ;; refile
+  (setq org-refile-use-cache t
+	org-refile-allow-creating-parent-nodes 'confirm
+	org-refile-targets '((nil :maxlevel . 3)
+			     (org-agenda-files :maxlevel . 3)))
+
+  ;; publish
+  (setq org-preview-latex-image-directory "~/.config/emacs/.cache/ltximg"
+	org-latex-image-default-width "8cm"))
+
+  ;; links
+  (setq org-link-abbrev-alist
+	'(("google" . "http://www.google.com/search?q=")
+	  ("gmap" . "http://maps.google.com/maps?q=%s")
+	  ("omap" . "http://nominatim.openstreetmap.org/search?q=%s&polygon=1")
+	  ("ads" . "https://ui.adsabs.harvard.edu/search/q=%20author%3A\"%s\"")
+	  ("rw" . "https://rwest.io/%s")
+	  ("src" . "https://hg.rwest.io/%s")
+	  ("contrib" . "https://hg.rwest.io/contrib/%s")
+	  ("cdn" . "https://rwest.io/a/%s")))
+
+  (defvar yt-iframe-format
+    (concat "<iframe width=\"480\""
+	    " height=\"360\""
+	    " src=\"https://www.youtube.com/embed/%s\""
+	    " frameborder=\"0\""
+	    " allowfullscreen>%s</iframe>"))
+
+  (org-add-link-type
+   "yt"
+   (lambda (handle)
+     (browse-url
+      (concat "https://www.youtube.com/embed/"
+	      handle)))
+   (lambda (path desc backend)
+     (cl-case backend
+       (html (format yt-iframe-format
+		     path (or desc "")))
+       (latex (format "\href{%s}{%s}"
+		      path (or desc "video"))))))
+;;;; Prog
 ;;;;; Comments 
-(defcustom default-prog-comment-keywords
+(defcustom prog-comment-keywords
   '("TODO" "NOTE" "REVIEW" "FIXME" "HACK" "RESEARCH")
   "List of strings with comment keywords."
-  :group 'default-prog)
+  :group 'default)
 
-(defcustom default-prog-comment-timestamp-format-concise "%F"
-  "Specifier for date in `default-prog-comment-timestamp-keyword'.
+(defcustom prog-comment-timestamp-format-concise "%F"
+  "Specifier for date in `prog-comment-timestamp-keyword'.
 Refer to the doc string of `format-time-string' for the available
 options."
-  :group 'default-prog)
+  :group 'default)
 
-(defcustom default-prog-comment-timestamp-format-verbose "%F %T %z"
-  "Like `default-prog-comment-timestamp-format-concise', but longer."
-  :group 'default-prog)
+(defcustom prog-comment-timestamp-format-verbose "%F %T %z"
+  "Like `prog-comment-timestamp-format-concise', but longer."
+  :group 'default)
 
+(define-key prog-mode-map (kbd "M-;") 'prog-comment-dwim)
+(define-key prog-mode-map (kbd "C-c M-;") 'prog-comment-timestamp-keyword)
 ;;;###autoload
-(defun default-prog-comment-dwim (arg)
+(defun prog-comment-dwim (arg)
   "Flexible, do-what-I-mean commenting.
 
 If region is active and ARG is either a numeric argument greater
@@ -366,23 +705,23 @@ operates on the lines before point)."
    (t
     (save-excursion (comment-line (or arg 1))))))
 
-(defvar default-prog-comment--keyword-hist '()
+(defvar prog-comment--keyword-hist '()
   "Input history of selected comment keywords.")
 
-(defun default-prog-comment--keyword-prompt (keywords)
+(defun prog-comment--keyword-prompt (keywords)
   "Prompt for candidate among KEYWORDS."
-  (let ((def (car default-prog-comment--keyword-hist)))
+  (let ((def (car prog-comment--keyword-hist)))
     (completing-read
      (format "Select keyword [%s]: " def)
-     keywords nil nil nil 'default-prog-comment--keyword-hist def)))
+     keywords nil nil nil 'prog-comment--keyword-hist def)))
 
 
 ;;;###autoload
-(defun default-prog-comment-timestamp-keyword (keyword &optional verbose)
+(defun prog-comment-timestamp-keyword (keyword &optional verbose)
   "Add timestamped comment with KEYWORD.
 
 When called interactively, the list of possible keywords is that
-of `default-prog-comment-keywords', though it is possible to
+of `prog-comment-keywords', though it is possible to
 input arbitrary text.
 
 If point is at the beginning of the line or if line is empty (no
@@ -396,18 +735,18 @@ with `comment-indent'.
 
 The comment is always formatted as 'DELIMITER KEYWORD DATE:',
 with the date format being controlled by the variable
-`default-prog-comment-timestamp-format-concise'.
+`prog-comment-timestamp-format-concise'.
 
 With optional VERBOSE argument (such as a prefix argument
 `\\[universal-argument]'), use an alternative date format, as
-specified by `default-prog-comment-timestamp-format-verbose'."
+specified by `prog-comment-timestamp-format-verbose'."
   (interactive
    (list
-    (default-prog-comment--keyword-prompt default-prog-comment-keywords)
+    (prog-comment--keyword-prompt prog-comment-keywords)
     current-prefix-arg))
   (let* ((date (if verbose
-                   default-prog-comment-timestamp-format-verbose
-                 default-prog-comment-timestamp-format-concise))
+                   comment-timestamp-format-verbose
+                 prog-comment-timestamp-format-concise))
          (string (format "%s %s: " keyword (format-time-string date)))
          (beg (point)))
     (cond
@@ -436,10 +775,6 @@ specified by `default-prog-comment-timestamp-format-verbose'."
       (insert (concat " " string))))))
 
 ;;;;; Skeletons 
-(defgroup default-skel nil
-  "base skel functions"
-  :group 'default)
-
 (defcustom file-template-insert-automatically nil
   "*Insert file-template automatically.
 Can be one of the following values:
@@ -447,12 +782,12 @@ Can be one of the following values:
 nil - do not insert automatically.
 t   - always insert automatically.
 ask - ask whether to insert or not."
-  :group 'default-skel
+  :group 'default
   :type '(choice (const :tag "No"  nil)
                  (const :tag "Yes" t)
                  (const :tag "Ask" 'ask)))
 
-(defvar default-skel-available '()
+(defvar skel-available '()
   "Internal list of available default skeletons.")
 
 (define-abbrev-table 'default-skel-abbrev-table ()
@@ -470,8 +805,8 @@ will be bound to default-skel-NAME."
     `(progn
        (define-abbrev default-skel-abbrev-table
          ,name "" ',function-name :system t)
-       (setq default-skel-available
-             (cons ',function-name default-skel-available))
+       (setq skel-available
+             (cons ',function-name skel-available))
        (define-skeleton ,function-name
          ,(or doc
               (format "Insert default %s skeleton." name))
@@ -506,10 +841,6 @@ will be bound to default-skel-NAME."
 (advice-add #'iedit-mode :around #'iedit-scoped)
 
 ;;;; Utils
-(defgroup default-util ()
-  "base utilities"
-  :group 'util)
-
 ;;;;; Regex
 (defvar base-url-regexp
   (concat
@@ -663,206 +994,50 @@ buffer, otherwise just change the current paragraph."
                else do (cl-incf fill-column)
                finally return fill-column))))
 
-;;;; Registry
-(setq bookmark-default-file "~/shed/data/emacs/bookmarks")
-;;;; Viper
-;; It is sometimes convenient to have vi-style editing available. In
-;; Emacs this is provided with the `viper` package. I find myself
-;; preferring this input method specifically on mobile devices (iPhone
-;; and iPad) as well as machines where I don't have the ability to
-;; re-map the `CAPS LOCK` key to `CTRL`.
-;;
-;; There are other packages available for vi-emulation available on
-;; MELPA which you may prefer such as `evil`. This package is great
-;; for users who prefer vi input style on all devices, but since I
-;; prefer Emacs input most of the time, it's a bit bloated for my
-;; needs.
-;; 
-;; These settings may also be used to provide an Emacs distribution
-;; for vim die-hards who have no interest in using Emacs keybinds.
-(defgroup default-viper ()
-  "Default extensions for `viper`, a vi-emulator."
-  :group 'default)
-
-;;;; Keys
-(defgroup default-keys nil
-  "default keys"
-  :group 'default)
-
-(defcustom cmd-keys-prefix ()
-  "cmd-keys prefix"
-  :group 'default-keys)
-
-(defcustom mode-keys-prefix ()
-  "mode-keys prefix"
-  :group 'default-keys)
-(defcustom default-keys-prefix ()
-  "default-keys-mode prefix key"
-  :group 'default-keys)
-
-;;;;; Global keys 
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key "\C-c l" #'org-store-link)
-(global-set-key "\C-c L" #'org-insert-link-global)
-(global-set-key "\C-c o" #'org-open-at-point-global)
-
-(define-minor-mode default-keys-mode "Global minor mode containing useful keybinds."
-  :lighter " dk"
-  :global t
-  :keymap `(
-	    ;; Registers
-	    (,(kbd "C-c r y") . copy-to-register)
-	    (,(kbd"C-c r j") . jump-to-register)
-	    (,(kbd"C-c r f") . frameset-to-register)
-	    (,(kbd"C-c r SPC") . point-to-register)
-	    ;; Commands
-	    (,(kbd "C-c c r") . rustic-popup)
-	    ;; Outlines
-	    (,(kbd "M-TAB") . outline-cycle)
-	    (,(kbd "C-c C-n") . outline-next-visible-heading)
-	    (,(kbd "C-c C-p") . outline-previous-visible-heading)
-	    ;; Windows
-	    (,(kbd "C-x -") . split-window-vertically)
-	    (,(kbd "C-x =") . split-window-horizontally)
-	    ;; Speedbar  
-	    (,(kbd "C-c e s") . speedbar)
-	    ;; Embark
-	    (,(kbd "C-c a") . embark-act)
-
-	    ;; Projects
-	    (,(kbd "C-c p p") . project-switch-project)
-	    (,(kbd "C-c p k") . project-kill-buffers)
-	    (,(kbd "C-c p v") . project-vc-dir)
-	    ;; Version Control
-	    (,(kbd "C-c v v") . vc-next-action)
-	    (,(kbd "C-c v .") . vc-dir)
-
-	    ;; Shell
-	    (,(kbd "C-c t x") . async-shell-command)
-	    (,(kbd "C-c t t") . vterm)
-	    (,(kbd "C-c t T") . eshell)
-
-	    ;; Search
-	    (,(kbd "M-s w") . search-web)
-	    (,(kbd "M-s r") . rg)
-	    (,(kbd "C-c s R") . rg-dwim-current-dir)
-	    (,(kbd "C-c ? d") . apropos-documentation)
-	    (,(kbd "C-c ? k") . apropos-variable)
-	    (,(kbd "C-c ? c") . apropos-command)
-	    (,(kbd "C-c ? l") . apropos-library)
-	    (,(kbd "C-c ? u") . apropos-user-option)
-	    (,(kbd "C-c ? v") . apropos-value)
-	    ;; UI
-	    (,(kbd "C-c w b") . balance-windows)
-	    (,(kbd "C-c w i") . enlarge-window)
-	    (,(kbd "C-c w j") . shrink-window-horizontally)
-	    (,(kbd "C-c w k") . shrink-window)
-	    (,(kbd "C-c w l") . enlarge-window-horizontally)
-	    (,(kbd "C-c w s") . switch-window-then-swap-buffer)
-	    (,(kbd "C-c w t") . toggle-theme)
-	    (,(kbd "C-c w T") . modus-themes-toggle)
-	    (,(kbd "C-c w w") . winum-select-window-by-number)
-	    ;; Org
-	    (,(kbd "C-c n c") . org-capture)
-	    (,(kbd "C-c n a") . org-agenda)
-	    (,(kbd "C-c n t t") . org-timer)
-	    (,(kbd "C-c n t p") . org-timer-pause-or-continue)
-	    (,(kbd "C-c n t s") . org-timer-set-timer)
-	    (,(kbd "C-c n t t") . org-timer-show-remaining-time)
-	    (,(kbd "C-c n 1") . org-timer-start)
-	    (,(kbd "C-c n 2") . org-timer-stop)
-	    (,(kbd "C-c n i") . org-id-get-create)
-	    (,(kbd "C-c n p e") . set-effort-prop)
-	    (,(kbd "C-c n e") . org-encrypt-entry)
-	    (,(kbd "C-c n E") . org-encrypt-entries)
-	    (,(kbd "C-c n d") . org-decrypt-entry)
-	    (,(kbd "C-c n D") . org-decrypt-entries)
-	    (,(kbd "C-c l") . org-store-link)
-	    ;; Org Web Tools
-	    (,(kbd "C-c n l") . org-web-tools-insert-link-for-url)
-	    (,(kbd "C-c n w") . org-web-tools-read-url-as-org)
-	    (,(kbd "C-c n L") . org-web-tools-insert-web-page-as-entry)
-	    (,(kbd "C-c n C-l") . org-web-tools-convert-links-to-page-entries)
-	    ;; Org Clock
-	    ;; (,(kbd "C-c x c") . org-clock-cancel)
-	    ;; (,(kbd "C-c x d") . org-clock-display)
-	    ;; (,(kbd "C-c x e") . org-clock-modify-effort-estimate)
-	    ;; (,(kbd "C-c x i") . org-clock-in)
-	    ;; (,(kbd "C-c x j") . org-clock-goto)
-	    ;; (,(kbd "C-c x o") . org-clock-out)
-	    ;; (,(kbd "C-c x r") . org-clock-report)
-
-	    (,(kbd "C-c i") . new-scratch)
-	    ;; Modes
-	    (,(kbd "C-c m v") . global-visual-line-mode)
-	    (,(kbd "C-c m h") . global-hl-line-mode)
-	    (,(kbd "C-c m l") . global-display-line-numbers-mode)
-	    (,(kbd "C-c m a") . gpm-mouse-mode)
-	    (,(kbd "C-c m r") . refill-mode)
-	    (,(kbd "C-c m k") . which-key-mode)
-	    (,(kbd "C-c m c") . global-corfu-mode)
-	    (,(kbd "C-c m R") . global-auto-revert-mode)
-	    (,(kbd "C-c m t") . toggle-frame-tab-bar)
-	    (,(kbd "C-c m d") . toggle-debug-on-error)
-	    (,(kbd "C-c m i") . org-toggle-inline-images)
-	    (,(kbd "C-c m y") . yas-global-mode)
-	    ;; Etc
-	    (,(kbd "C-c e m") . notmuch) ;mail
-	    (,(kbd "C-c e w") . eww)
-	    (,(kbd "C-c e C-w") . webjump)
-	    (,(kbd "C-c e W") . browse-url)
-	    (,(kbd "C-c e C-e") . notmuch-exec-offlineimap)
-	    (,(kbd "C-c e i") . ielm)
-	    (,(kbd "C-c e f") . load-file)
-	    (,(kbd "C-c e l") . load-library) 
-	    (,(kbd "C-c e k") . server-shutdown)
-	    ;; Fun & Games
-	    (,(kbd "C-c e g t") . tetris)
-	    (,(kbd "C-c e g z") . zone)
-	    (,(kbd "C-c e g s") . snake)))
 ;;;; Setup
 ;;;###autoload
 (defun default-setup ()
   "Setup defaults"
   ;; default settings
-  (setq package-enable-at-startup nil
-
-	make-backup-files nil
-	auto-save-list-file-prefix (concat default-data-dir "auto-save/.")
-
-	confirm-kill-emacs nil
-	confirm-kill-process nil
-	use-short-answers t
-
-	display-time-format "%Y-%m-%d--%H:%M"
-	ring-bell-function 'ignore
-	gc-cons-percentage 0.6
-	gc-cons-threshold most-positive-fixnum
-	;; Completion
-	completion-ignore-case t
-	;; Web
-	shr-use-colors nil
-	shr-use-fonts nil
-	shr-max-image-proportion 0.6
-	shr-image-animate nil
-	shr-discard-aria-hidden t
-	tab-always-indent 'complete
-	shr-cookie-policy nil
-	browse-url-browser-function 'eww-browse-url
-	eww-search-prefix "https://duckduckgo.com/html?q="
-	url-privacy-level '(email agent cookies lastloc))
-
-  ;; Hooks
-  (add-hook 'after-init-hook 'default-keys-mode)
-  (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
-  (add-hook 'shell-mode-hook 'set-no-process-query-on-exit)
+  (setq-default package-enable-at-startup nil
+		make-backup-files nil
+		auto-save-list-file-prefix (expand-file-name "auto-save/." user-data-dir)
+		tramp-auto-save-directory (expand-file-name "auto-save/tramp/" user-data-dir)
+		confirm-kill-emacs nil
+		confirm-kill-process nil
+		use-short-answers t
+		display-time-format "%Y-%m-%d--%H:%M"
+		ring-bell-function 'ignore
+		gc-cons-percentage 0.6
+		gc-cons-threshold most-positive-fixnum
+		completion-ignore-case t
+		;; org
+		org-agenda-files (list org-directory)
+		shr-use-colors nil
+		shr-use-fonts nil
+		shr-max-image-proportion 0.6
+		shr-image-animate nil
+		shr-discard-aria-hidden t
+		bookmark-default-file (expand-file-name "bookmarks" user-data-dir)
+		project-list-file (expand-file-name "projects" user-data-dir)
+		emms-directory (expand-file-name "emms" user-data-dir)
+		gnus-cache-directory (expand-file-name "gnus" user-data-dir)
+		url-cache-directory (expand-file-name "url" user-data-dir)
+		tab-always-indent 'complete
+		shr-cookie-policy nil
+		browse-url-browser-function 'browse-url-default-browser
+		eww-search-prefix "https://duckduckgo.com/html?q="
+		url-privacy-level '(email agent cookies lastloc))
 
   ;; init custom package archive
-  (setq package-archives '(("contrib" . "/home/ellis/shed/data/emacs/contrib/")
-			   ("local" . "/home/ellis/shed/data/emacs/lisp/")))
-  (package-initialize)
-  )
+  (setq package-archives '(("contrib" . (expand-file-name "contrib" user-data-dir))
+			   ("local" . (expand-file-name "lisp" user-data-dir))))
 
+  (add-hook 'after-init-hook 'keys)
+  (add-hook 'after-init-hook #'org-setup)
+  (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
+  (add-hook 'shell-mode-hook 'set-no-process-query-on-exit)
+  (package-initialize))
 ;;;; provide
 (provide 'default)
 ;;; default.el ends here
