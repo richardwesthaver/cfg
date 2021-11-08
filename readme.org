@@ -1,6 +1,5 @@
-# Created 2021-11-06 Sat 21:33
+# Created 2021-11-07 Sun 20:59
 #+title: cfg
-#+author: ellis
 - what -> my config files
   - emacs
   - mail

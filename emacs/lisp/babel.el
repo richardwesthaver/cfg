@@ -4,7 +4,7 @@
 ;; 
 ;; Author: ellis <ellis@rwest.io>
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "28") (ob-async "0.1"))
+;; Package-Requires: ((emacs "28"))
 ;; Keywords: convenience, abbrev, tools, languages, lisp, files, c, extensions
 ;; 
 ;; This program is free software; you can redistribute it and/or modify
@@ -26,12 +26,10 @@
 ;; a spiritual descendent of the Library of Babel (`ob-lob.el`).
 ;;
 ;;; Code:
-(require 'ob-async)
-
 (defgroup babel ()
   "Meta-programming extensions"
   :group 'shed)
- 
+
 (defcustom lob-file-name "~/shed/src/babel/lob.org"
   "Filename for an org-mode buffer containing the Library of Babel"
   :type 'string
@@ -41,28 +39,37 @@
 (defcustom lob-ingest-trigger 'on-save
   "Control when 'org-babel-lob-ingest` will be executed."
   :type '(choice (const :tag "Ingest on `lob-file` save." on-save)
-		 (const :tag "JIT Ingestion." jit)
 		 (const :tag "Trigger lob-ingest manually." nil))
   :group 'babel)
 
-(defvar lob-file (expand-file-name lob-file-name))
+(defvar lob-file (expand-file-name lob-file-name)
+  "library-of-babel file, usually 'lob.org'")
+
+;;;###autoload
+(defun lob-refresh ()
+  (interactive)
+  "add contents of 'lob-file' to 'org-babel-library-of-babel'"
+  (org-babel-lob-ingest lob-file))
+
+;;;###autoload
+(add-hook 'after-init-hook #'lob-refresh)
 
 (defun lob-file-active-p ()
   "Non-nil if the active buffer is `lob-file`"
   (string= (buffer-file-name) lob-file))
 
 ;;;; Hooks 
+(defun lob-ingest-hook () "function to run after 'org-babel-library-of-babel' is populated")
+
 (defun lob-after-save-hook ()
   "lob.org `after-save-hook` when lob-ingest-trigger = on-save
 and `lob-file-active-p` is non-nil."
   (when (and (eq lob-ingest-trigger 'on-save)
-	     ( lob-file-active-p))
+	     (lob-file-active-p))
     (org-babel-lob-ingest lob-file)))
  
 ;;;###autoload
 (add-hook 'after-save-hook #'lob-after-save-hook)
-;;;###autoload
-(add-hook 'org-load-hook (lambda () (org-babel-lob-ingest lob-file)))
 
 ;;;; Macros
 (defun babel--mode-prefix (mode)
@@ -98,33 +105,33 @@ and `lob-file-active-p` is non-nil."
       (org-trim (if (stringp result) result (format "%S" result))))))
 
 ;;;; Skeletons 
-(defcustom babel-skeleton-autoinsert nil
+(defcustom fu-magic nil
   "Non-nil means babel template skeletons will be inserted automagically using abbrevs."
   :type 'boolean
   :group 'babel
   :safe 'booleanp)
 
-(defvar babel-skeleton-alist '()
+(defvar fu-alist '()
   "Internal list of available skeletons.")
 
-(define-abbrev-table 'babel-skeleton-abbrev-table ()
+(define-abbrev-table 'fu-abbrev-table ()
   "Abbrev table for Babel skeletons"
   :case-fixed t
   ;; Allow / inside abbrevs.
   :regexp "\\(?:^\\|[^/]\\)\\<\\([[:word:]/]+\\)\\W*")
 
-(defmacro babel-skeleton-define (name doc &rest skel)
+(defmacro babel-define-skeleton (name doc &rest skel)
   "Define a Babel skeleton using NAME DOC and SKEL.
-The skeleton will be bound to babel-skeleton-NAME and added to
-`babel-skeleton-abbrev-table`"
+The skeleton will be bound to fu-NAME and added to
+`fu-abbrev-table`"
   (declare (indent 2))
   (let* ((name (symbol-name name))
-         (function-name (intern (concat "babel-skeleton-" name))))
+         (function-name (intern (concat "fu-" name))))
     `(progn
-       (define-abbrev babel-skeleton-abbrev-table
+       (define-abbrev fu-abbrev-table
          ,name "" ',function-name :system t)
-       (setq babel-skeleton-alist
-             (cons ',function-name babel-skeleton-alist))
+       (setq fu-alist
+             (cons ',function-name fu-alist))
        (define-skeleton ,function-name
          ,(or doc
               (format "Insert %s statement." name))
@@ -132,10 +139,10 @@ The skeleton will be bound to babel-skeleton-NAME and added to
 
 (defmacro babel-define-aux-skeleton (name &optional doc &rest skel)
   "Define a Babel auxiliary skeleton using NAME DOC and SKEL.
-The skeleton will be bound to babel-skeleton-NAME."
+The skeleton will be bound to fu-NAME."
   (declare (indent 2))
   (let* ((name (symbol-name name))
-         (function-name (intern (concat "babel-skeleton--" name)))
+         (function-name (intern (concat "fu--" name)))
          (msg (funcall (if (fboundp 'format-message) #'format-message #'format)
                        "Add `%s' clause? " name)))
     (when (not skel)
@@ -155,17 +162,16 @@ The skeleton will be bound to babel-skeleton-NAME."
 (babel-define-aux-skeleton then)
 (babel-define-aux-skeleton while)
 
-(define-abbrev-table 'babel-abbrev-table ()
-  "Abbrev table for Babel."
-  :parents (list babel-skeleton-abbrev-table))
+(babel-define-skeleton makefile "insert a makefile"
+  "name: " "# makefile --- " str \n ".PHONY: c" \n \n "c:;rm -rf o")
 
-(define-skeleton local-variables-section                                  
+(babel-define-skeleton local-variables
  "Insert a local variables section.  Use current comment syntax if any."  
  (completing-read "mode: " obarray                                        
-                (lambda (symbol)                                          
-                  (if (commandp symbol)                                   
-                      (string-match "-mode$" (symbol-name symbol))))      
-                t)                                                        
+                  (lambda (symbol)
+		    (if (commandp symbol)
+			(string-match
+			 "-mode$" (symbol-name symbol)))) t)                                                        
  '(save-excursion                                                         
     (if (re-search-forward page-delimiter nil t)                          
       (error "Not on last page")))                                        
@@ -185,12 +191,23 @@ The skeleton will be bound to babel-skeleton-NAME."
  resume:                                                                  
  \n)                                     
 
-(define-skeleton rust-fn
+(babel-define-skeleton rust-fn
   "Insert a Rust function."
-  nil
-  > "fn " _ " {" \n
-  > \n
-  "}" > \n)
+  nil > "fn " > _ "() {" \n \n "}")
+
+(define-abbrev-table 'babel-abbrev-table ()
+  "Abbrev table for Babel."
+  :parents (list fu-abbrev-table))
+
+;;;###autoload
+(define-derived-mode babel-keys keys "babel-keys"
+  "babel keybinds")
+
+;;;###autoload
+(define-minor-mode fu-mode "babel-skeleton mode") 
+
+;;;###autoload
+(define-derived-mode babel-mode fundamental-mode "babel")
 
 ;;;; pkg 
 (provide 'babel)

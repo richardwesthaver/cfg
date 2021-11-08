@@ -100,12 +100,6 @@ choice's name, and the rest of which is its body forms."
 	    (,(kbd "M-s w") . search-web)
 	    (,(kbd "M-s r") . rg)
 	    (,(kbd "C-c s R") . rg-dwim-current-dir)
-	    (,(kbd "C-c ? d") . apropos-documentation)
-	    (,(kbd "C-c ? k") . apropos-variable)
-	    (,(kbd "C-c ? c") . apropos-command)
-	    (,(kbd "C-c ? l") . apropos-library)
-	    (,(kbd "C-c ? u") . apropos-user-option)
-	    (,(kbd "C-c ? v") . apropos-value)
 	    ;; UI
 	    (,(kbd "C-c w b") . balance-windows)
 	    (,(kbd "C-c w i") . enlarge-window)
@@ -494,6 +488,62 @@ Interactively, NUMBER is the prefix arg."
         '(quote (("EFFORT_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
                  ("STYLE_ALL" . "habit"))))
 
+(defun org-mode-ask-effort ()
+  "Ask for an effort estimate when clocking in."
+  (unless (org-entry-get (point) "Effort")
+    (let ((effort
+           (completing-read
+            "Effort: "
+            (org-entry-get-multivalued-property (point) "Effort"))))
+      (unless (equal effort "")
+        (org-set-property "Effort" effort)))))
+
+(add-hook 'org-clock-in-prepare-hook
+          'org-mode-ask-effort)
+
+;;;###autoload
+(defun org-adjust-tags-column-reset-tags ()
+  "In org-mode buffers it will reset tag position according to
+`org-tags-column'."
+  (when (and
+         (not (string= (buffer-name) "*Remember*"))
+         (eql major-mode 'org-mode))
+    (let ((b-m-p (buffer-modified-p)))
+      (condition-case nil
+          (save-excursion
+            (goto-char (point-min))
+            (command-execute 'outline-next-visible-heading)
+            ;; disable (message) that org-set-tags generates
+            (flet ((message (&rest ignored) nil))
+		  (org-set-tags 1 t))
+            (set-buffer-modified-p b-m-p))
+        (error nil)))))
+
+;;;###autoload
+(defun org-align-all-tables ()
+  "align all tables in current buffer"
+  (interactive)
+  (org-table-map-tables 'org-table-align 'quietly))
+
+(defun org-remove-redundant-tags ()
+  "Remove redundant tags of headlines in current buffer.
+
+A tag is considered redundant if it is local to a headline and
+inherited by a parent headline."
+  (interactive)
+  (when (eq major-mode 'org-mode)
+    (save-excursion
+      (org-map-entries
+       (lambda ()
+         (let ((alltags (split-string (or (org-entry-get (point) "ALLTAGS") "") ":"))
+               local inherited tag)
+           (dolist (tag alltags)
+             (if (get-text-property 0 'inherited tag)
+                 (push tag inherited) (push tag local)))
+           (dolist (tag local)
+             (if (member tag inherited) (org-toggle-tag tag 'off)))))
+       t nil))))
+
 ;;;###autoload
 (defun org-export-headings-to-org ()
   "Export all subtrees that are *not* tagged with :noexport: to
@@ -529,6 +579,45 @@ are exported to a filename derived from the headline text."
 (defvar org-agenda-restrict)
 (defvar org-agenda-restrict-begin)
 (defvar org-agenda-restrict-end)
+
+;;;###autoload
+(defun org-agenda-reschedule-to-today ()
+  (interactive)
+  (flet ((org-read-date (&rest rest) (current-time)))
+	(call-interactively 'org-agenda-schedule)))
+
+;; Patch org-mode to use vertical splitting
+(defadvice org-prepare-agenda (after org-fix-split)
+  (toggle-window-split))
+(ad-activate 'org-prepare-agenda)
+
+(add-hook 'org-agenda-mode-hook (lambda () (hl-line-mode 1)))
+
+(defun org-agenda-log-mode-colorize-block ()
+  "Set different line spacing based on clock time duration."
+  (save-excursion
+    (let* ((colors (cl-case (alist-get 'background-mode (frame-parameters))
+                     ('light
+                      (list "#F6B1C3" "#FFFF9D" "#BEEB9F" "#ADD5F7"))
+                     ('dark
+                      (list "#aa557f" "DarkGreen" "DarkSlateGray" "DarkSlateBlue"))))
+           pos
+           duration)
+      (nconc colors colors)
+      (goto-char (point-min))
+      (while (setq pos (next-single-property-change (point) 'duration))
+        (goto-char pos)
+        (when (and (not (equal pos (point-at-eol)))
+                   (setq duration (org-get-at-bol 'duration)))
+          ;; larger duration bar height
+          (let ((line-height (if (< duration 15) 1.0 (+ 0.5 (/ duration 30))))
+                (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+            (overlay-put ov 'face `(:background ,(car colors) :foreground "black"))
+            (setq colors (cdr colors))
+            (overlay-put ov 'line-height line-height)
+            (overlay-put ov 'line-spacing (1- line-height))))))))
+
+(add-hook 'org-agenda-finalize-hook #'org-agenda-log-mode-colorize-block)
 
 ;;;###autoload
 (defun org-agenda-current-subtree-or-region (only-todos)

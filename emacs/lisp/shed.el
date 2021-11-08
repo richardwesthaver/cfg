@@ -41,21 +41,17 @@
   "shed lab directory.")
 
 ;;;; Daemon 
-(defgroup shed-daemon ()
-  "shed emacs daemon settings"
-  :group 'shed)
-
 (defcustom server-after-make-frame-hook nil
   "Hook run when the shed server creates a client frame.
 The created frame is selected when the hook is called."
   :type 'hook
   :version "27.1"
-  :group 'shed-daemon)
+  :group 'shed)
 
 (defcustom server-done-hook nil
   "Hook run when done editing a buffer for the shed server."
   :type 'hook
-  :group 'shed-daemon)
+  :group 'shed)
 
 (defvar server-process nil
   "The current server process.")
@@ -88,19 +84,6 @@ $ emacsclient -c
 (define-key special-event-map [sigusr1] 'signal-restart-server)
 
 ;;;; Process
-(defun ordinary-insertion-filter (proc string)
-  (when (buffer-live-p (process-buffer proc))
-    (with-current-buffer (process-buffer proc)
-      (let ((moving (= (point) (process-mark proc))))
-
-        (save-excursion
-          ;; Insert the text, advancing the process marker.
-          (goto-char (process-mark proc))
-          (insert string)
-          (set-marker (process-mark proc) (point)))
-        (if moving (goto-char (process-mark proc)))))))
-
-;;;; Network
 ;;;###autoload
 (defun net-check-opts ()
   ;; https://gnu.huihoo.org/emacs/24.4/emacs-lisp/Network-Options.html#Network-Options
@@ -126,14 +109,29 @@ $ emacsclient -c
    :type 'datagram
    :nowait t))
 
+(defun shed-cmd-server-sentinel (proc msg)
+  (when (string= msg "connection broken by remote peer\n")
+    (setq shed-cmd-server-clients (assq-delete-all proc shed-cmd-server-clients))
+    (shed-cmd-server-log (format "client %s has quit" proc))))
+
+;;from server.el
+;;;###autoload
+(defun shed-cmd-server-log (string &optional client)
+  "If a *shed-cmd-server* buffer exists, write STRING to it for logging purposes."
+  (if (get-buffer "*shed-cmd-server*")
+      (with-current-buffer "*shed-cmd-server*"
+        (goto-char (point-max))
+        (insert (if client (format "<%s>: " (format-network-address (process-datagram-address client))))
+                string)
+        (or (bolp) (newline)))))
+
 (defun shed-cmd-server-start nil
   "starts a shed-cmd broadcaster over udp"
   (interactive)
   (unless (process-status "shed-cmd-server")
     (make-network-process :name "shed-cmd-server" :buffer "*shed-cmd-server*" :family 'ipv4 :service shed-cmd-server-port :type 'datagram :coding 'binary :sentinel 'shed-cmd-server-sentinel :filter 'shed-cmd-server-filter :server t :broadcast t) 
     (setq shed-cmd-server-clients '())
-    )
-  )
+    (add-function :before (process-filter (get-process "shed-cmd-server")) #'shed-babel-response-filter)))
 
 (defun shed-cmd-server-stop nil
   "stop a shed-cmd-server"
@@ -141,8 +139,7 @@ $ emacsclient -c
   (while  shed-cmd-server-clients
     (delete-process (car (car shed-cmd-server-clients)))
     (setq shed-cmd-server-clients (cdr shed-cmd-server-clients)))
-  (delete-process "shed-cmd-server")
-  )
+  (delete-process "shed-cmd-server"))
 
 (defun shed-cmd-server-filter (proc string)   
   (let ((pending (assoc proc shed-cmd-server-clients))
@@ -158,26 +155,23 @@ $ emacsclient -c
       (process-send-string proc (substring message 0 index))
       (shed-cmd-server-log  (substring message 0 index) proc)
       (setq message (substring message index)))
-    (setcdr pending message))
-  )
+    (setcdr pending message)))
 
-(defun shed-cmd-server-sentinel (proc msg)
-  (when (string= msg "connection broken by remote peer\n")
-    (setq shed-cmd-server-clients (assq-delete-all proc echo-server-clients))
-    (shed-cmd-server-log (format "client %s has quit" proc))))
+(defun ordinary-insertion-filter (proc string)
+  (when (buffer-live-p (process-buffer proc))
+    (with-current-buffer (process-buffer proc)
+      (let ((moving (= (point) (process-mark proc))))
 
-;;from server.el
-;;;###autoload
-(defun shed-cmd-server-log (string &optional client)
-  "If a *shed-cmd-server* buffer exists, write STRING to it for logging purposes."
-  (if (get-buffer "*shed-cmd-server*")
-      (with-current-buffer "*shed-cmd-server*"
-        (goto-char (point-max))
-        (insert (current-time-string)
-                (if client (format " %s:" client) " ")
-                string)
-        (or (bolp) (newline)))))
+        (save-excursion
+          ;; Insert the text, advancing the process marker.
+          (goto-char (process-mark proc))
+          (insert string)
+          (set-marker (process-mark proc) (point)))
+        (if moving (goto-char (process-mark proc)))))))
 
+(defun shed-babel-response-filter (proc string)
+  (when (buffer-live-p (process-buffer proc))
+    (org-sbx string)))
 
 ;;;; Protocol
 (defun shed-proto-insert-string (string)
