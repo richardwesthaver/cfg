@@ -4,7 +4,7 @@
 [database]
 path=shed/data/mail
 [user]
-name=Richard Westhaver
+name=ellis
 primary_email=ellis@rwest.io
 other_email=demon@rwest.io;
 [new]

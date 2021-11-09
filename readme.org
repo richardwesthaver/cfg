@@ -1,43 +1,57 @@
-# Created 2021-11-07 Sun 20:59
+# Created 2021-11-08 Mon 20:01
 #+title: cfg
-- what -> my config files
-  - emacs
-  - mail
-  - shell
-  - term
-  - tmux
-  - vc
-  - virt
-  - wm
+This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
+use often.
 
-I have a relatively small set of config files, but they get a lot
-done. The sections below cover configuration of a certain category or
+| category | description                            | apps                |
+|----------+----------------------------------------+---------------------|
+| emacs    | the superior editor                    | emacs               |
+| mail     | gmail local setup                      | offlineimap notmuch |
+| shell    | shell profiles and configs             | bash zsh            |
+| term     | terminal emulation and multiplexing    | urxvt tmux kitty    |
+| vc       | version control                        | hg git              |
+| virt     | machine emulation                      | lxc qemu archiso    |
+| wm       | minimal X11 desktop config and widgets | 2bwm conky          |
+
+The top-level makefile can be used for basic local bootstrap but these
+files are generally intended to be loaded into a user environment via
+the =shed= development tool. I work out of a Linux box 99% of the
+time, but most programs are cross-platform. I don't bother with
+Windows machines, but there is a =powershell= configuration that
+provides some amenities when I need to use one. My default =emacs=
+config also works on Windows but YMMV.
+
+The sections below cover configuration of a certain category or
 individual application such as =shell= or =emacs= respectively.
 
-The top-level makefile is used for basic deployment and publishing,
-but these files are generally intended to be loaded into a user
-environment via the =shed= development tool.
 * emacs
 - what -- Configuration for the superior editor.
 - version -- 2.1
-** Abstract
-I've been using Emacs since 2016 as my primary editor. I started with
-Spacemacs, used Doom for a while, then started rolling my own
-configurations. Configuring the Emacs editor requires learning the
-Emacs language - emacs-lisp. It is a dialect of Common Lisp which can
-be a bit tricky to adapt to for non-Lisp programmers, but it is built
-specifically for Emacs.
 
-This meta covers my Emacs modules, configurations, scripts, and other
-code written in emacs-lisp. I have a main configuration which is
-thousands of lines, but lately I've been experimenting with running
-multiple smaller isolated emacs servers, with their own unique
-configs.
+I've been using Emacs since 2016 as my primary editor. I started with
+[[https://www.spacemacs.org/][Spacemacs]], used [[https://github.com/hlissner/doom-emacs][Doom]] for a while, then started rolling my own
+configurations. Configuring the Emacs editor requires learning the
+Emacs language - [[https://www.gnu.org/software/emacs/manual/html_node/elisp/][Emacs Lisp]] or =elisp=. It is a dialect of Common Lisp
+which can be a bit tricky to adapt to for non-Lisp programmers (such
+as myself), but it is built specifically for Emacs and quite powerful.
+
+This section covers my Emacs packages, configurations, and other code
+written in =elisp=.
+** default.el
+=default.el= provides a package called =default= which is always the
+first package loaded in my init file. Why? because it doesn't require
+/any/ external packages - only packages included with the vanilla GNU
+Emacs distribution. This removes the need to bootstrap a package
+manager, download remote packages, and do other things that can impact
+startup time. It also guarantees my defaults will work on any platform
+that supports vanilla Emacs.
+
+** hyde.el
 ** config.org
 The (old) main configuration file. A lot of this is getting moved to
 our =notes=. The resulting files will be refactored. Despite being
 messy, it's still very effective (see [[id:005d2a6e-d34f-45ee-a169-f26fc264c916][Screenshots]]).
-** Screenshots
+*** Screenshots
 - themes \\
   [[https://rwest.io/a/img/abyss-theme-emacs.png][https://rwest.io/a/img/abyss-theme-emacs.png]]
   [[https://rwest.io/a/img/sanityinc-theme-emacs.png][https://rwest.io/a/img/sanityinc-theme-emacs.png]]
@@ -67,14 +81,14 @@ messy, it's still very effective (see [[id:005d2a6e-d34f-45ee-a169-f26fc264c916]
 * tmux
 - what -- tmux config
 * vc
-- what -- Version Control configs
-  - mercurial
-  - git
+- mercurial
+- git
 * virt
 - what -- virtual machine and container configs
-  - lxd | lxc
+  - lxc
+  - qemu
+  - archiso
 * wm
-- what -- X11 configs
-  - 2bwm
-  - conky
-  - lemonbar
+- 2bwm
+- conky
+- lemonbar
