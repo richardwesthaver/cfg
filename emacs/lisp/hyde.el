@@ -80,7 +80,6 @@
 
 ;;;; Mail 
 (require 'notmuch)
-(require 'ol-notmuch)
 
 (defgroup hyde-mail ()
   "Hyde email system.
@@ -187,8 +186,6 @@ rather than the whole path."
 (require 'dyalog-mode)
 (require 'bqn-mode)
 (require 'k-mode)
-
-(require 'ob-async)
 
 (defgroup hd-prog ()
   "hyde programming extensions"
