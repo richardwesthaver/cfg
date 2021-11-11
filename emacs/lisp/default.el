@@ -9,7 +9,7 @@
 ;; 
 ;;; Commentary:
 ;; 
-;; This package is used to set default values for a vanilla Emacs28
+;; This package is used to set default values for a vanilla Emacs 28+
 ;; installation on any supported platform. It should be loaded before
 ;; any user-specific configuration in `init.el`. This package doesn't
 ;; have any external dependencies and isn't depended on by other
@@ -18,16 +18,37 @@
 ;;; Code:
 (eval-when-compile (require 'cl-lib))
 ;; (require 'package-x)
-;;;; Settings
+;;;; Custom
 (defgroup default nil
   "default settings")
 
-(defcustom default-website "https://rwest.io/"
+(defcustom user-website-url "https://rwest.io/"
   "default website homepage. don't forget the slash!"
   :group 'default)
 
-;;;;; data
-(defvar user-data-dir (expand-file-name "~/shed/data/emacs/"))
+(defcustom user-data-dir (expand-file-name "~/shed/data/emacs/")
+  "location to store emacs-related data"
+  :group 'default)
+
+(defcustom user-settings '()
+  "custom settings to load at startup in addition to 'default-settings'
+'default-settings'"
+  :type 'alist
+  :group 'default)
+
+(defvar default-settings '()
+  "alist of VAR . VAL pairs for defaults")
+
+(defun map-settings (settings &optional default)
+  "map an alist SETTINGS to their respective variables. DEFAULT
+will change the function used to 'set-default' as opposed to
+'set'"
+  (dolist (s settings)
+    (let ((var (car s))
+	  (val (cdr s)))
+      (if (eq default t)
+	  (set-default var val)
+	(set var val)))))
 
 ;;;; Macros
 (defmacro hook-modes (modes &rest body)
@@ -158,10 +179,11 @@ choice's name, and the rest of which is its body forms."
 	    (,(kbd "C-c e g t") . tetris)
 	    (,(kbd "C-c e g z") . zone)
 	    (,(kbd "C-c e g s") . snake)))
-;;;; Scratch
+
+;;;; Scratch Buffers
 (defcustom default-scratch-buffer-mode 'lisp-interaction-mode
-      "Default major mode for new scratch buffers"
-      :group 'default)
+  "Default major mode for new scratch buffers"
+  :group 'default)
 
 ;; Adapted from the `scratch.el' package by Ian Eure.
 (defun default-scratch-list-modes ()
@@ -241,11 +263,16 @@ buffer."
     (lisp-interaction-mode)))
 
 ;;;; VC
+(defcustom default-vc-backend "hg"
+  "the default vc-backend to use for version-control-related commands."
+  :type '(string)
+  :group 'default)
+
 ;;;; Registers 
 (defcustom registers-save-file (expand-file-name ".registers.el" user-data-dir)
   "The place where the contents of the registers should be saved."
-  :group 'default
-  :type '(file))
+  :type '(file)
+  :group 'default)
 
 (defun jump-to-register-action (register &optional delete)
   "Do what is the most sane thing to do for the thing stored in
@@ -572,7 +599,25 @@ are exported to a filename derived from the headline text."
            (set-buffer-modified-p modifiedp)))
        "-noexport" 'region-start-level))))
 
-(require 'ox-publish)
+(with-eval-after-load 'ox-publish
+  (let ((yt-iframe-format
+	 (concat "<iframe width=\"480\""
+		 " height=\"360\""
+		 " src=\"https://www.youtube.com/embed/%s\""
+		 " frameborder=\"0\""
+		 " allowfullscreen>%s</iframe>")))
+    (org-add-link-type
+     "yt"
+     (lambda (handle)
+       (browse-url
+	(concat "https://www.youtube.com/embed/"
+		handle)))
+     (lambda (path desc backend)
+       (cl-case backend
+	 (html (format yt-iframe-format
+		       path (or desc "")))
+	 (latex (format "\href{%s}{%s}"
+			path (or desc "video"))))))))
 
 (defvar org-agenda-overriding-header)
 (defvar org-agenda-sorting-strategy)
@@ -724,29 +769,11 @@ are exported to a filename derived from the headline text."
 	  ("omap" . "http://nominatim.openstreetmap.org/search?q=%s&polygon=1")
 	  ("ads" . "https://ui.adsabs.harvard.edu/search/q=%20author%3A\"%s\"")
 	  ("rw" . "https://rwest.io/%s")
+	  ("yt" . "%s")
 	  ("src" . "https://hg.rwest.io/%s")
 	  ("contrib" . "https://hg.rwest.io/contrib/%s")
 	  ("cdn" . "https://rwest.io/a/%s")))
 
-  (defvar yt-iframe-format
-    (concat "<iframe width=\"480\""
-	    " height=\"360\""
-	    " src=\"https://www.youtube.com/embed/%s\""
-	    " frameborder=\"0\""
-	    " allowfullscreen>%s</iframe>"))
-
-  (org-add-link-type
-   "yt"
-   (lambda (handle)
-     (browse-url
-      (concat "https://www.youtube.com/embed/"
-	      handle)))
-   (lambda (path desc backend)
-     (cl-case backend
-       (html (format yt-iframe-format
-		     path (or desc "")))
-       (latex (format "\href{%s}{%s}"
-		      path (or desc "video"))))))
 ;;;; Prog
 ;;;;; Comments 
 (defcustom prog-comment-keywords
@@ -1087,6 +1114,7 @@ buffer, otherwise just change the current paragraph."
 ;;;###autoload
 (defun default-setup ()
   "Setup defaults"
+  ;; enable native-compilation on supported builds
   (when (and (fboundp 'native-comp-available-p)
              (native-comp-available-p))
     (progn
@@ -1095,7 +1123,7 @@ buffer, otherwise just change the current paragraph."
       (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-data-dir))
       (setq package-native-compile t)
       ))
-  ;; default settings
+  ;; set defaults
   (setq-default package-enable-at-startup nil
 		make-backup-files nil
 		auto-save-list-file-prefix (expand-file-name "auto-save/." user-data-dir)
@@ -1130,6 +1158,10 @@ buffer, otherwise just change the current paragraph."
   (setq package-archives '(("contrib" . (expand-file-name "contrib" user-data-dir))
 			   ("local" . (expand-file-name "lisp" user-data-dir))))
 
+  ;; user settings
+  (map-settings user-settings)
+
+  ;; hooks
   (add-hook 'after-init-hook 'keys)
   (add-hook 'after-init-hook #'org-setup)
   (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
