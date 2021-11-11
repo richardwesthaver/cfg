@@ -1087,6 +1087,14 @@ buffer, otherwise just change the current paragraph."
 ;;;###autoload
 (defun default-setup ()
   "Setup defaults"
+  (when (and (fboundp 'native-comp-available-p)
+             (native-comp-available-p))
+    (progn
+      (setq native-comp-async-report-warnings-errors nil)
+      (setq comp-deferred-compilation t)
+      (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-data-dir))
+      (setq package-native-compile t)
+      ))
   ;; default settings
   (setq-default package-enable-at-startup nil
 		make-backup-files nil
