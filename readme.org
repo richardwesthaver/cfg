@@ -1,7 +1,15 @@
-# Created 2021-11-11 Thu 04:27
+# Created 2021-11-17 Wed 00:43
 #+title: cfg
 This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
 use often.
+
+#+results: 
+| key     | val                                      |
+|---------+------------------------------------------|
+| name    | nil                                      |
+| version | alpha-0.1                                |
+| rev     | [[https://hg.rwest.io/nil/rev/nil][nil]] |
+| update  | nil                                      |
 
 | category | description                            | apps                |
 |----------+----------------------------------------+---------------------|
@@ -50,7 +58,7 @@ that supports vanilla Emacs.
 ** config.org
 The (old) main configuration file. A lot of this is getting moved to
 our =notes=. The resulting files will be refactored. Despite being
-messy, it's still very effective (see [[id:005d2a6e-d34f-45ee-a169-f26fc264c916][Screenshots]]).
+messy, it's still very effective (see [[#emacs_screenshots][Screenshots]]).
 *** Screenshots
 - themes \\
   [[https://rwest.io/a/img/abyss-theme-emacs.png][https://rwest.io/a/img/abyss-theme-emacs.png]]

@@ -23,22 +23,12 @@
 ;; development system.
 ;; 
 ;;; Code:
+;;;; Custom 
 (defgroup shed nil
   "shed Emacs Modules")
 
 (defcustom shed-dir "~/shed/" "shed directory."
   :group 'shed)
-
-(defvar shed-data-dir (file-name-as-directory (expand-file-name "data" shed-dir))
-  "shed data directory.")
-(defvar shed-src-dir (file-name-as-directory (expand-file-name "src" shed-dir))
-  "shed src directory.")
-(defvar shed-stash-dir (file-name-as-directory (expand-file-name "stash" shed-dir))
-  "shed stash directory.")
-(defvar shed-store-dir (file-name-as-directory (expand-file-name "store" shed-dir))
-  "shed store directory.")
-(defvar shed-lab-dir (file-name-as-directory (expand-file-name "lab" shed-dir))
-  "shed lab directory.")
 
 (defcustom server-after-make-frame-hook nil
   "Hook run when the shed server creates a client frame.
@@ -51,6 +41,17 @@ The created frame is selected when the hook is called."
   "Hook run when done editing a buffer for the shed server."
   :type 'hook
   :group 'shed)
+
+(defvar shed-data-dir (file-name-as-directory (expand-file-name "data" shed-dir))
+  "shed data directory.")
+(defvar shed-src-dir (file-name-as-directory (expand-file-name "src" shed-dir))
+  "shed src directory.")
+(defvar shed-stash-dir (file-name-as-directory (expand-file-name "stash" shed-dir))
+  "shed stash directory.")
+(defvar shed-store-dir (file-name-as-directory (expand-file-name "store" shed-dir))
+  "shed store directory.")
+(defvar shed-lab-dir (file-name-as-directory (expand-file-name "lab" shed-dir))
+  "shed lab directory.")
 
 (defvar shed-server-process nil
   "The shed-server process handle.")
@@ -264,12 +265,6 @@ $ emacsclient -c
 	(shed-cmd-server-log (format "BABEL_CMD:%s" status) proc)))))
 
 ;;;; Shells 
-(defcustom shed-x-buffer-name "X"
-  "Default buffer name for X interpreters"
-  :type 'string
-  :group 'shed
-  :safe 'stringp)
-
 ;;;;; Python
 (setq python-shell-interpreter "shc"
       python-shell-interpreter-interactive-arg "x py"

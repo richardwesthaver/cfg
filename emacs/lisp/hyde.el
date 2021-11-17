@@ -141,11 +141,17 @@ env: USER_EMAIL"
 
 (setq elfeed-db-directory "~/shed/data/emacs/elfeed")
 
-;;;; Music 
+;;;; EMMS
 (require 'emms-setup)
+(require 'emms-mark)
+(require 'emms-player-mpd)
+
 (emms-all)
 (emms-default-players)
-(setq emms-source-file-default-directory "~/shed/stash/music")
+(setq emms-player-mpd-server-name "localhost")
+(setq emms-player-mpd-server-port "6600")
+(setq emms-source-file-default-directory "~/shed/stash/music/lib")
+(setq emms-playlist-default-major-mode 'emms-mark-mode)
 
 (defun track-title-from-file-name (file)
   "For using with EMMS description functions. Extracts the track
@@ -217,6 +223,7 @@ rather than the whole path."
 	lsp-ui-doc-show-with-cursor nil
 	lsp-ui-doc-show-with-mouse t)
 
+  (setq bqn-mode-map-prefix "C-M-")
   (setq python-indent-offset 2
 	python-guess-indent nil
 	ron-indent-offset 2)

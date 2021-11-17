@@ -36,8 +36,14 @@
   :type 'alist
   :group 'default)
 
-(defvar default-settings '()
-  "alist of VAR . VAL pairs for defaults")
+(defcustom default-settings '()
+  "alist of VAR . VAL pairs for 'map-settings'. Used in
+'default-setup' with the optional arg 'DEFAULT' enabled.
+
+This should only be used for trivial settings that you use with
+all of your Emacs configs."
+  :type 'alist
+  :group 'default)
 
 (defun map-settings (settings &optional default)
   "map an alist SETTINGS to their respective variables. DEFAULT
@@ -116,7 +122,7 @@ choice's name, and the rest of which is its body forms."
 	    ;; Shell
 	    (,(kbd "C-c t x") . async-shell-command)
 	    (,(kbd "C-c t t") . vterm)
-	    (,(kbd "C-c t T") . eshell)
+	    (,(kbd "C-c t ") . eshell)
 	    ;; Search
 	    (,(kbd "M-s w") . search-web)
 	    (,(kbd "M-s r") . rg)
@@ -599,26 +605,6 @@ are exported to a filename derived from the headline text."
            (set-buffer-modified-p modifiedp)))
        "-noexport" 'region-start-level))))
 
-(with-eval-after-load 'ox-publish
-  (let ((yt-iframe-format
-	 (concat "<iframe width=\"480\""
-		 " height=\"360\""
-		 " src=\"https://www.youtube.com/embed/%s\""
-		 " frameborder=\"0\""
-		 " allowfullscreen>%s</iframe>")))
-    (org-add-link-type
-     "yt"
-     (lambda (handle)
-       (browse-url
-	(concat "https://www.youtube.com/embed/"
-		handle)))
-     (lambda (path desc backend)
-       (cl-case backend
-	 (html (format yt-iframe-format
-		       path (or desc "")))
-	 (latex (format "\href{%s}{%s}"
-			path (or desc "video"))))))))
-
 (defvar org-agenda-overriding-header)
 (defvar org-agenda-sorting-strategy)
 (defvar org-agenda-restrict)
@@ -714,7 +700,13 @@ are exported to a filename derived from the headline text."
 	org-outline-path-complete-in-steps nil)
   ;; todos
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "RESEARCH(r)" "HACK(h)" "FIXME(f)" "REVIEW(R)" "NOTE(n)" "GOTO(g)" "NEXT(N)" "|" "DONE(d@)" "KILL(k@)")))
+	'((type "TODO(t!)" "|" "DONE(D!)")
+	  (sequence "FIND(q)" "|" "FOUND(!)")
+	  (sequence "RESEARCH(r)" "RECORD(e)" "|" "NOTED(!)")
+	  (sequence "OUTLINE(o)" "DRAFT(d)" "|" "PUBLISHED(P!)")
+	  (sequence "FIX(f)" "REVIEW(w)" "IMPL(i)" "TEST(t)" "|" "FIXED(F!)")
+	  (type "GOTO(g)" "HACK(h)" "NOTE(n)" "CODE(c)" "LINK(l)" "|")
+	  (sequence "|" "CANCELED(C@)")))
   ;; captures
   (setq org-capture-templates
 	'(("t" "task" entry (file "t.org") "* %?\n- %U" :prepend t)
@@ -727,10 +719,9 @@ are exported to a filename derived from the headline text."
 	  ("m" "meta" item (file+function "~/shed/src/meta/m.org" org-ask-location) "%?")
 	  ("n" "note" item (file+function "~/shed/src/meta/n.org" org-ask-location) "%?")))
 
-  ;; crypto
+  ;; org-crypt
   (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance '("crypt")
-	org-crypt-key nil)
+  (setq org-tags-exclude-from-inheritance '("crypt"))
 
   ;; src
   (setq org-structure-template-alist
@@ -749,9 +740,10 @@ are exported to a filename derived from the headline text."
   (setq org-confirm-babel-evaluate nil)
 
   (setq org-src-fontify-natively t
-	org-src-tabs-act-natively t
 	org-src-tabs-act-natively t)
 
+  ;; archive
+  (setq org-archive-location "basement::")
   ;; refile
   (setq org-refile-use-cache t
 	org-refile-allow-creating-parent-nodes 'confirm
@@ -760,7 +752,7 @@ are exported to a filename derived from the headline text."
 
   ;; publish
   (setq org-preview-latex-image-directory "~/.config/emacs/.cache/ltximg"
-	org-latex-image-default-width "8cm"))
+	org-latex-image-default-width "8cm")
 
   ;; links
   (setq org-link-abbrev-alist
@@ -769,17 +761,17 @@ are exported to a filename derived from the headline text."
 	  ("omap" . "http://nominatim.openstreetmap.org/search?q=%s&polygon=1")
 	  ("ads" . "https://ui.adsabs.harvard.edu/search/q=%20author%3A\"%s\"")
 	  ("rw" . "https://rwest.io/%s")
-	  ("yt" . "%s")
+	  ("yt" . "https://youtube.com/watch?v=%s")
 	  ("src" . "https://hg.rwest.io/%s")
 	  ("contrib" . "https://hg.rwest.io/contrib/%s")
-	  ("cdn" . "https://rwest.io/a/%s")))
+	  ("cdn" . "https://rwest.io/a/%s"))))
 
 ;;;; Prog
 ;;;;; Comments 
 (defcustom prog-comment-keywords
-  '("TODO" "NOTE" "REVIEW" "FIXME" "HACK" "RESEARCH")
-  "List of strings with comment keywords."
-  :group 'default)
+        '("TODO" "REVIEW" "FIX" "HACK" "RESEARCH")
+        "List of strings with comment keywords."
+        :group 'default)
 
 (defcustom prog-comment-timestamp-format-concise "%F"
   "Specifier for date in `prog-comment-timestamp-keyword'.
@@ -1154,6 +1146,7 @@ buffer, otherwise just change the current paragraph."
 		eww-search-prefix "https://duckduckgo.com/html?q="
 		url-privacy-level '(email agent cookies lastloc))
 
+  (setq org-agenda-files '("~/shed/stash/org/"))
   ;; init custom package archive
   (setq package-archives '(("contrib" . (expand-file-name "contrib" user-data-dir))
 			   ("local" . (expand-file-name "lisp" user-data-dir))))

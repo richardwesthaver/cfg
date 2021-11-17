@@ -1,2 +1,3 @@
+xrdb .Xresources &
+xset r rate 200 40 &
 exec 2bwm
-xset r rate 200 50
