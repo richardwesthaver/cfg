@@ -44,6 +44,11 @@
 
 (add-hook 'after-init-hook (lambda () (load-theme current-theme)))
 
+;;;; Async 
+(require 'async)
+(require 'ob-async)
+(autoload 'dired-async-mode "dired-async.el" nil t)
+(dired-async-mode 1)
 ;;;; Completion 
 (require 'marginalia)
 (require 'orderless)
