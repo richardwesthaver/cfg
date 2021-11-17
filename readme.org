@@ -1,4 +1,4 @@
-# Created 2021-11-17 Wed 03:41
+# Created 2021-11-17 Wed 03:44
 #+title: cfg
 This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
 use often.
