@@ -1,11 +1,9 @@
-# Created 2021-11-17 Wed 06:21
+# Created 2021-11-17 Wed 20:41
 #+title: cfg
 This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
 use often.
 
 #+results: 
-| key     | val                                      |
-|---------+------------------------------------------|
 | name    | nil                                      |
 | version | alpha-0.1                                |
 | rev     | [[https://hg.rwest.io/nil/rev/nil][nil]] |
