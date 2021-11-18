@@ -1,4 +1,4 @@
-# Created 2021-11-17 Wed 23:02
+# Created 2021-11-17 Wed 23:20
 #+title: cfg
 This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
 use often.
@@ -6,7 +6,7 @@ use often.
 #+results: 
 | name    | [[https://rwest.io/m#cfg][cfg]]                                                                                 |
 | version | alpha-0.1                                                                                                       |
-| vc      | [[https://hg.rwest.io/cfg/rev/6e80eca6a680][6e80eca6a680]], [[https://github.com/richardwesthaver/cfg][github]] |
+| vc      | [[https://hg.rwest.io/cfg/rev/a77086664041][a77086664041]], [[https://github.com/richardwesthaver/cfg][github]] |
 | updated | 22 hours ago                                                                                                    |
 
 | category | description                            | apps                |
