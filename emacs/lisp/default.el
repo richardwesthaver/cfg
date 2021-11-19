@@ -120,9 +120,9 @@ choice's name, and the rest of which is its body forms."
 	    (,(kbd "C-c v v") . vc-next-action)
 	    (,(kbd "C-c v .") . vc-dir)
 	    ;; Shell
-	    (,(kbd "C-c t x") . async-shell-command)
-	    (,(kbd "C-c t t") . vterm)
-	    (,(kbd "C-c t ") . eshell)
+	    (,(kbd "C-c x x") . async-shell-command)
+	    (,(kbd "C-c x SPC") . eshell)
+	    (,(kbd "C-c t T") . vterm)
 	    ;; Search
 	    (,(kbd "M-s w") . search-web)
 	    (,(kbd "M-s r") . rg)
