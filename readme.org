@@ -1,14 +1,18 @@
-# Created 2021-11-18 Thu 00:54
+# Created 2021-11-19 Fri 04:26
 #+title: cfg
 This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
 use often.
 
 #+results: 
-| name    | [[https://rwest.io/m#cfg][cfg]]                                                                                    |
-| version | alpha-0.1                                                                                                          |
-| vc      | [[https://hg.rwest.io/cfg/rev/1a841ba8c7ae][39:1a841ba8c7ae]], [[https://github.com/richardwesthaver/cfg][github]] |
-| updated | 23 hours ago                                                                                                       |
-| count   | 101 lines, 530 words                                                                                               |
+| info    |                                                                                                                     |
+|---------+---------------------------------------------------------------------------------------------------------------------|
+| name    | [[https://rwest.io/m#cfg][cfg]]                                                                                     |
+| version | alpha-0.1                                                                                                           |
+| vc      | [[https://hg.rwest.io/cfg/rev/8649c6171529][41+:8649c6171529]], [[https://github.com/richardwesthaver/cfg][github]] |
+| updated | 26 hours ago                                                                                                        |
+| lines   | 6929 = λ:1971 #:445 _:259                                                                                           |
+| langs   | (CHeader Elisp Lua Makefile Org Yaml)                                                                               |
+|---------+---------------------------------------------------------------------------------------------------------------------|
 
 | category | description                            | apps                |
 |----------+----------------------------------------+---------------------|
@@ -55,46 +59,31 @@ that supports vanilla Emacs.
 
 ** hyde.el
 ** config.org
-The (old) main configuration file. A lot of this is getting moved to
-our =notes=. The resulting files will be refactored. Despite being
-messy, it's still very effective (see [[#emacs_screenshots][Screenshots]]).
-*** Screenshots
-- themes \\
-  [[https://rwest.io/a/img/abyss-theme-emacs.png][https://rwest.io/a/img/abyss-theme-emacs.png]]
-  [[https://rwest.io/a/img/sanityinc-theme-emacs.png][https://rwest.io/a/img/sanityinc-theme-emacs.png]]
-  [[https://rwest.io/a/img/wheatgrass-theme-emacs.png][https://rwest.io/a/img/wheatgrass-theme-emacs.png]]
-  [[https://rwest.io/a/img/leuven-theme-emacs.png][https://rwest.io/a/img/leuven-theme-emacs.png]]
-- org-mode \\
-  [[https://rwest.io/a/img/olivetti-emacs.png][https://rwest.io/a/img/olivetti-emacs.png]]
-- programming \\
-  [[https://rwest.io/a/img/rust-development-emacs.png][https://rwest.io/a/img/rust-development-emacs.png]]
-  [[https://rwest.io/a/img/rust-tests-emacs.png][https://rwest.io/a/img/rust-tests-emacs.png]]
-- email \\
-  [[https://rwest.io/a/img/email-emacs.png][https://rwest.io/a/img/email-emacs.png]]
-- eww \\
-  The Emacs Web Wowser
-  [[https://rwest.io/a/img/eww-emacs.png][https://rwest.io/a/img/eww-emacs.png]]
+[[https://rwest.io/a/img/abyss-theme-emacs.png][https://rwest.io/a/img/abyss-theme-emacs.png]]
+[[https://rwest.io/a/img/sanityinc-theme-emacs.png][https://rwest.io/a/img/sanityinc-theme-emacs.png]]
+[[https://rwest.io/a/img/wheatgrass-theme-emacs.png][https://rwest.io/a/img/wheatgrass-theme-emacs.png]]
+[[https://rwest.io/a/img/leuven-theme-emacs.png][https://rwest.io/a/img/leuven-theme-emacs.png]]
+[[https://rwest.io/a/img/olivetti-emacs.png][https://rwest.io/a/img/olivetti-emacs.png]]
+[[https://rwest.io/a/img/rust-development-emacs.png][https://rwest.io/a/img/rust-development-emacs.png]]
+[[https://rwest.io/a/img/rust-tests-emacs.png][https://rwest.io/a/img/rust-tests-emacs.png]]
+[[https://rwest.io/a/img/email-emacs.png][https://rwest.io/a/img/email-emacs.png]]
+[[https://rwest.io/a/img/eww-emacs.png][https://rwest.io/a/img/eww-emacs.png]]
 * mail
-- what -- mail configs
-  - notmuch
-  - offlineimap
+- notmuch
+- offlineimap
 * shell
-- what -- shell configs
-  - bash
-  - zsh
+- bash
+- zsh
 * term
-- what -- terminal emulator configs
-  - kitty
+- kitty
 * tmux
-- what -- tmux config
 * vc
 - mercurial
 - git
 * virt
-- what -- virtual machine and container configs
-  - lxc
-  - qemu
-  - archiso
+- lxc
+- qemu
+- archiso
 * wm
 - 2bwm
 - conky

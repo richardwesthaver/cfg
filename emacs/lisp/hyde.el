@@ -197,6 +197,8 @@ rather than the whole path."
 (require 'dyalog-mode)
 (require 'bqn-mode)
 (require 'k-mode)
+(require 'jq-mode)
+(require 'ob-jq)
 
 (defgroup hd-prog ()
   "hyde programming extensions"
@@ -242,6 +244,7 @@ rather than the whole path."
 			       (eshell . t)
 			       (sed . t)
 			       (awk . t)
+			       (jq . t)
 			       (dot . t)
 			       (js . t)
 			       (C . t)
