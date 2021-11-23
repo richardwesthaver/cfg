@@ -156,7 +156,7 @@ env: USER_EMAIL"
 (setq emms-player-mpd-server-name "localhost")
 (setq emms-player-mpd-server-port "6600")
 (setq emms-source-file-default-directory "~/shed/stash/music/lib")
-(setq emms-playlist-default-major-mode 'emms-mark-mode)
+;; (setq emms-playlist-default-major-mode 'emms-mark-mode)
 
 (defun track-title-from-file-name (file)
   "For using with EMMS description functions. Extracts the track
@@ -228,7 +228,8 @@ rather than the whole path."
   ;; lsp config
   (setq lsp-ui-doc-position "bottom"
 	lsp-ui-doc-show-with-cursor nil
-	lsp-ui-doc-show-with-mouse t)
+	lsp-ui-doc-show-with-mouse t
+	lsp-keymap-prefix "C-c M-l")
 
   (setq bqn-mode-map-prefix "C-M-")
   (setq python-indent-offset 2
@@ -250,6 +251,8 @@ rather than the whole path."
 			       (C . t)
 			       (python . t)
 			       (lua . t)))
+  (add-hook 'c-mode-hook 'lsp)
+  (add-hook 'c++-mode-hook 'lsp)
   ;; auto-mode-alist setup
   (dolist (m hd-prog-auto-mode-alist)
     (push m auto-mode-alist))

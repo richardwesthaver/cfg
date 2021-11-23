@@ -702,8 +702,8 @@ are exported to a filename derived from the headline text."
   (setq org-todo-keywords
 	'((type "TODO(t!)" "|" "DONE(D!)")
 	  (sequence "FIND(q)" "|" "FOUND(!)")
-	  (sequence "RESEARCH(r)" "RECORD(e)" "|" "NOTED(!)")
-	  (sequence "OUTLINE(o)" "DRAFT(d)" "|" "PUBLISHED(P!)")
+	  (sequence "RESEARCH(r)" "RECORD(e)" "|" "DONE(!)")
+	  (sequence "OUTLINE(o)" "RESEARCH(r)" "DRAFT(d)" "REVIEW(w)" "|" "DONE(D!)")
 	  (sequence "FIX(f)" "REVIEW(w)" "IMPL(i)" "TEST(t)" "|" "FIXED(F!)")
 	  (type "GOTO(g)" "HACK(h)" "NOTE(n)" "CODE(c)" "LINK(l)" "|")
 	  (sequence "|" "CANCELED(C@)")))
@@ -715,13 +715,16 @@ are exported to a filename derived from the headline text."
 	  ("3" "current-task-region" plain (clock) "%i" :immediate-finish t :empty-lines 1)
 	  ("4" "current-task-kill" plain (clock) "%c" :immediate-finish t :empty-lines 1)
 	  ("l" "log" item (file+headline "i.org" "log") "%U %?" :prepend t)
-	  ("s" "secret" table-line (file+headline "i.org" "secret") "| %^{key} | %^{val} |" :immediate-finish t)
-	  ("m" "meta" item (file+function "~/shed/src/meta/m.org" org-ask-location) "%?")
-	  ("n" "note" item (file+function "~/shed/src/meta/n.org" org-ask-location) "%?")))
+	  ("s" "secret" table-line (file+headline "i.org" "secret") "| %^{key} | %^{val} |" :immediate-finish t :kill-buffer t)
+	  ("n" "note" item (file+function "~/shed/src/meta/n.org" org-ask-location) "%?")
+	  ("i" "ramble" entry (file "t.org") "* OUTLINE %?\n:notes:\n:end:\n- _outline_ [/]\n  - [ ] \n  - [ ] \n- _refs_" :prepend t)
+	  ("b" "bug" entry (file "t.org") "* FIX %?\n- _review_\n- _fix_\n- _test_" :prepend t)
+	  ("r" "research" entry (file "t.org") "* RESEARCH %?\n:notes:\n:end:\n- _refs_" :prepend t)))
 
+  (setq org-footnote-section nil)
   ;; org-crypt
   (org-crypt-use-before-save-magic)
-  (setq org-tags-exclude-from-inheritance '("crypt"))
+  (setq org-tags-exclude-from-inheritance '("crypt" "k"))
 
   ;; src
   (setq org-structure-template-alist
@@ -1037,9 +1040,19 @@ With optional N, search in the Nth line from point."
              (setq result (concat (file-name-as-directory result) dir)))
     result))
 
+(defun kill-ring-car-espace-quotes ()
+  "Escape doublequotes in car of kill-ring "
+  (interactive)
+  (with-temp-buffer
+    (insert (car kill-ring))
+    (goto-char (point-min))
+    (while (search-forward "\"" nil t 1)
+      (replace-match "\\\\\""))
+    (kill-new (buffer-substring-no-properties (point-min) (point-max)))))
+
 ;;;;; Formatting 
 (defvar flex-fill-paragraph-column nil
-      "Last fill column used in command `flex-fill-paragraph'.")
+  "Last fill column used in command `flex-fill-paragraph'.")
 
 ;;;###autoload
 (defun flex-fill-paragraph (&optional fewer-lines unfill)
@@ -1106,6 +1119,10 @@ buffer, otherwise just change the current paragraph."
 ;;;###autoload
 (defun default-setup ()
   "Setup defaults"
+  (require 'package)
+  (package-initialize)
+  (setq package-archives '(("contrib" . (expand-file-name "lisp/contrib/" user-data-dir))))
+  
   ;; enable native-compilation on supported builds
   (when (and (fboundp 'native-comp-available-p)
              (native-comp-available-p))
@@ -1116,8 +1133,7 @@ buffer, otherwise just change the current paragraph."
       (setq package-native-compile t)
       ))
   ;; set defaults
-  (setq-default package-enable-at-startup nil
-		make-backup-files nil
+  (setq-default make-backup-files nil
 		auto-save-list-file-prefix (expand-file-name "auto-save/." user-data-dir)
 		tramp-auto-save-directory (expand-file-name "auto-save/tramp/" user-data-dir)
 		confirm-kill-emacs nil
@@ -1147,9 +1163,6 @@ buffer, otherwise just change the current paragraph."
 		url-privacy-level '(email agent cookies lastloc))
 
   (setq org-agenda-files '("~/shed/stash/org/"))
-  ;; init custom package archive
-  (setq package-archives '(("contrib" . (expand-file-name "contrib" user-data-dir))
-			   ("local" . (expand-file-name "lisp" user-data-dir))))
 
   ;; user settings
   (map-settings user-settings)
@@ -1158,8 +1171,7 @@ buffer, otherwise just change the current paragraph."
   (add-hook 'after-init-hook 'keys)
   (add-hook 'after-init-hook #'org-setup)
   (add-hook 'term-exec-hook 'set-no-process-query-on-exit)
-  (add-hook 'shell-mode-hook 'set-no-process-query-on-exit)
-  (package-initialize))
+  (add-hook 'shell-mode-hook 'set-no-process-query-on-exit))
 ;;;; provide
 (provide 'default)
 ;;; default.el ends here

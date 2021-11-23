@@ -1,28 +1,43 @@
-# Created 2021-11-19 Fri 04:51
+# Created 2021-11-23 Tue 04:46
 #+title: cfg
 This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
 use often.
 
 #+results: 
-| info    |                                                                                                                     |
 |---------+---------------------------------------------------------------------------------------------------------------------|
 | name    | [[https://rwest.io/m#cfg][cfg]]                                                                                     |
 | version | alpha-0.1                                                                                                           |
-| vc      | [[https://hg.rwest.io/cfg/rev/8649c6171529][41+:8649c6171529]], [[https://github.com/richardwesthaver/cfg][github]] |
-| updated | 26 hours ago                                                                                                        |
-| lines   | 6929 = λ:1971 #:445 _:259                                                                                           |
+| vc      | [[https://hg.rwest.io/cfg/rev/ae5302ec1e29][45+:ae5302ec1e29]], [[https://github.com/richardwesthaver/cfg][github]] |
+| updated | 3 days ago                                                                                                          |
+| lines   | 2704 = λ:1997 #:445 _:262                                                                                           |
 | langs   | (CHeader Elisp Lua Makefile Org Yaml)                                                                               |
 |---------+---------------------------------------------------------------------------------------------------------------------|
+#+results: 
+| includes | (readme.org emacs/ mail/ shell/ term/ vc/ virt/ wm/) |
 
-| category | description                            | apps                |
-|----------+----------------------------------------+---------------------|
-| emacs    | the superior editor                    | emacs               |
-| mail     | gmail local setup                      | offlineimap notmuch |
-| shell    | shell profiles and configs             | bash zsh            |
-| term     | terminal emulation and multiplexing    | urxvt tmux kitty    |
-| vc       | version control                        | hg git              |
-| virt     | machine emulation                      | lxc qemu archiso    |
-| wm       | minimal X11 desktop config and widgets | 2bwm conky          |
+#+results: 
+| file       | size |          updated |
+|------------+------+------------------|
+| emacs      |   64 | 2021-11-21-21:57 |
+| mail       |   30 | 2021-11-08-16:55 |
+| readme.org | 5.3K | 2021-11-23-03:21 |
+| shell      |   86 | 2021-10-23-19:12 |
+| term       |   28 | 2021-11-08-16:45 |
+| vc         |    8 | 2021-10-23-00:10 |
+| virt       |   20 | 2021-11-08-16:22 |
+| wm         |   50 | 2021-11-13-00:47 |
+
+
+| category              | description                            | apps                |
+|-----------------------+----------------------------------------+---------------------|
+| [[#cfg:emacs][emacs]] | the superior editor                    | emacs               |
+| [[#cfg:mail][mail]]   | gmail local setup                      | offlineimap notmuch |
+| [[#cfg:shell][shell]] | shell profiles and configs             | bash zsh            |
+| [[#cfg:term][term]]   | terminal emulation and multiplexing    | urxvt tmux kitty    |
+| [[#cfg:vc][vc]]       | version control                        | hg git              |
+| [[#cfg:virt][virt]]   | machine emulation                      | lxc qemu archiso    |
+| [[#cfg:wm][wm]]       | minimal X11 desktop config and widgets | 2bwm conky          |
+
 
 The top-level makefile can be used for basic local bootstrap but these
 files are generally intended to be loaded into a user environment via

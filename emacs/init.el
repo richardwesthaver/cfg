@@ -10,7 +10,6 @@
 (require 'babel)
 (setq package-user-dir (expand-file-name "~/shed/data/emacs/elpa"))
 ;;;; config
-(progn
-  (push '(org-directory . "~/shed/stash/org") user-settings)
-  (default-setup)
-  (hd-prog-setup))
+(push '(org-directory . "~/shed/stash/org") user-settings)
+(default-setup)
+(hd-prog-setup)
