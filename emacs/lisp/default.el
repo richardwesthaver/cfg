@@ -715,7 +715,7 @@ are exported to a filename derived from the headline text."
 	  ("3" "current-task-region" plain (clock) "%i" :immediate-finish t :empty-lines 1)
 	  ("4" "current-task-kill" plain (clock) "%c" :immediate-finish t :empty-lines 1)
 	  ("l" "log" item (file+headline "i.org" "log") "%U %?" :prepend t)
-	  ("s" "secret" table-line (file+headline "i.org" "secret") "| %^{key} | %^{val} |" :immediate-finish t :kill-buffer t)
+	  ("s" "secret" table-line (file+headline "i.org" "krypt") "| %^{key} | %^{val} |" :immediate-finish t :kill-buffer t)
 	  ("n" "note" item (file+function "~/shed/src/meta/n.org" org-ask-location) "%?")
 	  ("i" "ramble" entry (file "t.org") "* OUTLINE %?\n:notes:\n:end:\n- _outline_ [/]\n  - [ ] \n  - [ ] \n- _refs_" :prepend t)
 	  ("b" "bug" entry (file "t.org") "* FIX %?\n- _review_\n- _fix_\n- _test_" :prepend t)
