@@ -1,17 +1,17 @@
-# Created 2021-11-24 Wed 03:12
+# Created 2021-11-28 Sun 03:47
 #+title: cfg
 This repo contains [[https://wiki.archlinux.org/title/Dotfiles][dotfiles]] for various programs and applications I
 use often.
 
 #+results: 
-|---------+---------------------------------------------------------------------------------------------------------------------|
-| name    | [[https://rwest.io/m#cfg][cfg]]                                                                                     |
-| version | alpha-0.1                                                                                                           |
-| vc      | [[https://hg.rwest.io/cfg/rev/ea417aa40e40][46+:ea417aa40e40]], [[https://github.com/richardwesthaver/cfg][github]] |
-| updated | 62 minutes ago                                                                                                      |
-| lines   | 2707 = λ:1998 #:445 _:264                                                                                           |
-| langs   | (CHeader Elisp Lua Makefile Org Yaml)                                                                               |
-|---------+---------------------------------------------------------------------------------------------------------------------|
+|---------+--------------------------------------------------------------------------------------------------------------------|
+| name    | [[https://rwest.io/m#cfg][cfg]]                                                                                    |
+| version | alpha-0.1                                                                                                          |
+| vc      | [[https://hg.rwest.io/cfg/rev/0ea5c6ee8739][47:0ea5c6ee8739]], [[https://github.com/richardwesthaver/cfg][github]] |
+| updated | 4 days ago                                                                                                         |
+| lines   | 2707 = λ:1998 #:445 _:264                                                                                          |
+| langs   | (CHeader Elisp Lua Makefile Org Yaml)                                                                              |
+|---------+--------------------------------------------------------------------------------------------------------------------|
 #+results: 
 | includes | (readme.org emacs/ mail/ shell/ term/ vc/ virt/ wm/) |
 
@@ -20,7 +20,7 @@ use often.
 |------------+------+------------------|
 | emacs      |   64 | 2021-11-21-21:57 |
 | mail       |   30 | 2021-11-08-16:55 |
-| readme.org | 5.2K | 2021-11-23-04:46 |
+| readme.org | 5.2K | 2021-11-24-03:12 |
 | shell      |   86 | 2021-10-23-19:12 |
 | term       |   28 | 2021-11-08-16:45 |
 | vc         |    8 | 2021-10-23-00:10 |
