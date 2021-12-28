@@ -1,0 +1,6 @@
+root:x:0:root
+adm:x:4:ellis
+wheel:x:10:ellis
+uucp:x:14:ellis
+ellis:x:1000:
+demon:x:1001:

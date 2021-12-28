@@ -1,0 +1,35 @@
+# baseline
+base
+linux
+syslinux
+
+# core
+openssh
+mkinitcpio
+mkinitcpio-archiso
+memtest86+
+edk2-shell
+zsh
+connman
+iwd
+tmux
+git
+zstd
+
+# operator
+autossh
+sshfs
+socat
+python
+rustup
+nodejs
+emacs
+wireguard-tools
+mtools
+usbutils
+smartmontools
+sudo
+make
+# ak47
+usbmuxd
+tcpdump

@@ -187,12 +187,23 @@ rather than the whole path."
 
 ;;;; Programming 
 (require 'lsp-mode)
-(require 'lsp-ui)
+(require 'lsp-lens)
 (require 'lsp-headerline)
-
+(require 'lsp-completion)
+(require 'lsp-diagnostics)
+(require 'lsp-protocol)
+(require 'lsp-modeline)
+(require 'lsp-iedit)
+(require 'lsp-semantic-tokens)
+(require 'lsp-ido)
+(require 'lsp-dired)
+(require 'lsp-icons)
+(require 'lsp-ui)
+(require 'lsp-treemacs)
 (require 'ron-mode)
 (require 'toml-mode)
 (require 'yaml-mode)
+(require 'meson-mode)
 
 (require 'dyalog-mode)
 (require 'bqn-mode)
@@ -200,6 +211,7 @@ rather than the whole path."
 (require 'jq-mode)
 (require 'ob-jq)
 
+(require 'csound-mode)
 (defgroup hd-prog ()
   "hyde programming extensions"
   :group 'hyde)
@@ -229,8 +241,7 @@ rather than the whole path."
   (setq lsp-ui-doc-position "bottom"
 	lsp-ui-doc-show-with-cursor nil
 	lsp-ui-doc-show-with-mouse t
-	lsp-keymap-prefix "C-c M-l")
-
+	lsp-keymap-prefix "C-c `")
   (setq bqn-mode-map-prefix "C-M-")
   (setq python-indent-offset 2
 	python-guess-indent nil
@@ -250,9 +261,10 @@ rather than the whole path."
 			       (js . t)
 			       (C . t)
 			       (python . t)
-			       (lua . t)))
-  (add-hook 'c-mode-hook 'lsp)
-  (add-hook 'c++-mode-hook 'lsp)
+			       (lua . t)
+			       (lilypond . t)))
+  ;; (add-hook 'c-mode-hook 'lsp-mode)
+  ;; (add-hook 'c++-mode-hook 'lsp-mode)
   ;; auto-mode-alist setup
   (dolist (m hd-prog-auto-mode-alist)
     (push m auto-mode-alist))

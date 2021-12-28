@@ -1,0 +1,71 @@
+# baseline
+base
+linux
+syslinux
+linux-firmware
+
+# core
+openssh
+memtest86+
+edk2-shell
+zsh
+connman
+iwd
+tmux
+git
+zstd
+emacs
+
+# bootstrap
+arch-install-scripts
+mkinitcpio
+mkinitcpio-archiso
+grub
+
+# basics
+# sshfs
+
+# operator
+# autossh
+# socat
+# python
+# rustup
+# nodejs
+# nginx
+# tor
+# wireguard-tools
+# nmap
+# mtools
+# usbutils
+# smartmontools
+# ncmpcpp
+# man-pages
+# man-db
+# qemu
+# make
+# cmake
+# clang
+# llvm
+# lld
+# lldb
+# mpd
+
+# gui
+# xorg-xinit
+# xorg-server
+# xorg-xmodmap
+# xorg-xauth
+# xorg-xrandr
+# xorg-xhost
+# xorg-xclock
+# xf86-video-nouveau
+# xf86-input-libinput
+# xf86-input-synaptics
+# chromium
+# kitty
+# awesome
+# nitrokey-app
+
+# ak47
+#usbmuxd
+#tcpdump
