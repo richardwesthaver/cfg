@@ -29,7 +29,6 @@
 ;; 
 ;;; Code:
 ;;;; Themes 
-;; (setq custom-theme-directory "~/shed/data/emacs/themes")
 (defvar current-theme 'modus-operandi "the current theme")
 
 (defun next-theme (theme)
@@ -112,8 +111,6 @@ env: USER_EMAIL"
       message-send-mail-function 'message-smtpmail-send-it
       smtpmail-debug-info t
       message-default-mail-headers "Cc: \nBcc: \n"
-      message-auto-save-directory "~/shed/data/mail/draft"
-      message-directory "~/shed/data/mail/sent"
       message-kill-buffer-on-exit t)
 
 ;;;###autoload
@@ -143,8 +140,6 @@ env: USER_EMAIL"
     ("http://pages.cs.wisc.edu/~psilord/blog/rssfeed.rss" blog)
     ("http://www.anticscomic.com/?feed=rss2" comic)
     ("http://feeds.feedburner.com/blogspot/TPQSS" blog dev)))
-
-(setq elfeed-db-directory "~/shed/data/emacs/elfeed")
 
 ;;;; EMMS
 (require 'emms-setup)
@@ -200,6 +195,7 @@ rather than the whole path."
 (require 'lsp-icons)
 (require 'lsp-ui)
 (require 'lsp-treemacs)
+(require 'company)
 (require 'ron-mode)
 (require 'toml-mode)
 (require 'yaml-mode)
@@ -276,7 +272,6 @@ rather than the whole path."
 
 ;;;;; Shells 
 (require 'esh-opt)
-(require 'vterm)
 (require 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
@@ -296,12 +291,12 @@ rather than the whole path."
 
 ;;;;; Rust 
 (require 'rustic)
-(require 'lsp-rust)
 (setq rustic-indent-offset 2
       rustic-babel-format-src-block t
       rustic-babel-display-compilation-buffer t)
 (setq lsp-rust-analyzer-cargo-watch-command "clippy")
-(remove-hook 'rustic-mode-hook 'flycheck-mode)
+(setq lsp-rust-server 'rust-analyzer)
+;; (remove-hook 'rustic-mode-hook 'flycheck-mode)
 
 ;;;; Demos 
 (require 'frameshot)

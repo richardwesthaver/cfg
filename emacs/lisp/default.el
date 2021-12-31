@@ -26,7 +26,7 @@
   "default website homepage. don't forget the slash!"
   :group 'default)
 
-(defcustom user-data-dir (expand-file-name "~/shed/data/emacs/")
+(defcustom user-data-dir (expand-file-name "~/.emacs.d")
   "location to store emacs-related data"
   :group 'default)
 
@@ -122,7 +122,6 @@ choice's name, and the rest of which is its body forms."
 	    ;; Shell
 	    (,(kbd "C-c x x") . async-shell-command)
 	    (,(kbd "C-c x SPC") . eshell)
-	    (,(kbd "C-c t T") . vterm)
 	    ;; Search
 	    (,(kbd "M-s w") . search-web)
 	    (,(kbd "M-s r") . rg)
@@ -1121,7 +1120,7 @@ buffer, otherwise just change the current paragraph."
   "Setup defaults"
   (require 'package)
   (package-initialize)
-  (setq package-archives '(("contrib" . (expand-file-name "lisp/contrib/" user-data-dir))))
+  (setq package-archives '(("contrib" . (expand-file-name "lisp/elpa" user-data-dir))))
   
   ;; enable native-compilation on supported builds
   (when (and (fboundp 'native-comp-available-p)

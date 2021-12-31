@@ -66,14 +66,14 @@ Each element is a process.")
 (defvar shed-cmd-server-clients '() 
   "alist where KEY is a client process and VALUE is the string")
 
-;;;; Protocol
-(setq header-spec
+;;;; Bindat
+(setq shed-header-bindat-spec
       '((dest-ip   ip)
-        (src-ip    ip)
         (dest-port u16)
+        (src-ip    ip)
         (src-port  u16)))
 
-(setq data-spec
+(setq shed-body-bindat-spec
       '((type      u8)
         (opcode    u8)
         (length    u16)  ; network byte order
@@ -81,7 +81,7 @@ Each element is a process.")
         (data      vec (length))
         (align     4)))
 
-(setq packet-spec
+(setq shed-packet-bindat-spec
       '((header    struct header-spec)
         (counters  vec 2 u32r)   ; little endian order
         (items     u8)
@@ -89,10 +89,18 @@ Each element is a process.")
         (item      repeat (items)
                    (struct data-spec))))
 
-(defun shed-proto-insert-string (string)
+(defun shed-insert-string (string)
   (insert string 0 (make-string (- 3 (% (length string) 4)) 0)))
 
-(defun shed-proto-insert-float32 (value)
+(defun shed-insert-int32 (value)
+  (let (bytes)
+    (dotimes (i 4)
+      (push (% value 256) bytes)
+      (setq value (/ value 256)))
+    (dolist (byte bytes)
+      (insert byte))))
+
+(defun shed-insert-float32 (value)
   (let (s (e 0) f)
     (cond
      ((string= (format "%f" value) (format "%f" -0.0))
@@ -118,13 +126,38 @@ Each element is a process.")
 	    (lsh (logand f #XFF00) -8)
 	    (logand f #XFF))))
 
-(defun shed-proto-insert-int32 (value)
-  (let (bytes)
+(defun shed-read-string ()
+  (let ((pos (point)) string)
+    (while (not (= (following-char) 0)) (forward-char 1))
+    (setq string (buffer-substring-no-properties pos (point)))
+    (forward-char (- 4 (% (length string) 4)))
+    string))
+
+(defun shed-read-int32 ()
+  (let ((value 0))
     (dotimes (i 4)
-      (push (% value 256) bytes)
-      (setq value (/ value 256)))
-    (dolist (byte bytes)
-      (insert byte))))
+      (setq value (logior (* value 256) (following-char)))
+      (forward-char 1))
+    value))
+
+(defun shed-read-float32 ()
+  (let ((s (lsh (logand (following-char) #X80) -7))
+	(e (+ (lsh (logand (following-char) #X7F) 1)
+	      (lsh (logand (progn (forward-char) (following-char)) #X80) -7)))
+	(f (+ (lsh (logand (following-char) #X7F) 16)
+	      (lsh (progn (forward-char) (following-char)) 8)
+	      (prog1 (progn (forward-char) (following-char)) (forward-char)))))
+    (cond
+     ((and (= e 0) (= f 0))
+      (* 0.0 (expt -1 s))
+      ((and (= e 255) (or (= f (1- (expt 2 23))) (= f 0)))
+       (* 1.0e+INF (expt -1 s)))
+      ((and (= e 255) (not (or (= f 0) (= f (1- (expt 2 23))))))
+       0.0e+NaN)
+      (t
+       (* (expt -1 s)
+	  (expt 2.0 (- e 127))
+	  (1+ (/ f (expt 2.0 23)))))))))
 
 ;;;; Network
 ;;;###autoload
@@ -133,36 +166,12 @@ Each element is a process.")
   ;; non-blocking
   (featurep 'make-network-process '(:nowait t))
   ;; UNIX socket
-  ;(featurep 'make-network-process '(:family local))
+					;(featurep 'make-network-process '(:family local))
   ;; UDP
   (featurep 'make-network-process '(:type datagram)))
 
-;;;; Signals
-(defun server-shutdown ()
-  "Save buffers, Quit, and Shutdown (kill) server"
-  (interactive)
-  (save-some-buffers)
-  (kill-emacs))
-
-(defun signal-restart-server ()
-  "Handler for SIGUSR1 signal, to (re)start an emacs server.
-
-Can be tested from within emacs with:
-  (signal-process (emacs-pid) 'sigusr1)
-
-or from the command line with:
-$ kill -USR1 <emacs-pid>
-$ emacsclient -c
-"
-  (interactive)
-  (server-force-delete)
-  (server-start)
-  )
-
-(define-key special-event-map [sigusr1] 'signal-restart-server)
-
 ;;;; Process
-(defun shed-cmd-make-client (host port)
+(defun shed-make-client (host port)
   (make-network-process
    :name "shed-cmd-client"
    :coding 'binary
@@ -235,7 +244,7 @@ $ emacsclient -c
     (setcdr pending message)))
 
 (defun shed-cmd-packet-filter (proc string)
-  "process-filter for decoding 'shed-proto' packets"
+  "process-filter for decoding 'shed-packet-bindat-spec'"
   (bindat-unpack packet-spec string))
 
 (defun ordinary-insertion-filter (proc string)
@@ -263,6 +272,31 @@ $ emacsclient -c
       (progn
 	(setq status "ERR")
 	(shed-cmd-server-log (format "BABEL_CMD:%s" status) proc)))))
+
+;;;; Signals
+(defun server-shutdown ()
+  "Save buffers, Quit, and Shutdown (kill) server"
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs))
+
+(defun signal-restart-server ()
+  "Handler for SIGUSR1 signal, to (re)start an emacs server.
+
+Can be tested from within emacs with:
+  (signal-process (emacs-pid) 'sigusr1)
+
+or from the command line with:
+$ kill -USR1 <emacs-pid>
+$ emacsclient -c
+"
+  (interactive)
+  (server-force-delete)
+  (server-start)
+  )
+
+(define-key special-event-map [sigusr1] 'signal-restart-server)
+
 
 ;;;; Shells 
 ;;;;; Python

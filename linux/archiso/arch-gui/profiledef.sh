@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
-iso_name="zorg"
-iso_label="ZORG_$(date +%Y%m)"
-iso_publisher="demon"
-iso_application="demon"
+iso_name="zor_bootstrap"
+iso_label="ZOR_$(date +%Y%m)"
+iso_publisher="ellis"
+iso_application="ellis"
 iso_version="$(date +%Y.%m.%d)"
 install_dir="arch"
 bootmodes=('bios.syslinux.mbr' 'bios.syslinux.eltorito' 'uefi-x64.systemd-boot.esp' 'uefi-x64.systemd-boot.eltorito')
