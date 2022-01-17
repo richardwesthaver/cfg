@@ -23,9 +23,13 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'package-selected-packages 'esh-opt t)
+
+(mapcar #'(lambda (x)
+	    (add-to-list 'package-selected-packages x t))
+	'(esh-opt eshell-prompt-extras))
 
 (require 'esh-opt)
+(require 'eshell-prompt-extras)
 
 (with-eval-after-load "esh-opt"
   (autoload 'epe-theme-lambda "eshell-prompt-extras")

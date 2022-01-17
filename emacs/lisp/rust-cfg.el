@@ -23,13 +23,14 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'package-selected-packages 'rust-mode t)
+(add-to-list 'package-selected-packages '(rust-mode eglot) t)
 
 (require 'rust-mode)
 
 (setq rust-indent-offset 2)
-(setq lsp-rust-analyzer-cargo-watch-command "clippy")
-(setq lsp-rust-server 'rust-analyzer)
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
 
 (provide 'rust-cfg)
 ;;; rust-cfg.el ends here

@@ -1,0 +1,1 @@
+do shell script "/usr/local/bin/emacs &> /dev/null &"

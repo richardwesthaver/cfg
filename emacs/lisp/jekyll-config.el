@@ -29,8 +29,7 @@
 
 (setq package-selected-packages '(async exec-path-from-shell))
 
-(with-eval-after-load 'exec-path-from-shell
-(exec-path-from-shell-initialize))
+(exec-path-from-shell-initialize)
 
 ;;; UI
 (require 'theme-cfg)

@@ -142,6 +142,7 @@
 		completion-ignore-case t
 		;; org
 		org-agenda-files '(org-directory)
+		epa-pinentry-mode 'loopback
 		shr-use-colors nil
 		shr-use-fonts nil
 		shr-max-image-proportion 0.6
