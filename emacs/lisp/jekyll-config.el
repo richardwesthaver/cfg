@@ -27,14 +27,42 @@
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
 
-(setq package-selected-packages '(async exec-path-from-shell
-lispy company geiser geiser-guile notmuch avy swiper rg))
+(setq package-selected-packages '(async exec-path-from-shell))
 
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
+(with-eval-after-load 'exec-path-from-shell
+(exec-path-from-shell-initialize))
 
 ;;; UI
 (require 'theme-cfg)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+;;; Org
+(require 'org-cfg)
+(require 'lob-cfg)
+
+;;; Prog
+(require 'prog-cfg)
+(require 'rust-cfg)
+(require 'elisp-cfg)
+(require 'python-cfg)
+
+;;; Term
+(require 'shell-cfg)
+(require 'eshell-cfg)
+
+;;; Tools
+(require 'search-cfg)
+(require 'completion-cfg)
+(require 'scratch-cfg)
+(require 'register-cfg)
+(require 'macro-cfg)
+(require 'skel-cfg)
+(require 'vc-cfg)
+;;; Apps
+(require 'emms-cfg)
+(require 'elfeed-cfg)
+(require 'mail-cfg)
 
 (provide 'jekyll-config)
 ;;; jekyll-custom.el ends here

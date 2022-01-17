@@ -141,7 +141,7 @@
 		gc-cons-percentage 0.6
 		completion-ignore-case t
 		;; org
-		org-agenda-files (list org-directory)
+		org-agenda-files '(org-directory)
 		shr-use-colors nil
 		shr-use-fonts nil
 		shr-max-image-proportion 0.6

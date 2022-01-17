@@ -23,11 +23,34 @@
 ;; 
 
 ;;; Code:
+;;; Helpers
+(defvar default-line-regexp-alist
+  '((empty . "[\s\t]*$")
+    (indent . "^[\s\t]+")
+    (non-empty . "^.+$")
+    (list . "^\\([\s\t#*+]+\\|[0-9]+[^\s]?[).]+\\)")
+    (heading . "^[=-]+"))
+  "Alist of regexp types used by `default-line-regexp-p'.")
+
+(defun default-line-regexp-p (type &optional n)
+  "Test for TYPE on line.
+TYPE is the car of a cons cell in
+`default-line-regexp-alist'.  It matches a regular
+expression.
+With optional N, search in the Nth line from point."
+  (save-excursion
+    (goto-char (point-at-bol))
+    (and (not (bobp))
+         (or (beginning-of-line n) t)
+         (save-match-data
+           (looking-at
+            (alist-get type default-line-regexp-alist))))))
+
 ;;; Comments 
 (defcustom prog-comment-keywords
-        '("TODO" "REVIEW" "FIX" "HACK" "RESEARCH")
-        "List of strings with comment keywords."
-        :group 'default)
+  '("TODO" "REVIEW" "FIX" "HACK" "RESEARCH")
+  "List of strings with comment keywords."
+  :group 'default)
 
 (defcustom prog-comment-timestamp-format-concise "%F"
   "Specifier for date in `prog-comment-timestamp-keyword'.
@@ -138,7 +161,9 @@ specified by `prog-comment-timestamp-format-verbose'."
       (comment-indent t)
       (insert (concat " " string))))))
 
+
 (setq hexl-bits 8)	 
+
 ;; auto-indent newlines
 (electric-indent-mode)
 

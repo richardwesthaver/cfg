@@ -23,6 +23,8 @@
 ;; 
 
 ;;; Code:
+(add-to-list 'package-selected-packages 'elfeed t)
+
 (require 'elfeed)
 
 (setq elfeed-feeds

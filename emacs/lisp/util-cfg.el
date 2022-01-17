@@ -43,28 +43,6 @@
    "\\)")
   "Regular expression that matches URLs.")
 
-(defvar default-line-regexp-alist
-  '((empty . "[\s\t]*$")
-    (indent . "^[\s\t]+")
-    (non-empty . "^.+$")
-    (list . "^\\([\s\t#*+]+\\|[0-9]+[^\s]?[).]+\\)")
-    (heading . "^[=-]+"))
-  "Alist of regexp types used by `default-line-regexp-p'.")
-
-(defun default-line-regexp-p (type &optional n)
-  "Test for TYPE on line.
-TYPE is the car of a cons cell in
-`default-line-regexp-alist'.  It matches a regular
-expression.
-With optional N, search in the Nth line from point."
-  (save-excursion
-    (goto-char (point-at-bol))
-    (and (not (bobp))
-         (or (beginning-of-line n) t)
-         (save-match-data
-           (looking-at
-            (alist-get type default-line-regexp-alist))))))
-
 ;;; Macros
 (defmacro hook-modes (modes &rest body)
   (declare (indent 1))
