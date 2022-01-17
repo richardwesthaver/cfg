@@ -1,9 +1,9 @@
-;;; init.el --- Global Init File                     -*- lexical-binding: t; -*-
+;;; jekyll-custom.el --- Jekyll Config -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience
+;; Author: Richard Westhaver <ellis@Richards-MBP.frontier.com>
+;; Keywords: convenience, internal
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,20 +23,19 @@
 ;; 
 
 ;;; Code:
-(defvar elisp-dir "~/.emacs.d/lisp")
-(add-to-list 'load-path elisp-dir)
+(require 'theme-cfg)
 
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key "\C-c l" #'org-store-link)
-(global-set-key "\C-c L" #'org-insert-link-global)
-(global-set-key "\C-c o" #'org-open-at-point-global)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			 ("melpa" . "https://melpa.org/packages/")))
 
-(require 'default)
+(setq package-selected-packages '(async
+				  lispy
+				  company
+				  geiser geiser-guile
+				  notmuch
+				  avy swiper rg
+	      ))
 
-(cond
- ((string= (system-name) "zor") (require 'zor-config))
- ((string= (system-name) "jekyll") (require 'jekyll-config))
- ((string= (system-name) "hyde") (require 'hyde-config)))
-
-(provide 'init)
-;;; init.el ends here
+(provide 'jekyll-config)
+;;; jekyll-custom.el ends here

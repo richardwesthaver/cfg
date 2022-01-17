@@ -28,21 +28,6 @@
 ;; mercurial, etc).
 ;; 
 ;;; Code:
-;;;; Themes 
-(defvar current-theme 'modus-operandi "the current theme")
-
-(defun next-theme (theme)
-  (load-theme theme)
-  (setq current-theme theme))
-
-;;;###autoload
-(defun toggle-theme ()
-  (interactive)
-  (cond ((eq current-theme 'modus-operandi) (next-theme 'modus-vivendi))
-	((eq current-theme 'modus-vivendi) (next-theme 'modus-operandi))))
-
-(add-hook 'after-init-hook (lambda () (load-theme current-theme)))
-
 ;;;; Async 
 (require 'async)
 (require 'ob-async)
@@ -81,46 +66,6 @@
 (global-set-key (kbd "C-c s a") 'avy-goto-word-1)
 (global-set-key (kbd "C-c s e") 'avy-goto-word-0)
 (global-set-key (kbd "\C-s") 'swiper)
-
-;;;; Mail 
-(require 'notmuch)
-
-(defgroup hyde-mail ()
-  "Hyde email system.
-requires: notmuch, offlineimap
-env: USER_EMAIL"
-  :group 'hyde)
-
-(defcustom hyde-mail-dir ()
-  "Root path for mail-related data"
-  :group 'hyde-mail)
-
-(defcustom hyde-mailbox-alist ()
-  "list of initialized mailboxes to query"
-  :group 'hyde-mail)
-
-(define-key keys-map (kbd "C-c e m") #'notmuch)
-;; setup the mail address and use name
-(setq mail-user-agent 'message-user-agent)
-
-(setq user-mail-address "ellis@rwest.io"
-      user-full-name "ellis")
-
-;; smtp config
-(setq smtpmail-smtp-server "smtp.gmail.com"
-      message-send-mail-function 'message-smtpmail-send-it
-      smtpmail-debug-info t
-      message-default-mail-headers "Cc: \nBcc: \n"
-      message-kill-buffer-on-exit t)
-
-;;;###autoload
-(defun notmuch-exec-offlineimap ()
-  "execute offlineimap command and tag new mail with notmuch"
-  (interactive)
-  (start-process-shell-command "offlineimap"
-                               "*offlineimap*"
-                               "offlineimap -o")
-  (notmuch-refresh-all-buffers))
 
 ;;;; Org 
 (require 'org-web-tools)

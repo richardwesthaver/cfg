@@ -1,9 +1,9 @@
-;;; init.el --- Global Init File                     -*- lexical-binding: t; -*-
+;;; zor-custom.el --- Zor Config -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience
+;; Author: Richard Westhaver <ellis@Richards-MBP.frontier.com>
+;; Keywords: extensions, tools
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,23 +20,23 @@
 
 ;;; Commentary:
 
-;; 
+;; Archliinux BTW
 
 ;;; Code:
-(defvar elisp-dir "~/.emacs.d/lisp")
-(add-to-list 'load-path elisp-dir)
 
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key "\C-c l" #'org-store-link)
-(global-set-key "\C-c L" #'org-insert-link-global)
-(global-set-key "\C-c o" #'org-open-at-point-global)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			 ("melpa" . "https://melpa.org/packages/")))
+(setq package-selected-packages
+      '(async lispy company ))
 
-(require 'default)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
 
-(cond
- ((string= (system-name) "zor") (require 'zor-config))
- ((string= (system-name) "jekyll") (require 'jekyll-config))
- ((string= (system-name) "hyde") (require 'hyde-config)))
+(require 'lob-cfg)
+;;;###autoload
+(add-hook 'after-init-hook #'lob-refresh)
 
-(provide 'init)
-;;; init.el ends here
+(provide 'zor-config)
+;; zor-custom.el ends here

@@ -30,12 +30,6 @@
 ;;; Code:
 (setq frame-inhibit-implied-resize t)
 
-(unless (eq system-type 'darwin)
-  (menu-bar-mode -1))
-
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
 (setq inhibit-startup-echo-area-message "ellis"
       inhibit-startup-screen t
       inhibit-startup-buffer-menu nil
@@ -43,5 +37,12 @@
       use-dialog-box t
       use-file-dialog nil)
 
-(setq native-comp-async-report-warnings-errors 'silent)
+;; enable native-compilation on supported builds
+(when (and (fboundp 'native-comp-available-p)
+           (native-comp-available-p))
+  (progn
+    (setq native-comp-async-report-warnings-errors nil)
+    (setq comp-deferred-compilation t)
+    (setq package-native-compile t)))
+
 ;;; early-init.el ends here

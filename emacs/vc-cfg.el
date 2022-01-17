@@ -1,9 +1,9 @@
-;;; jekyll-custom.el --- Jekyll init                 -*- lexical-binding: t; -*-
+;;; vc-cfg.el --- VC Configuration -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2022  Richard Westhaver
 
-;; Author: Richard Westhaver <ellis@Richards-MBP.frontier.com>
-;; Keywords: convenience, internal
+;; Author: Richard Westhaver <ellis@jekyll>
+;; Keywords: vc
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,6 +23,10 @@
 ;; 
 
 ;;; Code:
+(defcustom default-vc-backend "hg"
+  "the default vc-backend to use for version-control-related commands."
+  :type '(string)
+  :group 'default)
 
-(provide 'jekyll-custom)
-;;; jekyll-custom.el ends here
+(provide 'vc-cfg)
+;;; vc-cfg.el ends here

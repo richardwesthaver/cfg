@@ -1,9 +1,9 @@
-;;; zor-custom.el --- Zor init                       -*- lexical-binding: t; -*-
+;;; hyde-config.el --- Hyde Configuration -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2022  Richard Westhaver
 
-;; Author: Richard Westhaver <ellis@Richards-MBP.frontier.com>
-;; Keywords: extensions, tools
+;; Author: Richard Westhaver <ellis@jekyll>
+;; Keywords: hardware
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,24 +20,11 @@
 
 ;;; Commentary:
 
-;; Archliinux BTW
+;; 
 
 ;;; Code:
-(require 'hyde)
-(require 'shed)
-(require 'babel)
 
-(defvar lisp-data "~/.emacs.d/lisp")
 
-(add-to-list 'load-path lisp-data)
 
-(let ((default-directory (concat  lisp-data "/elpa/")))
-  (normal-top-level-add-subdirs-to-load-path))
-
-(push '(org-directory . "~/s/org") user-settings)
-(setq package-native-compile t)
-
-(hd-prog-setup)
-
-(provide 'zor-custom)
-;; zor-custom.el ends here
+(provide 'hyde-config)
+;;; hyde-config.el ends here

@@ -1,8 +1,8 @@
-;;; init.el --- Global Init File                     -*- lexical-binding: t; -*-
+;;; macro-cfg.el --- Macro Config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2022  Richard Westhaver
 
-;; Author: Richard Westhaver <ellis@rwest.io>
+;; Author: Richard Westhaver <ellis@jekyll>
 ;; Keywords: convenience
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -23,20 +23,17 @@
 ;; 
 
 ;;; Code:
-(defvar elisp-dir "~/.emacs.d/lisp")
-(add-to-list 'load-path elisp-dir)
+(defun toggle-macro-recording ()
+  (interactive)
+  (if defining-kbd-macro
+      (end-kbd-macro)
+    (start-kbd-macro nil)))
 
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key "\C-c l" #'org-store-link)
-(global-set-key "\C-c L" #'org-insert-link-global)
-(global-set-key "\C-c o" #'org-open-at-point-global)
+(defun play-macro-if-not-playing ()
+  (interactive)
+  (if defining-kbd-macro
+      (end-kbd-macro)
+    (call-last-kbd-macro)))
 
-(require 'default)
-
-(cond
- ((string= (system-name) "zor") (require 'zor-config))
- ((string= (system-name) "jekyll") (require 'jekyll-config))
- ((string= (system-name) "hyde") (require 'hyde-config)))
-
-(provide 'init)
-;;; init.el ends here
+(provide 'macro-cfg)
+;;; macro-cfg.el ends here
