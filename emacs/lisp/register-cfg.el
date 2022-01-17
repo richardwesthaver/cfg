@@ -23,7 +23,7 @@
 ;; 
 
 ;;; Code:
-(defcustom registers-save-file (expand-file-name ".registers.el" user-data-dir)
+(defcustom registers-save-file (expand-file-name "registers" user-emacs-directory)
   "The place where the contents of the registers should be saved."
   :type '(file)
   :group 'default)

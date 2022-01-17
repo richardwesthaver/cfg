@@ -23,6 +23,7 @@
 ;; 
 
 ;;; Code:
+(add-to-list 'package-selected-packages 'emms)
 (require 'emms-setup)
 (require 'emms-mark)
 (require 'emms-player-mpd)

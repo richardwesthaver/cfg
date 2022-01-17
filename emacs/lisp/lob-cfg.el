@@ -44,13 +44,11 @@
   ;; populate org-babel
 (org-babel-do-load-languages
  ;; TODO 2021-10-24: bqn, apl, k
- 'org-babel-load-languages '((rust . t)
-			     (shell . t)
+ 'org-babel-load-languages '((shell . t)
 			     (emacs-lisp . t)
 			     (eshell . t)
 			     (sed . t)
 			     (awk . t)
-			     (jq . t)
 			     (dot . t)
 			     (js . t)
 			     (C . t)
