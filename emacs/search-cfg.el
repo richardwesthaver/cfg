@@ -1,9 +1,9 @@
-;;; jekyll-custom.el --- Jekyll Configuration -*- lexical-binding: t; -*-
+;;; search-cfg.el --- Search Config -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience, internal
+;; Author: ellis <ellis@rwest.io>
+;; Keywords: matching
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,18 +23,16 @@
 ;; 
 
 ;;; Code:
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ("melpa" . "https://melpa.org/packages/")))
+(mapcar #'(lambda (x)
+	    (add-to-list 'package-selected-packages x t))
+	'(avy swiper rg))
 
-(setq package-selected-packages '(async exec-path-from-shell
-lispy company geiser geiser-guile notmuch avy swiper rg))
+(global-set-key (kbd "C-'") 'avy-goto-char)
+(global-set-key (kbd "C-\"") 'avy-goto-char-2)
+(global-set-key (kbd "C-c s l") 'avy-goto-line)
+(global-set-key (kbd "C-c s a") 'avy-goto-word-1)
+(global-set-key (kbd "C-c s e") 'avy-goto-word-0)
+(global-set-key (kbd "\C-s") 'swiper)
 
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
-
-;;; UI
-(require 'theme-cfg)
-
-(provide 'jekyll-config)
-;;; jekyll-custom.el ends here
+(provide 'search-cfg)
+;;; search-cfg.el ends here

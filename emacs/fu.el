@@ -1,8 +1,8 @@
 ;;; fu.el --- Fu-mode -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Richard Westhaver
+;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@jekyll>
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: languages, convenience, abbrev
 
 ;; This program is free software; you can redistribute it and/or modify

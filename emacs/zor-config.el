@@ -1,8 +1,8 @@
-;;; zor-custom.el --- Zor Config -*- lexical-binding: t; -*-
+;;; zor-config.el --- Zor Configuration -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@Richards-MBP.frontier.com>
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: extensions, tools
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -27,16 +27,43 @@
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
-(setq package-selected-packages
-      '(async lispy company ))
 
+(setq package-selected-packages '(async csound-mode ob-jq bqn-mode dyalog-mode k-mode csound-mode))
+
+;;; UI
+(require 'theme-cfg)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (menu-bar-mode -1)
 
+;;; Org
+(require 'org-cfg)
+(add-hook 'after-init-hook #'org-setup)
+
 (require 'lob-cfg)
 ;;;###autoload
 (add-hook 'after-init-hook #'lob-refresh)
+
+;;; Prog
+(require 'prog-cfg)
+(require 'rust-cfg)
+(require 'elisp-cfg)
+;;; Tools
+(require 'fmt-cfg)
+(require 'search-cfg)
+(dired-async-mode 1)
+
+;;; Misc
+(require 'register-cfg)
+(require 'macro-cfg)
+(require 'mail-cfg)
+(require 'shell-cfg)
+(require 'skel-cfg)
+(require 'scratch-cfg)
+(require 'vc-cfg)
+(require 'emms-cfg)
+(require 'eshell-cfg)
+(setq emms-source-file-default-directory "/srv/shed/stash/music/lib")
 
 (provide 'zor-config)
 ;; zor-custom.el ends here

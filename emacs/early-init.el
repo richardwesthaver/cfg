@@ -1,8 +1,8 @@
 ;;; early-init.el --- pre-init configuration -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2021  ellis
+;; Copyright (C) 2021  anticorp
 
-;; Author: ellis
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: local
 
 ;; This program is free software; you can redistribute it and/or modify

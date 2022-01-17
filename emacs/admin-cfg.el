@@ -23,6 +23,8 @@
 ;; 
 
 ;;; Code:
+;; (require 'package-x)
+(require 'elpa-mirror)
 
 (provide 'admin-cfg)
 ;;; admin-cfg.el ends here

@@ -1,8 +1,8 @@
 ;;; prog-cfg.el --- Prog Config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Richard Westhaver
+;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@jekyll>
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -137,6 +137,10 @@ specified by `prog-comment-timestamp-format-verbose'."
      (t
       (comment-indent t)
       (insert (concat " " string))))))
+
+(setq hexl-bits 8)	 
+;; auto-indent newlines
+(electric-indent-mode)
 
 (provide 'prog-cfg)
 ;;; prog-cfg.el ends here

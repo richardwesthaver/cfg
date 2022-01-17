@@ -1,9 +1,9 @@
-;;; jekyll-custom.el --- Jekyll Configuration -*- lexical-binding: t; -*-
+;;; rust-cfg.el --- Rust Config -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience, internal
+;; Author: ellis <ellis@rwest.io>
+;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,18 +23,13 @@
 ;; 
 
 ;;; Code:
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ("melpa" . "https://melpa.org/packages/")))
+(add-to-list 'package-selected-packages 'rust-mode t)
 
-(setq package-selected-packages '(async exec-path-from-shell
-lispy company geiser geiser-guile notmuch avy swiper rg))
+(require 'rust-mode)
 
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
+(setq rust-indent-offset 2)
+(setq lsp-rust-analyzer-cargo-watch-command "clippy")
+(setq lsp-rust-server 'rust-analyzer)
 
-;;; UI
-(require 'theme-cfg)
-
-(provide 'jekyll-config)
-;;; jekyll-custom.el ends here
+(provide 'rust-cfg)
+;;; rust-cfg.el ends here

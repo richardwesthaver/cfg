@@ -1,8 +1,8 @@
 ;;; lob-cfg.el --- LoB Config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Richard Westhaver
+;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@jekyll>
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -23,24 +23,40 @@
 ;; 
 
 ;;; Code:
-(defgroup babel ()
-  "Meta-programming extensions"
-  :group 'shed)
+(defgroup lob nil
+  "Meta-programming extensions")
 
 (defcustom lob-file-name "~/org/lob.org"
   "Filename for an org-mode buffer containing the Library of Babel"
   :type 'string
-  :group 'babel
+  :group 'lob
   :safe 'stringp)
 
 (defcustom lob-ingest-trigger 'on-save
   "Control when 'org-babel-lob-ingest` will be executed."
   :type '(choice (const :tag "Ingest on `lob-file` save." on-save)
 		 (const :tag "Trigger lob-ingest manually." nil))
-  :group 'babel)
+  :group 'lob)
 
 (defvar lob-file (expand-file-name lob-file-name)
   "library-of-babel file, usually 'lob.org'")
+
+  ;; populate org-babel
+(org-babel-do-load-languages
+ ;; TODO 2021-10-24: bqn, apl, k
+ 'org-babel-load-languages '((rust . t)
+			     (shell . t)
+			     (emacs-lisp . t)
+			     (eshell . t)
+			     (sed . t)
+			     (awk . t)
+			     (jq . t)
+			     (dot . t)
+			     (js . t)
+			     (C . t)
+			     (python . t)
+			     (lua . t)
+			     (lilypond . t)))
 
 ;;;###autoload
 (defun lob-refresh ()
@@ -53,7 +69,8 @@
   (string= (buffer-file-name) lob-file))
 
 ;;; Hooks 
-(defun lob-ingest-hook () "function to run after 'org-babel-library-of-babel' is populated")
+(defun lob-ingest-hook ()
+  "function to run after 'org-babel-library-of-babel' is populated")
 
 (defun lob-after-save-hook ()
   "lob.org `after-save-hook` when lob-ingest-trigger = on-save
@@ -62,12 +79,12 @@ and `lob-file-active-p` is non-nil."
 	     (lob-file-active-p))
     (org-babel-lob-ingest lob-file)))
 
-(defun babel--mode-prefix (mode)
+(defun lob--mode-prefix (mode)
   "Return MODE name or empty string in nil."
   (if mode
       (string-trim-right (symbol-name mode) (rx "mode" eos))
     ""))
-(defun babel--abbrev-table (mode)
+(defun lob--abbrev-table (mode)
   "Get abbrev table for MODE or `global-abbrev-table' if nil."
   (if mode
       (derived-mode-abbrev-table-name mode)

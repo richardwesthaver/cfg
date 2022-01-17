@@ -1,9 +1,9 @@
-;;; jekyll-custom.el --- Jekyll Configuration -*- lexical-binding: t; -*-
+;;; python-cfg.el --- Python Config -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience, internal
+;; Author: ellis <ellis@rwest.io>
+;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,18 +23,8 @@
 ;; 
 
 ;;; Code:
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ("melpa" . "https://melpa.org/packages/")))
+(setq python-indent-offset 2
+      python-guess-indent nil)
 
-(setq package-selected-packages '(async exec-path-from-shell
-lispy company geiser geiser-guile notmuch avy swiper rg))
-
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
-
-;;; UI
-(require 'theme-cfg)
-
-(provide 'jekyll-config)
-;;; jekyll-custom.el ends here
+(provide 'python-cfg)
+;;; python-cfg.el ends here

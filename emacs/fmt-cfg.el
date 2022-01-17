@@ -1,8 +1,8 @@
 ;;; fmt-cfg.el --- Fmt Config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Richard Westhaver
+;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@jekyll>
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: convenience
 
 ;; This program is free software; you can redistribute it and/or modify

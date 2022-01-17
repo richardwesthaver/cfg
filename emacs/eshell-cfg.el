@@ -1,9 +1,9 @@
-;;; jekyll-custom.el --- Jekyll Configuration -*- lexical-binding: t; -*-
+;;; eshell-cfg.el --- Eshell Config                  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience, internal
+;; Author: ellis <ellis@rwest.io>
+;; Keywords: terminals
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,18 +23,14 @@
 ;; 
 
 ;;; Code:
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ("melpa" . "https://melpa.org/packages/")))
+(add-to-list 'package-selected-packages 'esh-opt t)
 
-(setq package-selected-packages '(async exec-path-from-shell
-lispy company geiser geiser-guile notmuch avy swiper rg))
+(require 'esh-opt)
 
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
+(with-eval-after-load "esh-opt"
+  (autoload 'epe-theme-lambda "eshell-prompt-extras")
+  (setq eshell-highlight-prompt nil
+        eshell-prompt-function 'epe-theme-lambda))
 
-;;; UI
-(require 'theme-cfg)
-
-(provide 'jekyll-config)
-;;; jekyll-custom.el ends here
+(provide 'eshell-cfg)
+;;; eshell-cfg.el ends here

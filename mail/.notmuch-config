@@ -2,15 +2,19 @@
 #
 # For more information about notmuch, see https://notmuchmail.org
 [database]
-path=shed/data/mail
+path=mail
+
 [user]
 name=ellis
 primary_email=ellis@rwest.io
-other_email=demon@rwest.io;
+other_email=demon@rwest.io
+
 [new]
 tags=new
 ignore=
+
 [search]
 exclude_tags=del;spam;
+
 [maildir]
 synchronize_flags=true

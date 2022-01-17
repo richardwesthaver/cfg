@@ -1,8 +1,8 @@
 ;;; org-cfg.el --- Org Config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Richard Westhaver
+;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@jekyll>
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: wp
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,8 @@
 ;; 
 
 ;;; Code:
+(add-to-list 'package-selected-packages 'org-web-tools t)
+
 (defun org-keys ()
   "add default keys to 'org-mode-map'"
   (define-key org-mode-map (kbd "C-c M-i") 'org-toggle-inline-images)

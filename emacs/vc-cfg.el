@@ -1,8 +1,8 @@
 ;;; vc-cfg.el --- VC Configuration -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Richard Westhaver
+;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@jekyll>
+;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: vc
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 
 ;;; Code:
 (defcustom default-vc-backend "hg"
-  "the default vc-backend to use for version-control-related commands."
+  "the default vc-backend to use for version-control commands."
   :type '(string)
   :group 'default)
 

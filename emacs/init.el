@@ -1,4 +1,4 @@
-;;; init.el --- Global Init File                     -*- lexical-binding: t; -*-
+;;; init.el --- Global Init File -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
@@ -23,15 +23,11 @@
 ;; 
 
 ;;; Code:
-(defvar elisp-dir "~/.emacs.d/lisp")
-(add-to-list 'load-path elisp-dir)
-
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key "\C-c l" #'org-store-link)
-(global-set-key "\C-c L" #'org-insert-link-global)
-(global-set-key "\C-c o" #'org-open-at-point-global)
+(defvar lisp-dir "~/.emacs.d/lisp")
+(add-to-list 'load-path lisp-dir)
 
 (require 'default)
+(add-hook 'after-init-hook #'default-setup)
 
 (cond
  ((string= (system-name) "zor") (require 'zor-config))

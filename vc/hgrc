@@ -21,7 +21,7 @@ clonebundles =
 highlight = 
 notify = 
 git = 
-hggit = ~/.hgext/hg-git/hggit
+#hggit = ~/.hgext/hg-git/hggit
 #strip =
 #commitsigs = hgext/commitsigs/commitsigs.py
 logtoprocess = 
@@ -41,7 +41,7 @@ warn_when_unused = false
 key = ellis
 
 [logtoprocess]
-commandexception = echo "$MSG1" > ~/shed/data/log/mercurial_exceptions.log
+commandexception = echo "$MSG1" > /var/log/hg_exception.log
 
 [web]
 baseurl = https://hg.rwest.io

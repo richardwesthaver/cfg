@@ -1,9 +1,9 @@
-;;; jekyll-custom.el --- Jekyll Configuration -*- lexical-binding: t; -*-
+;;; elisp-cfg.el --- Elisp Config -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience, internal
+;; Author: ellis <ellis@rwest.io>
+;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,18 +23,13 @@
 ;; 
 
 ;;; Code:
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ("melpa" . "https://melpa.org/packages/")))
+(mapcar #'(lambda (x)
+	    (add-to-list 'package-selected-packages x t))
+	'(lispy))
 
-(setq package-selected-packages '(async exec-path-from-shell
-lispy company geiser geiser-guile notmuch avy swiper rg))
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
+  (add-hook hook #'(lambda () (lispy-mode 1))))
 
-(require 'exec-path-from-shell)
-(exec-path-from-shell-initialize)
 
-;;; UI
-(require 'theme-cfg)
-
-(provide 'jekyll-config)
-;;; jekyll-custom.el ends here
+(provide 'elisp-cfg)
+;;; elisp-cfg.el ends here
