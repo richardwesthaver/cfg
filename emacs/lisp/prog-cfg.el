@@ -23,6 +23,15 @@
 ;; 
 
 ;;; Code:
+;;; Customization
+(require 'default)
+(add-packages '(tree-sitter tree-sitter-langs))
+
+(defcustom user-dev-directory (expand-file-name "~/dev/")
+  "Directory containing dev projects."
+  :type 'string
+  :group 'programming)
+
 ;;; Helpers
 (defvar default-line-regexp-alist
   '((empty . "[\s\t]*$")
@@ -161,11 +170,17 @@ specified by `prog-comment-timestamp-format-verbose'."
       (comment-indent t)
       (insert (concat " " string))))))
 
-
 (setq hexl-bits 8)	 
+
+(setq ede-project-directories t)
 
 ;; auto-indent newlines
 (electric-indent-mode)
 
+(let ((inhibit-message t))
+      (global-tree-sitter-mode))
+
+(with-eval-after-load 'tree-sitter-mode
+  (tree-sitter-hl-mode))
 (provide 'prog-cfg)
 ;;; prog-cfg.el ends here

@@ -23,6 +23,7 @@
 ;; 
 
 ;;; Code:
+(add-to-list 'package-selected-packages 'notmuch)
 (require 'notmuch)
 
 (defgroup hyde-mail ()

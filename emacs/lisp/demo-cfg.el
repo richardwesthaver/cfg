@@ -20,12 +20,9 @@
 
 ;;; Commentary:
 
-;; 
-
 ;;; Code:
-(mapcar #'(lambda (x)
-	    (add-to-list 'package-selected-packages x t))
-	'(frameshot keycast))
+(require 'default)
+(add-packages '(frameshot keycast))
 
 (provide 'demo-cfg)
 ;;; demo-cfg.el ends here

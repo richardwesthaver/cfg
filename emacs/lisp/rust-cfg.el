@@ -23,7 +23,8 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'package-selected-packages '(rust-mode eglot) t)
+(require 'default)
+(add-packages '(rust-mode eglot))
 
 (require 'rust-mode)
 

@@ -23,9 +23,8 @@
 ;; 
 
 ;;; Code:
-(mapcar #'(lambda (x)
-	    (add-to-list 'package-selected-packages x t))
-	'(marginalia orderless embark corfu))
+(require 'default)
+(add-packages '(marginalia orderless embark corfu))
 
 (corfu-global-mode 1)
 (marginalia-mode 1)

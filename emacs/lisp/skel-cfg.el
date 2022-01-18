@@ -71,62 +71,65 @@ will be bound to default-skel-NAME."
   default-website str "")
 
 ;;; Autoinsert
-(with-eval-after-load 'autoinsert (add-to-list 'auto-insert-alist '(("\\.el\\'" . "Emacs Lisp header") 
-				   "Short description: " ";;; "
-				   (file-name-nondirectory
-				    (buffer-file-name))
-				   " --- " str
-				   " "
-				   "-*- lexical-binding: t; -*-"
-				   '(setq lexical-binding t)
-				   "
+(with-eval-after-load 'autoinsert 
+     (add-to-list
+    'auto-insert-alist
+    '(("\\.el\\'" . "Emacs Lisp header") 
+    "Short description: " "	;;; "
+    (file-name-nondirectory
+     (buffer-file-name))
+    " --- " str
+    " "
+    "-*- lexical-binding: t; -*-"
+    '(setq lexical-binding t)
+    "
 
 ;; Copyright (C) "
-				   (format-time-string "%Y")
-				   "  "
-				   (getenv "ORGANIZATION")
-				   |
-				   (progn user-full-name)
-				   "
+    (format-time-string "%Y")
+    "  "
+    (getenv "ORGANIZATION")
+    |
+    (progn user-full-name)
+    "
 
 ;; Author: "
-				   (user-full-name)
-				   '(if
-					(search-backward "&"
-							 (line-beginning-position)
-							 t)
-					(replace-match
-					 (capitalize
-					  (user-login-name))
-					 t t))
-				   '(end-of-line 1)
-				   " <"
-				   (progn user-mail-address)
-				   ">
+    (user-full-name)
+    '(if
+	 (search-backward "&"
+			  (line-beginning-position)
+			  t)
+	 (replace-match
+	  (capitalize
+	   (user-login-name))
+	  t t))
+    '(end-of-line 1)
+    " <"
+    (progn user-mail-address)
+    ">
 ;; Keywords: "
-				   '(require 'finder)
-				   '(setq v1
-					  (mapcar
-					   (lambda
-					     (x)
-					     (list
-					      (symbol-name
-					       (car x))))
-					   finder-known-keywords)
-					  v2
-					  (mapconcat
-					   (lambda
-					     (x)
-					     (format "%12s:  %s"
-						     (car x)
-						     (cdr x)))
-					   finder-known-keywords "
+    '(require 'finder)
+    '(setq v1
+	   (mapcar
+	    (lambda
+	      (x)
+	      (list
+	       (symbol-name
+		(car x))))
+	    finder-known-keywords)
+	   v2
+	   (mapconcat
+	    (lambda
+	      (x)
+	      (format "%12s:  %s"
+		      (car x)
+		      (cdr x)))
+	    finder-known-keywords "
 "))
-				   ((let
-					((minibuffer-help-form v2))
-				      (completing-read "Keyword, C-h: " v1 nil t))
-				    str ", ")
-				   & -2 "
+    ((let
+	 ((minibuffer-help-form v2))
+       (completing-read "Keyword, C-h: " v1 nil t))
+     str ", ")
+    & -2 "
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -150,13 +153,47 @@ will be bound to default-skel-NAME."
 
 
 (provide '"
-				   (file-name-base
-				    (buffer-file-name))
-				   ")
+    (file-name-base
+     (buffer-file-name))
+    ")
 ;;; "
-				   (file-name-nondirectory
-				    (buffer-file-name))
-				   " ends here
+    (file-name-nondirectory
+     (buffer-file-name))
+    " ends here
+"))
+  (add-to-list 
+   'auto-insert-alist 
+   '("\\.dir-locals[-2]*\.el" nil ";;; Directory Local Variables
+" ";;; For more information see (info \"(emacs) Directory Variables\")
+
+" "(("
+'(setq v1
+       (let
+	   (modes)
+	 (mapatoms
+	  (lambda
+	    (mode)
+	    (let
+		((name
+		  (symbol-name mode)))
+	      (when
+		  (string-match "-mode$" name)
+		(push name modes)))))
+	 (sort modes 'string<)))
+(completing-read "Local variables for mode: " v1 nil t)
+" . (("
+(let
+    ((all-variables
+      (apropos-internal ".*"
+			(lambda
+			  (symbol)
+			  (and
+			   (boundp symbol)
+			   (get symbol 'variable-documentation))))))
+  (completing-read "Variable to set: " all-variables))
+" . "
+(completing-read "Value to set it to: " nil)
+"))))
 ")))
 
 (provide 'skel-cfg)

@@ -23,7 +23,7 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'package-selected-packages 'elfeed t)
+(add-to-list 'package-selected-packages 'elfeed)
 
 (require 'elfeed)
 

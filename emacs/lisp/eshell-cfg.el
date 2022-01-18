@@ -23,10 +23,7 @@
 ;; 
 
 ;;; Code:
-
-(mapcar #'(lambda (x)
-	    (add-to-list 'package-selected-packages x t))
-	'(esh-opt eshell-prompt-extras))
+(add-packages '(esh-opt eshell-prompt-extras))
 
 (require 'esh-opt)
 (require 'eshell-prompt-extras)

@@ -23,7 +23,7 @@
 ;; 
 
 ;;; Code:
-(add-to-list 'package-selected-packages 'org-web-tools t)
+(add-to-list 'package-selected-packages 'org-web-tools)
 
 (defun org-keys ()
   "add default keys to 'org-mode-map'"

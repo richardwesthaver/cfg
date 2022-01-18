@@ -18,13 +18,20 @@
 ;;; Code:
 (eval-when-compile (require 'cl-lib))
 
-;;; Custom
+;;; Customization
 (defgroup default nil
   "default settings")
 
 (defcustom user-website-url "https://rwest.io/"
   "default website homepage. don't forget the slash!"
   :group 'default)
+
+;;; Functions
+(defun add-packages (&rest pkgs)
+       "add list of packages to `package-selected-packages'"
+       (mapcar #'(lambda (x)
+		   (add-to-list 'package-selected-packages x))
+	       (flatten-list pkgs)))
 
 ;;; Keys
 (global-set-key (kbd "C-x C-b") #'ibuffer)
@@ -157,7 +164,9 @@
 		shr-cookie-policy nil
 		browse-url-browser-function 'browse-url-default-browser
 		eww-search-prefix "https://duckduckgo.com/html?q="
-		url-privacy-level '(email agent cookies lastloc)))
+		url-privacy-level '(email agent cookies lastloc))
+  (when (string= system-type "darwin")       
+    (setq dired-use-ls-dired nil)))
 
 (add-hook 'after-init-hook 'keys)
 

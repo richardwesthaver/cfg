@@ -27,7 +27,8 @@
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
 
-(setq package-selected-packages '(async exec-path-from-shell))
+(require 'default)
+(add-packages '(async exec-path-from-shell))
 
 (exec-path-from-shell-initialize)
 

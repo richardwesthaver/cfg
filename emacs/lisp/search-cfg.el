@@ -23,9 +23,7 @@
 ;; 
 
 ;;; Code:
-(mapcar #'(lambda (x)
-	    (add-to-list 'package-selected-packages x t))
-	'(avy swiper rg))
+(add-packages '(avy swiper rg))
 
 (global-set-key (kbd "C-'") 'avy-goto-char)
 (global-set-key (kbd "C-\"") 'avy-goto-char-2)

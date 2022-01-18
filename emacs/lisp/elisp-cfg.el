@@ -23,11 +23,9 @@
 ;; 
 
 ;;; Code:
-(mapcar #'(lambda (x)
-	    (add-to-list 'package-selected-packages x t))
-	'(lispy))
+(add-to-list 'package-selected-packages 'lispy)
 
-(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook))
+(dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook lisp-interaction-mode-hook lisp-data-mode-hook))
   (add-hook hook #'(lambda () (lispy-mode 1))))
 
 
