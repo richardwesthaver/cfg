@@ -72,6 +72,12 @@ choice's name, and the rest of which is its body forms."
            (funcall (alist-get choice-name ',choice-list nil nil #'equal))))
        (put ',name :define-lambda-choice t))))
 
+(defmacro with-system (type &rest body)
+  "Evaluate BODY if `system-type' equals TYPE."
+  (declare (indent defun))
+  `(when (eq system-type ',type)
+     ,@body))
+
 ;;; Helpers
 ;;;###autoload
 (defun random-integers (min max n)

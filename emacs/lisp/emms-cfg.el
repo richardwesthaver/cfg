@@ -26,12 +26,23 @@
 (add-to-list 'package-selected-packages 'emms)
 (require 'emms-setup)
 (require 'emms-mark)
-(require 'emms-player-mpd)
-
 (emms-all)
 (emms-default-players)
-(setq emms-player-mpd-server-name "localhost")
-(setq emms-player-mpd-server-port "6600")
+
+(cond
+ ((eq system-type 'darwin)
+  (require 'emms-player-mplayer)
+  (define-emms-simple-player mplayer '(file url)
+			     (regexp-opt
+			      '(".ogg" ".mp3" ".wav" ".mpg" ".mpeg" ".wmv" ".wma"
+				".mov" ".avi" ".divx" ".ogm" ".asf" ".mkv" "http://"
+				"mms://" ".rm" ".rmvb" ".mp4" ".flac" ".vob" ".m4a"
+				".flv" ".ogv" ".pls"))
+			     "mplayer" "-slave" "-quiet" "-really-quiet" "-fullscreen"))
+ ((eq system-type 'linux)
+  (require 'emms-player-mpd)
+  (setq emms-player-mpd-server-name "localhost")
+  (setq emms-player-mpd-server-port "6600")))
 
 (defun track-title-from-file-name (file)
   "For using with EMMS description functions. Extracts the track

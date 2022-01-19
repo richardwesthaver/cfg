@@ -28,9 +28,10 @@
 			 ("melpa" . "https://melpa.org/packages/")))
 
 (require 'default)
-(add-packages '(async exec-path-from-shell))
+(add-packages '(async))
 
-(exec-path-from-shell-initialize)
+(add-to-list 'exec-path  "/usr/local/bin/")
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin/"))
 
 ;;; UI
 (require 'theme-cfg)
