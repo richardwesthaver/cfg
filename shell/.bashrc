@@ -24,10 +24,13 @@ macsman() {
 
 alias eman=macsman
 
-# IDE ;)
 alias vi='emacsclient -t'
 alias vim='emacsclient -t'
-alias e='emacsclient -c'
+alias ec='emacsclient -c'
+alias et='emacsclient -t'
+alias hgpu='hg pull -u'
+alias hgc='hg ci -m'
+alias hgp='hg push'
 
 # VCS
 alias hgsub='find . -name ".hg" -type d | grep -v "\./\.hg" | xargs -n1 dirname | xargs -iREPO hg -R REPO'

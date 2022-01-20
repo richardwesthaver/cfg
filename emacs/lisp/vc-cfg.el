@@ -28,7 +28,7 @@
   :type '(string)
   :group 'default)
 
-(setq vc-hg-global-switches "--noninteractive")
+;; (setq vc-hg-global-switches "--noninteractive")
 
 (provide 'vc-cfg)
 ;;; vc-cfg.el ends here

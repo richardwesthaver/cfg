@@ -26,9 +26,8 @@
 (require 'default)
 (add-packages '(rust-mode eglot))
 
-(require 'rust-mode)
-
-(setq rust-indent-offset 2)
+(with-eval-after-load 'rust-mode
+  (setq rust-indent-offset 2))
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
