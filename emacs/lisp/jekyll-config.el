@@ -30,8 +30,8 @@
 (require 'default)
 (add-packages '(async))
 
-(add-to-list 'exec-path  "/usr/local/bin/")
-(add-to-list 'exec-path (expand-file-name "~/.cargo/bin/"))
+(add-to-list 'exec-path  "/usr/local/bin")
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 
 ;;; UI
 (require 'theme-cfg)
