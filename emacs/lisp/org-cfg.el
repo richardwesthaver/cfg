@@ -107,19 +107,9 @@
   (interactive "r")
   (org-capture-string (buffer-substring-no-properties start end) "3"))
 
-;;;###autoload
-(defun src-block-tags (src-block)
-  "Return tags for SRC-BLOCK (an org element)."
-  (let* ((headers (-flatten
-                   (mapcar 'org-babel-parse-header-arguments
-                           (org-element-property :header src-block))))
-         (tags (cdr (assoc :tags headers))))
-    (when tags
-      (split-string tags))))
-
-  (setq org-global-properties
-        '(quote (("EFFORT_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
-                 ("STYLE_ALL" . "habit"))))
+(setq org-global-properties
+      '(quote (("EFFORT_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
+               ("STYLE_ALL" . "habit"))))
 
 (defun org-mode-ask-effort ()
   "Ask for an effort estimate when clocking in."

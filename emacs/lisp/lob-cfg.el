@@ -46,6 +46,7 @@
  ;; TODO 2021-10-24: bqn, apl, k
  'org-babel-load-languages '((shell . t)
 			     (emacs-lisp . t)
+			     (org . t)
 			     (eshell . t)
 			     (sed . t)
 			     (awk . t)
@@ -100,6 +101,15 @@ and `lob-file-active-p` is non-nil."
                                       :end-header ":results silent")))
          (info (org-babel-lob-get-info ctx)))
     (when info (org-babel-execute-src-block nil info))))
+
+(defun org-src-block-tags (src-block)
+  "Return tags for SRC-BLOCK (an org element)."
+  (let* ((headers (-flatten
+                   (mapcar 'org-babel-parse-header-arguments
+                           (org-element-property :header src-block))))
+         (tags (cdr (assoc :tags headers))))
+    (when tags
+      (split-string tags))))
 
 (defmacro org-sbx (name &rest args)
   (let* ((header (if (stringp (car args)) (car args) nil))

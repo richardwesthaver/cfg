@@ -15,7 +15,7 @@ alias vim='emacsclient -t'
 alias e='emacsclient -c'
 
 # Rust
-export PATH="$HOME/.cargo/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:/usr/local/bin:$HOME/bin:$PATH"
 
 # completions
 autoload -Uz compinit && compinit

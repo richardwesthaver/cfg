@@ -28,6 +28,10 @@
 (require 'esh-opt)
 (require 'eshell-prompt-extras)
 
+(defun eshell-new()
+  "Open a new instance of eshell."
+  (interactive)
+  (eshell 'Z))
 (with-eval-after-load "esh-opt"
   (autoload 'epe-theme-lambda "eshell-prompt-extras")
   (setq eshell-highlight-prompt nil
