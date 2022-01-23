@@ -6,7 +6,6 @@ PS1="\u [\!]:\t:\w\n  >> \[\e[0m\]"
 # default Envs
 export ESHELL='/usr/bin/bash'
 export ORGANIZATION='anticorp'
-export TEMP='$HOME/shed/stash/tmp'
 export TERM='xterm-256color'
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
