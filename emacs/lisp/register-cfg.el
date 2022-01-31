@@ -28,6 +28,22 @@
   :type '(file)
   :group 'default)
 
+;;; Keys
+(define-prefix-command 'register-keys)
+
+(keymap-set register-keys "j" #'jump-to-register)
+(keymap-set register-keys "w" #'frameset-to-register)
+(keymap-set register-keys "SPC" #'point-to-register)
+(keymap-set register-keys "s" #'save-registers)
+(keymap-set register-keys "b" #'put-buffer-in-register)
+(keymap-set register-keys "f" #'put-buffer-filename-in-register)
+(keymap-set register-keys "k" #'put-keyboard-macro-in-register)
+(keymap-set register-keys "+" #'increment-register)
+(keymap-set register-keys "-" #'decrement-register)
+
+(with-eval-after-load 'default
+  (keymap-set keys-map "C-c r" #'register-keys))
+
 (defun jump-to-register-action (register &optional delete)
   "Do what is the most sane thing to do for the thing stored in
    register. Either insert text (evt. a rectangle), move point to

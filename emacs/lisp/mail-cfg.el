@@ -24,23 +24,21 @@
 
 ;;; Code:
 (add-to-list 'package-selected-packages 'notmuch)
-(require 'notmuch)
 
-(defgroup hyde-mail ()
+(defgroup mail ()
   "Hyde email system.
 requires: notmuch, offlineimap
 env: USER_EMAIL"
-  :group 'hyde)
+  :group 'default)
 
 (defcustom hyde-mail-dir ()
   "Root path for mail-related data"
-  :group 'hyde-mail)
+  :group 'mail)
 
 (defcustom hyde-mailbox-alist ()
   "list of initialized mailboxes to query"
-  :group 'hyde-mail)
+  :group 'mail)
 
-(define-key keys-map (kbd "C-c e m") #'notmuch)
 ;; setup the mail address and use name
 (setq mail-user-agent 'message-user-agent)
 
@@ -53,6 +51,18 @@ env: USER_EMAIL"
       smtpmail-debug-info t
       message-default-mail-headers "Cc: \nBcc: \n"
       message-kill-buffer-on-exit t)
+
+;;; Keys
+
+(define-prefix-command 'mail-keys)
+
+(define-key mail-keys "SPC" #'notmuch)
+(define-key mail-keys "r" #'notmuch-exec-offlineimap)
+
+(with-eval-after-load 'default
+  (keymap-set keys-map "C-c e m" #'mail-keys))
+
+;;; Functions
 
 ;;;###autoload
 (defun notmuch-exec-offlineimap ()

@@ -35,9 +35,9 @@
 
 ;;; Keys
 (global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key "\C-c l" #'org-store-link)
-(global-set-key "\C-c L" #'org-insert-link-global)
-(global-set-key "\C-c o" #'org-open-at-point-global)
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c L") #'org-insert-link-global)
+(global-set-key (kbd "C-c o") #'org-open-at-point-global)
 
 (define-minor-mode keys
   "Global minor mode containing useful keybinds."
@@ -45,27 +45,14 @@
   :global t
   :group 'default
   :keymap `(
-	    ;; Viper
-	    (,(kbd "C-c SPC") . toggle-viper-mode)
-	    ;; Registers
-	    (,(kbd "C-c M-y") . copy-to-register)
-	    (,(kbd"C-c M-j") . jump-to-register)
-	    (,(kbd"C-c M-f") . frameset-to-register)
-	    (,(kbd"C-c M-SPC") . point-to-register)
 	    ;; Outlines
 	    (,(kbd "M-TAB") . outline-cycle)
 	    (,(kbd "M-n") . outline-next-visible-heading)
 	    (,(kbd "M-p") . outline-previous-visible-heading)
-	    ;; Windows
-	    (,(kbd "C-x -") . split-window-vertically)
-	    (,(kbd "C-x =") . split-window-horizontally)
 	    ;; Speedbar  
 	    (,(kbd "C-c c s") . speedbar)
 	    ;; Embark
 	    (,(kbd "C-c a") . embark-act)
-	    ;; Version Control
-	    (,(kbd "C-c v v") . vc-next-action)
-	    (,(kbd "C-c v .") . vc-dir)
 	    ;; Shell
 	    (,(kbd "C-c x x") . async-shell-command)
 	    (,(kbd "C-c x SPC") . eshell)
@@ -106,7 +93,6 @@
 	    ;; (,(kbd "C-c x j") . org-clock-goto)
 	    ;; (,(kbd "C-c x o") . org-clock-out)
 	    ;; (,(kbd "C-c x r") . org-clock-report)
-	    (,(kbd "C-c i") . new-scratch)
 	    ;; Modes
 	    (,(kbd "C-c m v") . global-visual-line-mode)
 	    (,(kbd "C-c m h") . global-hl-line-mode)
@@ -114,7 +100,6 @@
 	    (,(kbd "C-c m L") . global-display-line-numbers-mode)
 	    (,(kbd "C-c m a") . gpm-mouse-mode)
 	    (,(kbd "C-c m r") . refill-mode)
-	    (,(kbd "C-c m k") . which-key-mode)
 	    (,(kbd "C-c m R") . global-auto-revert-mode)
 	    (,(kbd "C-c m t") . toggle-frame-tab-bar)
 	    (,(kbd "C-c m d") . toggle-debug-on-error)
@@ -122,7 +107,6 @@
 	    (,(kbd "C-c e w") . eww)
 	    (,(kbd "C-c e C-w") . webjump)
 	    (,(kbd "C-c e W") . browse-url)
-	    (,(kbd "C-c e C-e") . notmuch-exec-offlineimap)
 	    (,(kbd "C-c e i") . ielm)
 	    (,(kbd "C-c e f") . load-file)
 	    (,(kbd "C-c e l") . load-library) 
@@ -166,7 +150,7 @@
 		eww-search-prefix "https://duckduckgo.com/html?q="
 		url-privacy-level '(email agent cookies lastloc))
   (when (string= system-type "darwin")       
-    (setq dired-use-ls-dired nil)))
+    (setq-default dired-use-ls-dired nil)))
 
 (add-hook 'after-init-hook 'keys)
 

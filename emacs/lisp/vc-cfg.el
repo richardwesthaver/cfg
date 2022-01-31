@@ -28,6 +28,17 @@
   :type '(string)
   :group 'default)
 
+;;; Keys
+(define-prefix-command 'vc-keys nil "Version Control")
+(keymap-set vc-keys "n" #'vc-next-action)
+(keymap-set vc-keys "d" #'vc-dir)
+(keymap-set vc-keys "r" #'vc-register)
+(keymap-set vc-keys "F" #'vc-pull)
+(keymap-set vc-keys "P" #'vc-push )
+
+(with-eval-after-load 'default
+  (keymap-set keys-map "C-c v" #'vc-keys))
+
 ;; (setq vc-hg-global-switches "--noninteractive")
 
 (provide 'vc-cfg)

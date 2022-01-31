@@ -27,6 +27,15 @@
   "Default major mode for new scratch buffers"
   :group 'default)
 
+;;; Keys
+(define-prefix-command 'scratch-keys nil "Scratch")
+
+(keymap-set scratch-keys "n" #'new-scratch)
+(keymap-set scratch-keys "SPC" #'default-scratch-buffer)
+
+(with-eval-after-load 'default
+  (keymap-set keys-map "C-c i" #'scratch-keys))
+
 ;; Adapted from the `scratch.el' package by Ian Eure.
 (defun default-scratch-list-modes ()
   "List known major modes."
