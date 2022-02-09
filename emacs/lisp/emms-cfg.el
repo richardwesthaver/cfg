@@ -26,7 +26,6 @@
 (add-to-list 'package-selected-packages 'emms)
 
 (require 'emms-setup)
-
 (emms-all)
 (emms-default-players)
 
@@ -47,10 +46,16 @@
 				"mms://" ".rm" ".rmvb" ".mp4" ".flac" ".vob" ".m4a"
 				".flv" ".ogv" ".pls"))
 			     "mplayer" "-slave" "-quiet" "-really-quiet" "-fullscreen"))
- ((eq system-type 'linux)
-  (require 'emms-player-mpd)
-  (setq emms-player-mpd-server-name "localhost")
-  (setq emms-player-mpd-server-port "6600")
+ ((eq system-type 'gnu/linux)
+  (setq emms-volume-amixer-card 3)
+  (require 'emms-player-mplayer)
+  (define-emms-simple-player mplayer '(file url)
+			     (regexp-opt
+			      '(".ogg" ".mp3" ".wav" ".mpg" ".mpeg" ".wmv" ".wma"
+				".mov" ".avi" ".divx" ".ogm" ".asf" ".mkv" "http://"
+				"mms://" ".rm" ".rmvb" ".mp4" ".flac" ".vob" ".m4a"
+				".flv" ".ogv" ".pls"))
+			     "mplayer" "-slave" "-quiet" "-really-quiet" "-fullscreen")
   (define-emms-simple-player mikmod '(file)
 			     (regexp-opt '(".669" ".AMF" ".DSM" ".FAR" ".GDM" ".IT" ".IMF"  
 					   ".MED" ".MTM" ".OKT" ".S3M" ".STM" ".STX" ".ULT" 

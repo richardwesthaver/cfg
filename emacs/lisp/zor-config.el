@@ -48,6 +48,7 @@
 (require 'prog-cfg)
 (require 'rust-cfg)
 (require 'elisp-cfg)
+(require 'python-cfg)
 ;;; Tools
 (require 'fmt-cfg)
 (require 'search-cfg)

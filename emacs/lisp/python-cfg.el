@@ -23,8 +23,9 @@
 ;; 
 
 ;;; Code:
-(setq python-indent-offset 2
-      python-guess-indent nil)
+(setq python-indent 2
+      python-indent-guess-indent-offset nil
+      python-check-command "yapf")
 
 (provide 'python-cfg)
 ;;; python-cfg.el ends here
