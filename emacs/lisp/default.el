@@ -149,6 +149,7 @@
 		browse-url-browser-function 'browse-url-default-browser
 		eww-search-prefix "https://duckduckgo.com/html?q="
 		url-privacy-level '(email agent cookies lastloc))
+
   (when (string= system-type "darwin")       
     (setq-default dired-use-ls-dired nil)))
 
