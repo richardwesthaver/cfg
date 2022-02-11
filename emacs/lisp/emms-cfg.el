@@ -47,7 +47,6 @@
 				".flv" ".ogv" ".pls"))
 			     "mplayer" "-slave" "-quiet" "-really-quiet" "-fullscreen"))
  ((eq system-type 'gnu/linux)
-  (setq emms-volume-amixer-card 3)
   (require 'emms-player-mplayer)
   (define-emms-simple-player mplayer '(file url)
 			     (regexp-opt
