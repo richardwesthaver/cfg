@@ -187,10 +187,10 @@ specified by `prog-comment-timestamp-format-verbose'."
 (add-hook 'conf-toml-mode-hook
           (lambda ()
             (setq indent-line-function #'(lambda () (insert "  "))
-		  electric-indent-mode nil)))
+		  electric-indent-mode nil)
+	    (keymap-set conf-toml-mode-map "C-c C-c C-r" #'rust-run)
+	    (keymap-set conf-toml-mode-map "C-c C-c C-u" #'rust-compile)
+	    (keymap-set conf-toml-mode-map "C-c C-c C-t" #'rust-test)))
 
-(keymap-set conf-toml-mode-map "C-c C-c C-r" #'rust-run)
-(keymap-set conf-toml-mode-map "C-c C-c C-u" #'rust-compile)
-(keymap-set conf-toml-mode-map "C-c C-c C-t" #'rust-test)
 (provide 'prog-cfg)
 ;;; prog-cfg.el ends here

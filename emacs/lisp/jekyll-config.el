@@ -64,6 +64,7 @@
 (require 'emms-cfg)
 (require 'elfeed-cfg)
 (require 'mail-cfg)
+(require 'sclang-cfg)
 
 (provide 'jekyll-config)
 ;;; jekyll-custom.el ends here

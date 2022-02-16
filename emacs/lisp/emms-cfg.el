@@ -35,6 +35,7 @@
 (setq emms-browser-thumbnail-medium-size 128)
 (setq emms-playlist-mode-window-width 60)
 (setq emms-playlist-mode-hook #'emms-mark-mode)
+(setq emms-source-playlist-default-format 'm3u)
 
 (cond
  ((eq system-type 'darwin)
