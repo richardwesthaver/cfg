@@ -32,7 +32,9 @@
 (defcustom emms-streams-list
   '(("ambientsleepingpill" . "https://s.stereoscenic.com/asp-h.pls")
     ("AMambient" . "https://s.stereoscenic.com/ama-h.pls")
-    ("ambientmodern" . "https://s.stereoscenic.com/mod-h.pls"))
+    ("ambientmodern" . "https://s.stereoscenic.com/mod-h.pls")
+    ("thejazzgroove" . "http://thejazzgroove.com/itunes.pls")
+    ("absolutetrance" . "http://www.1.fm/tunein/trance64k.pls"))
   "List of online streamlists that can be played by EMMS. "
   :group 'emms)
 
@@ -128,7 +130,7 @@ rather than the whole path."
    (list
     (completing-read "Play Stream: " emms-streams-list)))
   (message "%s" stream)
-  (emms-play-streamlist (list (alist-get stream emms-streams-list))))
+  (emms-play-streamlist (cdr (assoc stream emms-streams-list))))
 
 (defun emms-play-matching (pattern)
   "Play matching song."
