@@ -29,6 +29,14 @@
 (emms-all)
 (emms-default-players)
 
+(defcustom emms-streams-list
+  '(("ambientsleepingpill" . "https://s.stereoscenic.com/asp-h.pls")
+    ("AMambient" . "https://s.stereoscenic.com/ama-h.pls")
+    ("ambientmodern" . "https://s.stereoscenic.com/mod-h.pls"))
+  "List of online streamlists that can be played by EMMS. "
+  :group 'emms)
+
+
 (setq emms-info-functions '(emms-info-exiftool))
 (setq emms-browser-covers #'emms-browser-cache-thumbnail-async)
 (setq emms-browser-thumbnail-small-size 64)
@@ -115,10 +123,12 @@ rather than the whole path."
 
 (setq emms-track-description-function #'hd-emms-track-description)
 
-(defun emms-play-smooth-jazz ()
-  "Start up some nice Jazz"
-  (interactive)
-  (emms-play-streamlist "http://thejazzgroove.com/itunes.pls"))
+(defun emms-stream (stream)
+  (interactive
+   (list
+    (completing-read "Play Stream: " emms-streams-list)))
+  (message "%s" stream)
+  (emms-play-streamlist (list (alist-get stream emms-streams-list))))
 
 (defun emms-play-matching (pattern)
   "Play matching song."
