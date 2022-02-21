@@ -14,7 +14,7 @@ export EDITOR='emacsclient -t'
 export VISUAL='emacsclient -c'
 
 # path
-export PATH="$HOME/go/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:$PATH"
+export PATH="$HOME/go/bin:$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH="$HOME/bin/sh:$HOME/bin/py:$HOME/bin/hs:$HOME/bin/ps:$PATH"
 # aliases
 macsman() {

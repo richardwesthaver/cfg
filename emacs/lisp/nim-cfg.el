@@ -1,9 +1,9 @@
-;;; eshell-cfg.el --- Eshell Config -*- lexical-binding: t; -*-
+;;; nim-cfg.el --- Nim Config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2022  ellis
 
 ;; Author: ellis <ellis@rwest.io>
-;; Keywords: terminals
+;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,13 +23,11 @@
 ;; 
 
 ;;; Code:
-(defun eshell-new()
-  "Open a new instance of eshell."
-  (interactive)
-  (eshell 'Z))
+(require 'default)
+(add-packages '(nim-mode))
 
+(with-eval-after-load 'nim-mode
+  (setq nim-indent-offset 2))
 
-(setq eshell-highlight-prompt nil)
-
-(provide 'eshell-cfg)
-;;; eshell-cfg.el ends here
+(provide 'nim-cfg)
+;;; nim-cfg.el ends here

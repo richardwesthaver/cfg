@@ -75,7 +75,7 @@ will be bound to default-skel-NAME."
      (add-to-list
     'auto-insert-alist
     '(("\\.el\\'" . "Emacs Lisp header") 
-    "Short description: " "	;;; "
+    "Short description: " ";;; "
     (file-name-nondirectory
      (buffer-file-name))
     " --- " str
