@@ -23,6 +23,7 @@
 ;; 
 
 ;;; Code:
+(require 'default)
 (add-packages '(avy swiper rg))
 
 (global-set-key (kbd "C-'") 'avy-goto-char)

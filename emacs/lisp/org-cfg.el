@@ -310,7 +310,8 @@ are exported to a filename derived from the headline text."
 	  ("i" "ramble" entry (file "t.org") "* OUTLINE %?\n:notes:\n:end:\n- _outline_ [/]\n  - [ ] \n  - [ ] \n- _refs_" :prepend t)
 	  ("b" "bug" entry (file "t.org") "* FIX %?\n- _review_\n- _fix_\n- _test_" :prepend t)
 	  ("r" "research" entry (file "t.org") "* RESEARCH %?\n:notes:\n:end:\n- _refs_" :prepend t)))
-
+  (setq org-html-htmlize-output-type 'css
+	org-html-head-include-default-style nil)
   (setq org-footnote-section nil)
   ;; org-crypt
   (org-crypt-use-before-save-magic)
@@ -344,7 +345,7 @@ are exported to a filename derived from the headline text."
 			     (org-agenda-files :maxlevel . 3)))
 
   ;; publish
-  (setq org-preview-latex-image-directory "~/.config/emacs/.cache/ltximg"
+  (setq org-preview-latex-image-directory "~/.emacs.d/.cache/ltximg"
 	org-latex-image-default-width "8cm")
 
   ;; links
@@ -359,7 +360,7 @@ are exported to a filename derived from the headline text."
 	  ("contrib" . "https://hg.rwest.io/contrib/%s")
 	  ("cdn" . "https://rwest.io/a/%s"))))
 
-(add-hook 'after-init-hook #'org-setup)
+(add-hook 'org-mode-hook #'org-setup)
 
 (provide 'org-cfg)
 ;;; org-cfg.el ends here

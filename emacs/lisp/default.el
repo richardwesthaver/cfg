@@ -68,8 +68,6 @@
 	    (,(kbd "C-c w l") . enlarge-window-horizontally)
 	    (,(kbd "C-c w s") . switch-window-then-swap-buffer)
 	    (,(kbd "C-c w t") . toggle-theme)
-	    (,(kbd "C-c w T") . modus-themes-toggle)
-	    (,(kbd "C-c w w") . winum-select-window-by-number)
 	    ;; Org
 	    (,(kbd "C-c n c") . org-capture)
 	    (,(kbd "C-c n a") . org-agenda)
@@ -132,7 +130,6 @@
 		gc-cons-percentage 0.6
 		completion-ignore-case t
 		;; org
-		org-agenda-files '(org-directory)
 		epa-pinentry-mode 'loopback
 		shr-use-colors nil
 		shr-use-fonts nil

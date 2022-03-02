@@ -28,7 +28,7 @@
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
 
-(setq package-selected-packages '(async csound-mode ob-jq bqn-mode dyalog-mode k-mode csound-mode))
+(setq package-selected-packages '(async csound-mode ob-jq bqn-mode dyalog-mode k-mode))
 
 ;;; UI
 (require 'theme-cfg)
@@ -38,17 +38,14 @@
 
 ;;; Org
 (require 'org-cfg)
-(add-hook 'after-init-hook #'org-setup)
-
 (require 'lob-cfg)
-;;;###autoload
-(add-hook 'after-init-hook #'lob-refresh)
 
 ;;; Prog
 (require 'prog-cfg)
 (require 'rust-cfg)
 (require 'elisp-cfg)
 (require 'python-cfg)
+(require 'nim-cfg)
 ;;; Tools
 (require 'fmt-cfg)
 (require 'search-cfg)

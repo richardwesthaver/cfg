@@ -40,6 +40,8 @@
 
 ;;; Org
 (require 'org-cfg)
+(with-eval-after-load 'org
+  (setq org-agenda-files `(,(expand-file-name org-directory) "/Volumes/stash/org/")))
 (require 'lob-cfg)
 
 ;;; Prog
