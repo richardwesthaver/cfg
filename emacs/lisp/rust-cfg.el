@@ -24,6 +24,8 @@
 
 ;;; Code:
 (require 'default)
+(require 'fu)
+
 (add-packages '(rust-mode eglot))
 
 (with-eval-after-load 'rust-mode
@@ -31,6 +33,35 @@
 
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+
+(fu-define-skeleton rust-err
+    "Insert default err.rs content"
+  nil > "pub type Result<T> = std::result::Result<T, Error>;" \n \n
+  "#[derive(Debug)]" \n "pub enum Error {" \n
+  "  " > _ \n
+  "  Io(std::io::Error)," \n
+  "}" \n \n
+  "impl std::error::Error for Error {" \n "fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {" \n
+  "  match *self {" \n
+  "    " \n
+  "    Error::Io(ref err) => Some(err)," \n
+  "}" \n \n
+  "impl std::fmt::Display for Error {" \n
+  "fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {" \n
+  "  match *self {" \n
+  "    " \n
+  "    Error::Io(ref err) => err.fmt(f)," \n
+  "  }" \n
+  "}")
+
+(fu-define-skeleton rust-fn
+  "Insert a Rust function."
+  nil > "fn " > _ "() {" \n \n "}")
+
+(fu-define-skeleton rust-match
+    "Insert a Rust match."
+  nil > "match " > _ "{" \n \n
+  "}")
 
 (provide 'rust-cfg)
 ;;; rust-cfg.el ends here

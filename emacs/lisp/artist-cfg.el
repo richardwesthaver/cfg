@@ -52,7 +52,7 @@
 					       ("Borders" . borders)
 					       ("Spray-chars" . spray-chars))))))))
 
-   (add-hook 'artist-mode-init-hook 
+   (add-hook 'artist-mode-hook 
 	     (lambda ()
 	       (define-key artist-mode-map (kbd "C-c C-a C-o") 'artist-ido-select-operation)
 	       (define-key artist-mode-map (kbd "C-c C-a C-c") 'artist-ido-select-settings)

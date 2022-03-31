@@ -34,7 +34,10 @@
     ("AMambient" . "https://s.stereoscenic.com/ama-h.pls")
     ("ambientmodern" . "https://s.stereoscenic.com/mod-h.pls")
     ("thejazzgroove" . "http://thejazzgroove.com/itunes.pls")
-    ("absolutetrance" . "http://www.1.fm/tunein/trance64k.pls"))
+    ("absolutetrance" . "http://www.1.fm/tunein/trance64k.pls")
+    ("Q105" . "https://playerservices.streamtheworld.com/pls/WQGNFMAAC.pls")
+    ("danceuk" . "https://dancestream.danceradiouk.com/stream")
+    ("boxuk" . "https://boxstream.danceradiouk.com/stream"))
   "List of online streamlists that can be played by EMMS. "
   :group 'emms)
 
@@ -129,8 +132,9 @@ rather than the whole path."
   (interactive
    (list
     (completing-read "Play Stream: " emms-streams-list)))
-  (message "%s" stream)
-  (emms-play-streamlist (cdr (assoc stream emms-streams-list))))
+  (if (or (string= stream "danceuk") (string= stream "boxuk"))
+      (emms-play-url (cdr (assoc stream emms-streams-list)))
+    (emms-play-streamlist (cdr (assoc stream emms-streams-list)))))
 
 (defun emms-play-matching (pattern)
   "Play matching song."
