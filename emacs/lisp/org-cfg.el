@@ -25,6 +25,8 @@
 ;;; Code:
 (add-to-list 'package-selected-packages 'org-web-tools)
 
+(org-eldoc-load)
+
 (defun org-keys ()
   "add default keys to 'org-mode-map'"
   (define-key org-mode-map (kbd "C-c M-i") 'org-toggle-inline-images)

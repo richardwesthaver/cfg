@@ -86,6 +86,7 @@
 (keymap-set emms-keys "l" #'emms-metaplaylist-mode-go)
 (keymap-set emms-keys "c" #'emms-playlist-mode-go-popup)
 (keymap-set emms-keys "." #'emms-play-now)
+(keymap-set emms-keys "d" #'emms-play-directory-tree)
 (keymap-set emms-keys "SPC" #'emms-pause)
 (keymap-set emms-keys "x" #'emms-stop)
 (keymap-set emms-keys "s" #'emms-seek)

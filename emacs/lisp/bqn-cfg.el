@@ -1,9 +1,9 @@
-;;; init.el --- Global Init File -*- lexical-binding: t; -*-
+;;; bqn-cfg.el --- BQN config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2022  ellis
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: convenience
+;; Author: ellis <ellis@rwest.io>
+;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,17 +23,9 @@
 ;; 
 
 ;;; Code:
-(defvar lisp-dir "~/.emacs.d/lisp")
-(defvar site-lisp-dir "~/.emacs.d/site-lisp")
-(add-to-list 'load-path lisp-dir site-lisp-dir)
 
-(require 'default)
-(add-hook 'after-init-hook #'default-setup)
 
-(cond
- ((string= (system-name) "zor") (require 'zor-config))
- ((string= (system-name) "jekyll") (require 'jekyll-config))
- ((string= (system-name) "hyde") (require 'hyde-config)))
-
-(provide 'init)
-;;; init.el ends here
+(add-to-list 'load-path "~/.emacs.d/site-lisp/bqn-mode")
+(require 'bqn-mode)
+(provide 'bqn-cfg)
+;;; bqn-cfg.el ends here

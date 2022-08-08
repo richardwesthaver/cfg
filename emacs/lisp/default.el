@@ -145,7 +145,8 @@
 		shr-cookie-policy nil
 		browse-url-browser-function 'browse-url-default-browser
 		eww-search-prefix "https://duckduckgo.com/html?q="
-		url-privacy-level '(email agent cookies lastloc))
+		url-privacy-level '(email agent cookies lastloc)
+		tramp-default-method "sshx")
 
   (when (string= system-type "darwin")       
     (setq-default dired-use-ls-dired nil)))

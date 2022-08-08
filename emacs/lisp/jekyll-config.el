@@ -30,30 +30,43 @@
 (require 'default)
 (add-packages '(async))
 
-(add-to-list 'exec-path  "/usr/local/bin")
-(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+(defun set-exec-path-from-shell ()
+  "Set up Emacs' `exec-path' and PATH environment variable to match
+that used by the user's shell.
 
+This is particularly useful under Mac OS X and macOS, where GUI
+apps are not started from a shell."
+  (interactive)
+  (let ((path-from-shell (replace-regexp-in-string
+			  "[ \t\n]*$" "" (shell-command-to-string
+					  "$SHELL --login -c 'echo $PATH'"
+						    ))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+(add-to-list 'exec-path  "/usr/local/bin/")
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin/"))
+
+(set-exec-path-from-shell)
 ;;; UI
 (require 'theme-cfg)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-
 ;;; Org
 (require 'org-cfg)
 (with-eval-after-load 'org
   (setq org-agenda-files `(,(expand-file-name org-directory) "/Volumes/stash/org/")))
 (require 'lob-cfg)
-
 ;;; Prog
 (require 'prog-cfg)
 (require 'rust-cfg)
+(require 'bqn-cfg)
 (require 'elisp-cfg)
 (require 'python-cfg)
-
+(require 'nim-cfg)
 ;;; Term
 (require 'shell-cfg)
 (require 'eshell-cfg)
-
 ;;; Tools
 (require 'search-cfg)
 (require 'completion-cfg)
