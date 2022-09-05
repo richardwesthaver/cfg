@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;; Jekyll is a MacBook Pro, most likely running Emacs 29.
 
 ;;; Code:
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")

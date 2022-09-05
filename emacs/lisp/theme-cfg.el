@@ -24,6 +24,9 @@
 
 ;;; Code:
 ;;;; Themes 
+(require 'default)
+(add-packages 'ef-themes)
+
 (defvar current-theme 'modus-operandi "the current theme")
 
 (defun next-theme (theme)
@@ -34,9 +37,19 @@
 (defun toggle-theme ()
   (interactive)
   (cond ((eq current-theme 'modus-operandi) (next-theme 'modus-vivendi))
-	((eq current-theme 'modus-vivendi) (next-theme 'modus-operandi))))
+	((eq current-theme 'modus-vivendi) (next-theme 'ef-day))
+	((eq current-theme 'ef-day) (next-theme 'ef-dark))
+	((eq current-theme 'ef-dark) (next-theme 'ef-summer))
+	((eq current-theme 'ef-summer) (next-theme 'ef-autumn))
+	((eq current-theme 'ef-autumn) (next-theme 'modus-operandi))))
 
-(add-hook 'after-init-hook (lambda () (load-theme current-theme)))
+;;;###autoload
+(defun reset-theme ()
+  "reset the theme to default value (modus-operandi)"
+  (interactive)
+  (next-theme 'modus-operandi))
+
+(add-hook 'after-init-hook 'reset-theme)
 
 (provide 'theme-cfg)
 ;;; theme-cfg.el ends here

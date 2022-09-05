@@ -28,10 +28,8 @@
 
 ;;; Functions
 (defun add-packages (&rest pkgs)
-       "add list of packages to `package-selected-packages'"
-       (mapcar #'(lambda (x)
-		   (add-to-list 'package-selected-packages x))
-	       (flatten-list pkgs)))
+  "add list of packages PKGS to `package-selected-packages'"
+  (mapcar #'(lambda (x) (add-to-list 'package-selected-packages x)) (flatten-list pkgs)))
 
 ;;; Keys
 (global-set-key (kbd "C-x C-b") #'ibuffer)
@@ -113,6 +111,7 @@
 	    (,(kbd "C-c e g t") . tetris)
 	    (,(kbd "C-c e g z") . zone)
 	    (,(kbd "C-c e g s") . snake)))
+
 
 ;;;; Setup
 ;;;###autoload

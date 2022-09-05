@@ -52,14 +52,13 @@
 
 (cond
  ((eq system-type 'darwin)
-  (require 'emms-player-mplayer)
-  (define-emms-simple-player mplayer '(file url)
-			     (regexp-opt
-			      '(".ogg" ".mp3" ".wav" ".mpg" ".mpeg" ".wmv" ".wma"
-				".mov" ".avi" ".divx" ".ogm" ".asf" ".mkv" "http://"
-				"mms://" ".rm" ".rmvb" ".mp4" ".flac" ".vob" ".m4a"
-				".flv" ".ogv" ".pls"))
-			     "mplayer" "-slave" "-quiet" "-really-quiet" "-fullscreen"))
+  (require 'emms-player-mpd)
+  (setq emms-player-mpd-server-name "localhost")
+  (setq emms-player-mpd-server-port "6600")
+  (add-to-list 'emms-info-functions 'emms-info-mpd)
+  (add-to-list 'emms-player-list 'emms-player-mpd)
+  (setq emms-player-mpd-music-directory "~/media/audio/music")
+  )
  ((eq system-type 'gnu/linux)
   (require 'emms-player-mplayer)
   (define-emms-simple-player mplayer '(file url)
