@@ -27,13 +27,18 @@
 (defvar site-lisp-dir "~/.emacs.d/site-lisp")
 (add-to-list 'load-path lisp-dir site-lisp-dir)
 
+(defvar system-names '("zor" "jekyll" "hyde")
+  "Hostnames of systems available.")
+
+(defmacro when-sys= (name body)
+  "(when (string= (system-name) NAME) BODY)"
+  `(when ,(string= (system-name) name) ,body))
+
 (require 'default)
 (add-hook 'after-init-hook #'default-setup)
 
-(cond
- ((string= (system-name) "zor") (require 'zor-config))
- ((string= (system-name) "jekyll") (require 'jekyll-config))
- ((string= (system-name) "hyde") (require 'hyde-config)))
+(when-sys= "zor" (require 'zor-config))
+(when-sys= "jekyll" (require 'jekyll-config))
+(when-sys= "hyde" (require 'hyde-config))
 
-(provide 'init)
 ;;; init.el ends here

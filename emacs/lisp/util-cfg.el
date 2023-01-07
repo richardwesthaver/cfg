@@ -72,10 +72,14 @@ choice's name, and the rest of which is its body forms."
            (funcall (alist-get choice-name ',choice-list nil nil #'equal))))
        (put ',name :define-lambda-choice t))))
 
-(defmacro with-system (type &rest body)
-  "Evaluate BODY if `system-type' equals TYPE."
+;; (defmacro *-system (op sys &rest body)
+;;   "(OP (eq system-type SYS) ,@body)"
+;;   )
+
+(defmacro with-system (sys &rest body)
+  "Evaluate BODY if `system-type' equals SYS."
   (declare (indent defun))
-  `(when (eq system-type ',type)
+  `(when (eq system-type ',sys)
      ,@body))
 
 ;;; Helpers

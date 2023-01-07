@@ -26,7 +26,7 @@
 (require 'default)
 (add-packages '(marginalia orderless embark corfu))
 
-(corfu-global-mode 1)
+(corfu-mode 1)
 (marginalia-mode 1)
 (setq completion-styles '(orderless))
 

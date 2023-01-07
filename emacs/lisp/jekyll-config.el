@@ -61,7 +61,7 @@ apps are not started from a shell."
 (require 'prog-cfg)
 (require 'rust-cfg)
 (require 'bqn-cfg)
-(require 'elisp-cfg)
+(require 'lisp-cfg)
 (require 'python-cfg)
 (require 'nim-cfg)
 ;;; Term
