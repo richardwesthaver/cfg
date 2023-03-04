@@ -24,7 +24,5 @@
 
 ;;; Code:
 
-
-
 (provide 'hyde-config)
 ;;; hyde-config.el ends here

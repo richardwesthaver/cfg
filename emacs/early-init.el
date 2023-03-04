@@ -28,21 +28,16 @@
 ;; migrating them to `early-init.el`.
 ;; 
 ;;; Code:
-(setq frame-inhibit-implied-resize t)
-
-(setq inhibit-startup-echo-area-message "ellis"
+(setq frame-inhibit-implied-resize t
+      inhibit-startup-echo-area-message "ellis"
       inhibit-startup-screen t
       inhibit-startup-buffer-menu nil
       inhibit-splash-screen t
       use-dialog-box t
       use-file-dialog nil)
-
-;; enable native-compilation on supported builds
 (when (and (fboundp 'native-comp-available-p)
            (native-comp-available-p))
-  (progn
-    (setq native-comp-async-report-warnings-errors nil)
-    (setq comp-deferred-compilation t)
-    (setq package-native-compile t)))
-
+  (setq native-comp-async-report-warnings-errors nil
+	comp-deferred-compilation t
+	package-native-compile t))
 ;;; early-init.el ends here

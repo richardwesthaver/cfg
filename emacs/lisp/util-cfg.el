@@ -44,6 +44,60 @@
   "Regular expression that matches URLs.")
 
 ;;; Macros
+(defmacro alambda (parms &rest body)
+  "Graham's alambda."
+  (declare (indent 0))
+  `(cl-labels ((self ,parms ,@body))
+     #'self))
+
+(defmacro aif (test then &optional else)
+  "Graham's aif."
+  `(let ((it ,test))
+     (if it ,then ,else)))
+
+(defmacro alet% (letargs &rest body)
+  `(let ((this) ,@letargs)
+     (setq this ,@(last body))
+     ,@(butlast body)
+     this))
+
+;;(setf (symbol-function 'alet-test) (alet ((acc 0))
+;; (alambda (n)
+;;   (if (eq n 'invert)
+;;     (setq this
+;;           (lambda (n)
+;;             (if (eq n 'invert)
+;;               (setq this #'self)
+;;               (cl-decf acc n))))
+;;     (cl-incf acc n)))))
+
+(defmacro alet (letargs &rest body)
+  `(let ((this) ,@letargs)
+     (setq this ,@(last body))
+     ,@(butlast body)
+     (lambda (&rest params)
+       (apply this params))))
+
+(defmacro alet-fsm (&rest states)
+  `(cl-macrolet ((state (s)
+                `(setq this #',s)))
+     (cl-labels (,@states) #',(caar states))))
+
+
+(defmacro alet-hotpatch% (letargs &rest body)
+  `(let ((this) ,@letargs)
+     (setq this ,@(last body))
+     ,@(butlast body)
+     (lambda (&rest args)
+       (if (eq (car args) ':hotpatch)
+         (setq this (cadr args))
+         (apply this args)))))
+
+;; (setf (symbol-function 'hotpatch-test)
+;;     (alet-hotpatch% ((acc 0))
+;;       (lambda (n)
+;;         (incf acc n))))
+
 (defmacro hook-modes (modes &rest body)
   (declare (indent 1))
   `(--each ,modes
@@ -60,7 +114,7 @@ choice's name, and the rest of which is its body forms."
                  (get name :define-lambda-choice)))
   (let* ((choice-names (mapcar #'car choices))
          (choice-list (--map (cons (car it) #'(lambda (&rest args)
-                                               ,@(cdr it)))
+						,@(cdr it)))
                              choices))
          (prompt (format "Choose %s: " name))
          (docstring (concat "Choose between: " (s-join ", " choice-names))))
