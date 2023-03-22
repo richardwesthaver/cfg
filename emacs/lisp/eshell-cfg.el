@@ -26,7 +26,7 @@
 (require 'default)
 (add-packages '(eshell-syntax-highlighting esh-help))
 
-(setup-esh-help-eldoc)
+;; (setup-esh-help-eldoc)
 
 (defun eshell-new()
   "Open a new instance of eshell."

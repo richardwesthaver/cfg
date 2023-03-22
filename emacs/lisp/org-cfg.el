@@ -25,8 +25,6 @@
 ;;; Code:
 (add-to-list 'package-selected-packages 'org-web-tools)
 
-(org-eldoc-load)
-
 (defun org-keys ()
   "add default keys to 'org-mode-map'"
   (define-key org-mode-map (kbd "C-c M-i") 'org-toggle-inline-images)
@@ -220,9 +218,9 @@ are exported to a filename derived from the headline text."
   "Set different line spacing based on clock time duration."
   (save-excursion
     (let* ((colors (cl-case (alist-get 'background-mode (frame-parameters))
-                     ('light
+                     (light
                       (list "#F6B1C3" "#FFFF9D" "#BEEB9F" "#ADD5F7"))
-                     ('dark
+                     (dark
                       (list "#aa557f" "DarkGreen" "DarkSlateGray" "DarkSlateBlue"))))
            pos
            duration)
