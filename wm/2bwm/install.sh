@@ -6,4 +6,4 @@ pushd /tmp/2bwm
 cp $CFG config.h
 sudo make install
 popd
-rmdir /tmp/2bwm
+rm -rf /tmp/2bwm
