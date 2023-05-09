@@ -1,3 +1,4 @@
 xrdb .Xresources &
 xset r rate 200 40 &
 exec 2bwm
+$HOME/xprofile

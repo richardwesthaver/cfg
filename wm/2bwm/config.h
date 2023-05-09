@@ -1,5 +1,4 @@
 #define MOD             XCB_MOD_MASK_4       /* Super/Windows key  or check xmodmap(1) with -pm  defined in /usr/include/xcb/xproto.h */
-
 /* Move this many pixels when moving or resizing with keyboard unless the window has hints saying otherwise.
  *0)move step slow   1)move step fast
  *2)mouse slow       3)mouse fast     */
@@ -44,7 +43,7 @@ static const char *menucmd[] = {"rofi","-show","run", NULL};
 static const char *emacs[] = {"emacsclient","-c","-a=", NULL};
 static const char *firefox[] = {"firefox", NULL};
 static const char *chromium[] = {"chromium", NULL};
-static const char *terminal[] = {"urxvt", NULL};
+static const char *terminal[] = {"wezterm", "start", NULL};
 static const char *click1[] = {"xdotool","click", "1", NULL};
 static const char *click2[] = {"xdotool","click", "2", NULL};
 static const char *click3[] = {"xdotool","click", "3", NULL};
@@ -195,6 +194,9 @@ static key keys[] = {
     {  MOD |SHIFT,              XK_s,       cursor_move,       {.i=TWOBWM_CURSOR_DOWN_SLOW}},
     {  MOD |SHIFT,              XK_d,      cursor_move,       {.i=TWOBWM_CURSOR_RIGHT_SLOW}},
     {  MOD |SHIFT,              XK_a,       cursor_move,       {.i=TWOBWM_CURSOR_LEFT_SLOW}},
+    {  MOD |SHIFT,              XK_1,       click1,       {}},
+    {  MOD |SHIFT,              XK_2,       click2,       {}},
+    {  MOD |SHIFT,              XK_3,       click3,       {}},
     // Move the cursor faster
     {  MOD |CONTROL,        XK_w,         cursor_move,       {.i=TWOBWM_CURSOR_UP}},
     {  MOD |CONTROL,        XK_s,       cursor_move,       {.i=TWOBWM_CURSOR_DOWN}},
@@ -203,8 +205,8 @@ static key keys[] = {
 
     // Start programs
     {  MOD,XK_d, start, {.com = menucmd}},
-    {  MOD,XK_e, start, {.com = emacs}},
-    {  MOD,XK_q, start, {.com = firefox}},
+    {  MOD,XK_1, start, {.com = emacs}},
+    {  MOD,XK_2, start, {.com = firefox}},
     {  MOD,XK_Return, start, {.com = terminal}},
     // Exit or restart 2bwm
     {  MOD |CONTROL,      XK_q,          twobwm_exit,       {.i=0}},
