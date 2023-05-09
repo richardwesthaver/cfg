@@ -1,0 +1,44 @@
+[general]
+accounts = ellis, demon
+pythonfile = ~/.config/offlineimap/get_pass.py
+
+[Account ellis]
+synclabels = yes
+localrepository = ellis
+remoterepository = ellis-imap
+postsynchook = ~/.config/offlineimap/postsync.sh
+
+[Repository ellis]
+type = GmailMaildir
+localfolders = ~/mail/ellis
+
+[Repository ellis-imap]
+type = Gmail
+remotepasseval = get_authinfo_password("imap.gmail.com", "ellis", 993)
+remoteuser = richard.westhaver@gmail.com
+# Necessary to work around https://github.com/OfflineIMAP/offlineimap/issues/573 (versions 7.0.12, 7.2.1)
+# macos only
+sslcacertfile = /opt/local/etc/openssl/cert.pem
+ssl_version = tls1_2
+folderfilter = lambda foldername: foldername in ['[Gmail]/All Mail']
+nametrans = lambda foldername: re.sub('^\[Gmail\]/All Mail$', 'all',foldername)
+
+[Account demon]
+synclabels = yes
+localrepository = demon
+remoterepository = demon-imap
+postsynchook = ~/.config/offlineimap/postsync.sh
+
+[Repository demon]
+type = GmailMaildir
+localfolders = ~/mail/demon
+
+[Repository demon-imap]
+type = Gmail
+remotepasseval = get_authinfo_password("imap.gmail.com", "demon", 993)
+remoteuser = throwoutxyz@gmail.com
+# macos only
+sslcacertfile = /opt/local/etc/openssl/cert.pem
+ssl_version = tls1_2
+folderfilter = lambda foldername: foldername in ['[Gmail]/All Mail']
+nametrans = lambda foldername: re.sub('^\[Gmail\]/All Mail$', 'all',foldername)

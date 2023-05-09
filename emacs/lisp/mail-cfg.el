@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; 
+;; TODO: https://quotenil.com/offlineimap-with-encrypted-authinfo.html
 
 ;;; Code:
 (add-to-list 'package-selected-packages 'notmuch)
@@ -31,17 +31,17 @@ requires: notmuch, offlineimap
 env: USER_EMAIL"
   :group 'default)
 
-(defcustom hyde-mail-dir ()
-  "Root path for mail-related data"
+(defcustom mail-dir "~/mail"
+  "Root path for mail-related data."
   :group 'mail)
 
-(defcustom hyde-mailbox-alist ()
+(defcustom mailbox-alist ()
   "list of initialized mailboxes to query"
   :group 'mail)
 
 ;; setup the mail address and use name
 (setq mail-user-agent 'message-user-agent)
-
+(setq notmuch-init-file "~/.notmuch-config")
 (setq user-mail-address "ellis@rwest.io"
       user-full-name "ellis")
 
@@ -56,14 +56,14 @@ env: USER_EMAIL"
 
 (define-prefix-command 'mail-keys)
 
-(define-key mail-keys "SPC" #'notmuch)
+(define-key mail-keys "m" #'notmuch)
 (define-key mail-keys "r" #'notmuch-exec-offlineimap)
 
 (with-eval-after-load 'default
   (keymap-set keys-map "C-c e m" #'mail-keys))
 
 ;;; Functions
-
+ 
 ;;;###autoload
 (defun notmuch-exec-offlineimap ()
   "execute offlineimap command and tag new mail with notmuch"
@@ -72,6 +72,11 @@ env: USER_EMAIL"
                                "*offlineimap*"
                                "offlineimap -o")
   (notmuch-refresh-all-buffers))
+
+(defun offlineimap-get-password (host port)
+  (let* ((netrc (netrc-parse (expand-file-name "~/.netrc.gpg")))
+         (hostentry (netrc-machine netrc host port port)))
+    (when hostentry (netrc-get hostentry "password"))))
 
 (provide 'mail-cfg)
 ;;; mail-cfg.el ends here

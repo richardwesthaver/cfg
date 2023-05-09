@@ -18,14 +18,10 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
-;; 
-
 ;;; Code:
 (add-to-list 'package-selected-packages 'org-web-tools)
 
-(org-eldoc-load)
+(setq-default org-log-into-drawer t)
 
 (defun org-keys ()
   "add default keys to 'org-mode-map'"
@@ -220,9 +216,9 @@ are exported to a filename derived from the headline text."
   "Set different line spacing based on clock time duration."
   (save-excursion
     (let* ((colors (cl-case (alist-get 'background-mode (frame-parameters))
-                     ('light
+                     (light
                       (list "#F6B1C3" "#FFFF9D" "#BEEB9F" "#ADD5F7"))
-                     ('dark
+                     (dark
                       (list "#aa557f" "DarkGreen" "DarkSlateGray" "DarkSlateBlue"))))
            pos
            duration)
@@ -363,6 +359,6 @@ are exported to a filename derived from the headline text."
 	  ("cdn" . "https://rwest.io/a/%s"))))
 
 (add-hook 'org-mode-hook #'org-setup)
-
+(add-hook 'org-mode-hook #'org-eldoc-load)
 (provide 'org-cfg)
 ;;; org-cfg.el ends here

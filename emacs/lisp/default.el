@@ -150,7 +150,7 @@
   (when (string= system-type "darwin")       
     (setq-default dired-use-ls-dired nil)))
 
-(add-hook 'after-init-hook 'keys)
+(add-hook 'after-init-hook #'keys)
 
 (provide 'default)
 ;;; default.el ends here

@@ -25,7 +25,7 @@
 ;;; Code:
 ;;; Customization
 (require 'default)
-(add-packages '(tree-sitter tree-sitter-langs))
+(add-packages '(eglot))
 
 (defcustom user-dev-directory (expand-file-name "~/dev/")
   "Directory containing dev projects."
@@ -177,12 +177,6 @@ specified by `prog-comment-timestamp-format-verbose'."
 
 ;; auto-indent newlines
 (electric-indent-mode)
-
-(let ((inhibit-message t))
-      (global-tree-sitter-mode))
-
-(with-eval-after-load 'tree-sitter-mode
-  (tree-sitter-hl-mode))
 
 (add-hook 'conf-toml-mode-hook
           (lambda ()

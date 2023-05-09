@@ -22,7 +22,7 @@
 (setf slime-lisp-implementations
       `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
         (roswell ("ros" "-Q" "run"))))
-(setf slime-default-lisp 'roswell)
+(setf slime-default-lisp 'sbcl)
 
 (defun common-lisp-quickdoc (package)
   "Search for PACKAGE in QuickDocs."
@@ -31,13 +31,53 @@
 	       (downcase package))))
     (eww-browse-url (concat "https://quickdocs.org/" name))))
 
+(defun common-lisp-hyperspec-read-symbol-name (&optional symbol-at-point)
+  (let* ((symbol-at-point (or symbol-at-point (thing-at-point 'symbol)))
+	 (stripped-symbol (and symbol-at-point
+			       (common-lisp-hyperspec--strip-cl-package
+				(downcase symbol-at-point)))))
+    (cond ((and stripped-symbol
+		(common-lisp-hyperspec--find stripped-symbol))
+	   stripped-symbol)
+	  (t
+	   (completing-read "Look up symbol in Common Lisp HyperSpec: "
+			    common-lisp-hyperspec--symbols nil t
+			    stripped-symbol
+			    'common-lisp-hyperspec-history)))))
+
+(defun common-lisp-hyperspec (symbol-name)
+  "View the documentation on SYMBOL-NAME from the Common Lisp HyperSpec.
+If SYMBOL-NAME has more than one definition, all of them are displayed with
+your favorite browser in sequence.  The browser should have a \"back\"
+function to view the separate definitions.
+
+The Common Lisp HyperSpec is the full ANSI Standard Common Lisp, provided
+by Kent Pitman and Xanalys Inc.  By default, the Xanalys Web site is
+visited to retrieve the information.  Xanalys Inc. allows you to transfer
+the entire Common Lisp HyperSpec to your own site under certain conditions.
+Visit http://www.lispworks.com/reference/HyperSpec/ for more information.
+If you copy the HyperSpec to another location, customize the variable
+`common-lisp-hyperspec-root' to point to that location."
+  (interactive (list (common-lisp-hyperspec-read-symbol-name)))
+  (let ((name (common-lisp-hyperspec--strip-cl-package
+	       (downcase symbol-name))))
+    (cl-maplist (lambda (entry)
+		  (browse-url (concat common-lisp-hyperspec-root "Body/"
+				      (car entry)))
+		  (when (cdr entry)
+		    ;; ???
+		    (sleep-for 1.5)))
+		(or (common-lisp-hyperspec--find name)
+		    (error "The symbol `%s' is not defined in Common Lisp"
+			   symbol-name)))))
+
 (setq inferior-lisp-program "ros -L sbcl -Q -l ~/.sbclrc run")
 (setq scheme-program-name "gsi")
 (setq guile-program "guile")
 (setq cmulisp-program "lisp")
 (setq scsh-program "scsh")
 
-(load (expand-file-name "~/.roswell/helper.el"))
+(load (expand-file-name "~/.roswell/helper.el") t)
 
 ;;; Structural Editing
 (repeat-mode 1)
@@ -113,5 +153,12 @@ is reduced to:
 		       (append syms (cdr a) (cdr b)))))
 		   `(,prev ,next)))))))
 
+(defun slime-qlot-exec (directory)
+  (interactive (list (read-directory-name "Project directory: ")))
+  (slime-start :program "qlot"
+               :program-args '("exec" "ros" "-S" "." "run")
+               :directory directory
+               :name 'qlot
+               :env (list (concat "PATH=" (mapconcat 'identity exec-path ":")))))
 
 (provide 'lisp-cfg)

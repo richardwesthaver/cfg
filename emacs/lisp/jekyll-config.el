@@ -48,15 +48,21 @@ apps are not started from a shell."
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin/"))
 
 (set-exec-path-from-shell)
+
 ;;; UI
 (require 'theme-cfg)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+;;; Font
+(set-face-attribute 'default nil :font "Iosevka Term" :height 160)
+
 ;;; Org
 (require 'org-cfg)
 (with-eval-after-load 'org
   (setq org-agenda-files `(,(expand-file-name org-directory) "/Volumes/stash/org/")))
 (require 'lob-cfg)
+
 ;;; Prog
 (require 'prog-cfg)
 (require 'rust-cfg)
@@ -64,6 +70,7 @@ apps are not started from a shell."
 (require 'lisp-cfg)
 (require 'python-cfg)
 (require 'nim-cfg)
+(require 'lua-cfg)
 ;;; Term
 (require 'shell-cfg)
 (require 'eshell-cfg)
@@ -75,6 +82,7 @@ apps are not started from a shell."
 (require 'macro-cfg)
 (require 'skel-cfg)
 (require 'vc-cfg)
+(require 'ledger-cfg)
 ;;; Apps
 (require 'emms-cfg)
 (require 'elfeed-cfg)

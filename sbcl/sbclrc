@@ -1,0 +1,10 @@
+;;; .sbclrc --- sbcl init file -*- mode: common-lisp; -*-
+#-quicklisp
+(let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp" (user-homedir-pathname))))
+  (when (probe-file quicklisp-init)
+    (load quicklisp-init)))
+
+(push #P"~/dev/" ql:*local-project-directories*)
+
+(require :swank)
+(push #P"/Users/ellis/src/lisp/quicklisp-systems/" swank::*load-path*)

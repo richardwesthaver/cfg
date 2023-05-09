@@ -26,15 +26,10 @@
 (require 'default)
 (add-packages '(eshell-syntax-highlighting esh-help))
 
-(setup-esh-help-eldoc)
-
 (defun eshell-new()
   "Open a new instance of eshell."
   (interactive)
   (eshell 'Z))
-
-
-(eshell-syntax-highlighting-global-mode +1)  
 
 (setq eshell-scroll-to-bottom-on-input 'all
       eshell-error-if-no-glob t
@@ -45,7 +40,10 @@
       eshell-destroy-buffer-when-process-dies t)
 
 (add-hook 'eshell-mode-hook
-	  (lambda () (eshell/alias "d" "dired $1")))
+	  (lambda () (progn
+		       (eshell/alias "d" "dired $1")
+		       (eshell-syntax-highlighting-global-mode +1)
+		       (setup-esh-help-eldoc))))
 
 (defun eshell/clear ()
   "Clear the eshell buffer."

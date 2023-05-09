@@ -26,7 +26,7 @@
 (require 'default)
 (require 'fu)
 
-(add-packages '(rust-mode eglot))
+(add-packages '(rust-mode ron-mode))
 
 (with-eval-after-load 'rust-mode
   (setq rust-indent-offset 2))
