@@ -20,7 +20,7 @@
 
 ;;; Commentary:
 
-;; Archliinux BTW
+;; Archlinux BTW
 
 ;;; Code:
 
@@ -50,6 +50,7 @@
 (require 'nim-cfg)
 (require 'lisp-cfg)
 ;;; Tools
+(require 'dired-cfg)
 (require 'completion-cfg)
 (require 'fmt-cfg)
 (require 'search-cfg)

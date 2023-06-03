@@ -75,6 +75,7 @@ apps are not started from a shell."
 (require 'shell-cfg)
 (require 'eshell-cfg)
 ;;; Tools
+(require 'dired-cfg)
 (require 'search-cfg)
 (require 'completion-cfg)
 (require 'scratch-cfg)

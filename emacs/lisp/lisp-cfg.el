@@ -2,6 +2,7 @@
 ;; HACK 2023-02-08: the great movement refactor
 ;; NOTE 2023-02-08: check out lisp-mnt.el for ideas
 ;; (add-to-list 'package-selected-packages 'lispy)
+(require 'default)
 (add-to-list 'package-selected-packages 'slime)
 
 (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
@@ -17,10 +18,11 @@
 		lisp-interaction-mode-hook
 		lisp-data-mode-hook
 		eval-expression-minibuffer-setup-hook))
-  (add-hook hook #'(lambda () (lispy-mode 1))))
-
+  (add-hook hook #'(lambda () )))
+(setq quicklisp-slime-helper-dist "ultralisp")
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setf slime-lisp-implementations
-      `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
+      `((sbcl    ("sbcl"))
         (roswell ("ros" "-Q" "run"))))
 (setf slime-default-lisp 'sbcl)
 
@@ -71,13 +73,13 @@ If you copy the HyperSpec to another location, customize the variable
 		    (error "The symbol `%s' is not defined in Common Lisp"
 			   symbol-name)))))
 
-(setq inferior-lisp-program "ros -L sbcl -Q -l ~/.sbclrc run")
+(setq inferior-lisp-program "sbcl")
 (setq scheme-program-name "gsi")
 (setq guile-program "guile")
 (setq cmulisp-program "lisp")
 (setq scsh-program "scsh")
 
-(load (expand-file-name "~/.roswell/helper.el") t)
+;; (load (expand-file-name "~/.roswell/helper.el") t)
 
 ;;; Structural Editing
 (repeat-mode 1)
