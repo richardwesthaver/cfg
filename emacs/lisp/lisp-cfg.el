@@ -20,7 +20,7 @@
 		eval-expression-minibuffer-setup-hook))
   (add-hook hook #'(lambda () )))
 (setq quicklisp-slime-helper-dist "ultralisp")
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(load (expand-file-name "~/.emacs.d/site-lisp/slime-helper.el"))
 (setf slime-lisp-implementations
       `((sbcl    ("sbcl"))
         (roswell ("ros" "-Q" "run"))))
