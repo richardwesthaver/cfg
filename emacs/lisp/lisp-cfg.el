@@ -1,6 +1,7 @@
 ;;; lisp-cfg
 ;; HACK 2023-02-08: the great movement refactor
 ;; NOTE 2023-02-08: check out lisp-mnt.el for ideas
+;; NOTE 2023-06-05: make sure to install the ~/quicklisp/slime-helper.el utility.
 ;; (add-to-list 'package-selected-packages 'lispy)
 (require 'default)
 (add-to-list 'package-selected-packages 'slime)
@@ -18,12 +19,16 @@
 		lisp-interaction-mode-hook
 		lisp-data-mode-hook
 		eval-expression-minibuffer-setup-hook))
-  (add-hook hook #'(lambda () )))
+  ;; (add-hook hook #'(lambda () ))
+  )
+
 (setq quicklisp-slime-helper-dist "ultralisp")
-(load (expand-file-name "~/.emacs.d/site-lisp/slime-helper.el"))
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+
 (setf slime-lisp-implementations
       `((sbcl    ("sbcl"))
         (roswell ("ros" "-Q" "run"))))
+
 (setf slime-default-lisp 'sbcl)
 
 (defun common-lisp-quickdoc (package)
