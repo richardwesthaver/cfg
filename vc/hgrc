@@ -1,6 +1,6 @@
 [ui]
 username = ellis <ellis@rwest.io>
-
+ssh = ssh -i ~/.ssh/ellis_ed25519
 [alias]
 erc = !$EDITOR `$HG root`/.hg/hgrc
 

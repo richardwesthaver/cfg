@@ -5,6 +5,6 @@
     (load quicklisp-init)))
 
 (push #P"~/dev/" ql:*local-project-directories*)
-
-(require :swank)
-(push #P"/Users/ellis/src/lisp/quicklisp-systems/" swank::*load-path*)
+(require :asdf)
+(require :quicklisp)
+;; (push #P"~/src/lisp/quicklisp-systems/" swank::*load-path*)
