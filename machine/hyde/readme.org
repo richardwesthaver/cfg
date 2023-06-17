@@ -1,0 +1,2 @@
+#+TITLE: Hyde Config
+Hyde lives on a very old Thinkpad that runs like a tank. Arch Linux based.

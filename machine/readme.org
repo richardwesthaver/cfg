@@ -1,0 +1,27 @@
+#+TITLE: machines
+This section isn't for generic configurable machine images. These are
+primarily for daily drivers, or machines I use with a regular enough
+frequency to warrant some creature comforts. They're inherently
+opinionated.
+
+Where possible, we run Arch Linux on all devices. This is not always
+possible, but typically those instances will receive more attention.
+- Machines
+  - Arch Linux
+    - *zor* -- desktop
+    - *hyde* -- thinkpad
+    - *boris* -- PinePhon Pro
+  - Apple
+    - *jekyll* -- macbook pro
+    - *brutus* -- iPhone X
+- Resources
+  - Arch Linux
+    - [[https://man.archlinux.org/man/core/pacman/libalpm.3.en][libalpm]]
+    - [[https://github.com/archlinux/arch-rebuild-order][arch-rebuild-order]]
+    - [[https://github.com/archlinux/mkinitcpio][mkinitcpio]]
+    - [[https://github.com/archlinux/contrib][contrib]]
+    - [[https://github.com/archlinux/devtools][devtools]]
+    - [[https://github.com/archlinux/archinstall][archinstall]]
+    - [[https://github.com/archlinux/archiso][archiso]]
+    - [[https://github.com/archlinux/arch-install-scripts][arch-install-scripts]]
+    - [[https://github.com/archlinux/releng][releng]]

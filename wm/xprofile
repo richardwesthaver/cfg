@@ -1,5 +1,4 @@
-xrandr --auto
-xrandr --output HDMI3 --primary --pos 0x0 --rotate normal --output HDMI-1 --pos 0x1080 --rotate normal
-~/.config/lemonbar/bar.sh | lemonbar -B#AFE1535C -d -b &
-conky -d -c ${HOME}/.config/conky/conky-l1.lua
-conky -d -c ${HOME}/.config/conky/conky-l2.lua
+#~/.config/lemonbar/bar.sh | lemonbar -B#AFE1535C -d -b &
+#conky -d -c ${HOME}/.config/conky/conky-l1.lua
+#conky -d -c ${HOME}/.config/conky/conky-l2.lua
+exec ~/screenlayout/default.sh

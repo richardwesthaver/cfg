@@ -359,6 +359,5 @@ are exported to a filename derived from the headline text."
 	  ("cdn" . "https://rwest.io/a/%s"))))
 
 (add-hook 'org-mode-hook #'org-setup)
-(add-hook 'org-mode-hook #'org-eldoc-load)
 (provide 'org-cfg)
 ;;; org-cfg.el ends here

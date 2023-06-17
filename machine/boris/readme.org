@@ -1,0 +1,9 @@
+#+TITLE: Boris Config
+Boris is a mobile device configuration for open-source hardware -
+currently the PinePhone Pro. This is a minimized Arch Linux config
+with all of the firmware tweaks and other gadgets provided by the
+Pine64 community.
+
+- Resources
+  - [[https://github.com/dreemurrs-embedded/Pine64-Arch][danctnix]]
+  - 

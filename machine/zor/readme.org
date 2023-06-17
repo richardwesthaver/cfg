@@ -1,0 +1,6 @@
+#+TITLE: Zor Config
+Zor currently lives on a compact desktop build circa 2015. This will
+probably change shortly before the 10-year anniversary of that
+hardware.
+
+This configuration is based on Arch Linux.
