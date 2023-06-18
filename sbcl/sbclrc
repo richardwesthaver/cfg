@@ -5,6 +5,10 @@
   (when (probe-file quicklisp-init)
     (load quicklisp-init)))
 
+(setf asdf:*central-registry*
+      (list* '*default-pathname-defaults*
+	     #p"~/lisp/systems/"
+	     #p"/usr/share/common-lisp/systems/"
+	     asdf:*central-registry*))
+
 (push #P"~/dev/" ql:*local-project-directories*)
-(require :quicklisp)
-;; (push #P"~/src/lisp/quicklisp-systems/" swank::*load-path*)
