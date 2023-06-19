@@ -542,20 +542,3 @@ let-env config = {
     }
   ]
 }
-
-let-env ALTERNATE_EDITOR = ''
-let-env EDITOR = 'emacsclient -t'
-let-env ENV_CONVERSIONS = '{PATH: {from_string: <Closure 1381>, to_string: <Closure 1383>}, Path: {from_string: <Closure 1385>, to_string: <Closure 1387>}}'
-let-env ESHELL = '/usr/bin/bash'
-let-env HG = '/usr/bin/hg'
-let-env HOME = '/home/ellis'
-let-env INVOCATION_ID = 'f1f37f8a553d44e2bc05bd99a2110db7'
-let-env LANG = 'en_US.UTF-8'
-let-env LD_LIBRARY_PATH = '/usr/local/lib:/usr/local/lib:'
-let-env MAIL = '/home/ellis/mail'
-let-env NU_LIB_DIRS = '[/home/ellis/.config/nushell/scripts]'
-let-env NU_PLUGIN_DIRS = '[/home/ellis/.config/nushell/plugins]'
-let-env ORGANIZATION = 'anticorp'
-let-env PATH = '[/home/ellis/.pyenv/shims, /home/ellis/bin/sh, /home/ellis/bin/py, /home/ellis/bin/hs, /home/ellis/bin/ps, /home/ellis/go/bin, /home/ellis/.cargo/bin, /home/ellis/.local/bin, /home/ellis/bin, /home/ellis/bin/sh, /home/ellis/bin/py, /home/ellis/bin/hs, /home/ellis/bin/ps, /home/ellis/go/bin, /home/ellis/.cargo/bin, /home/ellis/.local/bin, /home/ellis/bin, /usr/local/sbin, /usr/local/bin, /usr/bin, /usr/bin/site_perl, /usr/bin/vendor_perl, /usr/bin/core_perl]'
-let-env VISUAL = 'emacsclient -nw'
-let-env XAUTHORITY = '/home/ellis/.Xauthority'
