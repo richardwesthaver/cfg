@@ -84,7 +84,11 @@ let-env NU_PLUGIN_DIRS = [
 ]
 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
-# let-env PATH = ($env.PATH | split row (char esep) | prepend '$HOME/bin/sh')
+let-env PATH = ($env.PATH | split row (char esep) |
+  prepend '~/bin/sh' |
+  prepend '~/bin/ps' |
+  prepend '~/bin/py' |
+  prepend '~/bin/hs')
 let-env ESHELL = '/usr/bin/bash'
 let-env MAIL = '/home/ellis/mail'
 let-env ORGANIZATION = 'anticorp'
