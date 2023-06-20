@@ -1,5 +1,5 @@
 xrdb .Xresources &
 xset r rate 200 40 &
 xset s off -dpms
-exec stumpwm
-$HOME/.xprofile
+exec sbcl --load ~/.stumpwm.d/start
+$HOME/.xprofiel

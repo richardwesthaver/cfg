@@ -1,0 +1,2 @@
+;; -*- mode: common-lisp; -*-
+(load "~/.sbclrc")

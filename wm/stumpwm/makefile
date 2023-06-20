@@ -1,5 +1,5 @@
-DOTEMACS:=$(HOME)/.emacs.d
+DOTSTUMPWM:=$(HOME)/.stumpwm.d
 .PHONY: c
-i:$(wildcard *.el) lisp site-lisp;cp -rf $^ $(DOTEMACS)/
-c:;rm -rf $(DOTEMACS)/{*.el,lisp,site-lisp}
+i:$(wildcard *.lisp);cp -rf $^ $(DOTSTUMPWM)/
+c:;rm -rf $(DOTSTUMPWM)/*.lisp
 all:c i
