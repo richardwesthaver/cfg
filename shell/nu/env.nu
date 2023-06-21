@@ -88,8 +88,9 @@ let-env PATH = ($env.PATH | split row (char esep) |
   prepend '~/bin/sh' |
   prepend '~/bin/ps' |
   prepend '~/bin/py' |
-  prepend '~/bin/hs')
-let-env ESHELL = '/usr/bin/bash'
+  prepend '~/bin/hs' |
+  prepend '~/.cargo/bin')
+let-env ESHELL = '/usr/bin/env bash'
 let-env MAIL = '/home/ellis/mail'
 let-env ORGANIZATION = 'anticorp'
 let-env VISUAL = 'emacsclient -nw'
