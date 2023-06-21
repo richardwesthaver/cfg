@@ -88,7 +88,8 @@ let-env PATH = ($env.PATH | split row (char esep) |
   prepend '~/bin/sh' |
   prepend '~/bin/ps' |
   prepend '~/bin/py' |
-  prepend '~/bin/hs')
+  prepend '~/bin/hs' |
+  prepend '~/.cargo/bin')
 let-env ESHELL = '/bin/bash'
 let-env MAIL = '/home/ellis/mail'
 let-env ORGANIZATION = 'anticorp'
