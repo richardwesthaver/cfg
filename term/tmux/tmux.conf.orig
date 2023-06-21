@@ -1,0 +1,52 @@
+# tmux.conf --- tmux configuration file
+set -g default-terminal "xterm-256color"
+
+set -s escape-time 0 #faster command sequences
+
+unbind-key C-b
+set -g prefix "C-a"
+bind-key "C-z" send-prefix
+unbind '"'
+unbind '%'
+unbind 'a'
+bind a send-prefix
+bind - split-window -v
+bind = split-window -h
+set -g default-shell $SHELL
+setw -g automatic-rename on   # rename window to reflect current program
+set -g renumber-windows on    # renumber windows when a window is closed
+set -g set-titles on          # set terminal title
+set -g display-panes-time 800 # slightly longer pane indicators display time
+set -g display-time 1000      # slightly longer status messages display time
+set -g base-index 1
+
+# open new windows in the current path
+bind c new-window -c "#{pane_current_path}"
+
+# shhhh
+set -g visual-activity off
+set -g visual-bell off
+set -g visual-silence off
+setw -g monitor-activity on
+set -g bell-action none
+
+# reload config with r
+unbind r
+bind r source-file ~/.tmux.conf
+
+set -g mouse on
+
+#  modes
+setw -g clock-mode-colour colour6
+
+# panes
+# set -g pane-active-border-style 'bg=colour7 fg=colour3'
+
+# status bar
+set -g status-position bottom
+set -g status-justify left
+set -g status-right '%Y-%m-%d : %H:%M:%S'
+set -g status-right-length 100
+
+set -g status-left-length 20
+
