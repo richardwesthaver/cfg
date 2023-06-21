@@ -27,7 +27,7 @@ git =
 logtoprocess = 
 
 [subrepos]
-subrepos.allowed = true
+allowed = true
 hg:allowed = true
 git:allowed = true
 svn:allowed = true
