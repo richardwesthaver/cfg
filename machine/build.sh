@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-M="${!1}"
-A="${!2}"
-if [[ $M && $A ]]; then
-    guzuta build $M \
-	   --arch $A --chroot-dir ./chroot-$M \
-	   --repo-name $M --repo-dir ./repo/$M/$A \
-	   --srcdest $M --logdest ./logs
+PKG="${1}"
+M="${2}"
+A="${3}"
+if [[ $PKG && $M && $A ]] && [ -x "$(command -v guzuta)" ]; then
+    mkdir -p chroot-$M
+    mkdir -p repo/$M/$A/$PKG
+    mkdir -p log/$M
+    guzuta build $M/PKGBUILDS/$PKG \
+	   --arch $A --chroot-dir chroot \
+	   --repo-name $PKG --repo-dir repo/$M/$A/$PKG \
+	   --srcdest $M/PKGBUILDS/$PKG --logdest log/$M
 else
     if ! [ -x "$(command -v guzuta)" ]; then
 	echo "Error: guzuta is not installed."
