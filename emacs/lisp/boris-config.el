@@ -1,9 +1,9 @@
-;;; zor-config.el --- Zor Configuration -*- lexical-binding: t; -*-
+;;; boris-config.el --- Boris Configuration -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2023  Richard Westhaver
 
-;; Author: Richard Westhaver <ellis@rwest.io>
-;; Keywords: extensions, tools
+;; Author: Richard Westhaver <ellis@jekyll>
+;; Keywords: hardware
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,25 +20,24 @@
 
 ;;; Commentary:
 
-;; Archlinux BTW
+;; This configuration is specific to boris, which is a PinePhonePro
+;; running Linux.
 
 ;;; Code:
-
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
-
-(setq package-selected-packages '(async csound-mode ob-jq bqn-mode dyalog-mode k-mode))
 
 (require 'default)
 
 ;;; UI
 (require 'theme-cfg)
-
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
 ;;; Org
 (require 'org-cfg)
 (require 'lob-cfg)
-
 ;;; Prog
 (require 'prog-cfg)
 (require 'rust-cfg)
@@ -52,7 +51,6 @@
 (require 'fmt-cfg)
 (require 'search-cfg)
 (dired-async-mode 1)
-
 ;;; Misc
 (require 'elfeed-cfg)
 ;; (require 'sclang-cfg)
@@ -66,7 +64,6 @@
 (require 'emms-cfg)
 (require 'shell-cfg)
 (require 'eshell-cfg)
-(setq emms-source-file-default-directory "/mnt/x/audio/music")
 
-(provide 'zor-config)
-;; zor-custom.el ends here
+(provide 'boris-config)
+;;; boris-config.el ends here

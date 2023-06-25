@@ -35,6 +35,10 @@
       inhibit-splash-screen t
       use-dialog-box t
       use-file-dialog nil)
+
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
 (when (and (fboundp 'native-comp-available-p)
            (native-comp-available-p))
   (setq native-comp-async-report-warnings-errors nil

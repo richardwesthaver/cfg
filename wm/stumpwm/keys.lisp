@@ -26,6 +26,6 @@
 (define-key *top-map* (kbd "s-r") '*rofi-keymap*)
 (define-key *top-map* (kbd "s-e") "exec emacsclient -c .")
 
-(define-key *root-map* (kbd ";") #'eval-command)
+(define-key *root-map* (kbd ";") "colon")
 
 (which-key-mode)
