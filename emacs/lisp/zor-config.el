@@ -31,7 +31,7 @@
 (setq package-selected-packages '(async csound-mode ob-jq bqn-mode dyalog-mode k-mode))
 
 (require 'default)
-
+(require 'rw "rw/rw")
 ;;; UI
 (require 'theme-cfg)
 
@@ -42,7 +42,6 @@
 ;;; Prog
 (require 'prog-cfg)
 (require 'rust-cfg)
-(require 'elisp-cfg)
 (require 'python-cfg)
 (require 'nim-cfg)
 (require 'lisp-cfg)
