@@ -1,8 +1,6 @@
 ;;; rw-rex.el --- rx extensions -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Richard Westhaver
-
-;; Author: Richard Westhaver <rwestha2@gdeb.com>
 ;; Version: "0.1.0"
 ;; Keywords: convenience, extensions, languages
 
@@ -22,8 +20,8 @@
 ;;; Commentary:
 
 ;; `rx' is a powerful DSL for regexp, implemented as an Emacs Lisp
-;; macro. This package includes a variety of extensions to this package
-;; to support common EB workflows and parsing processes.
+;; macro. This package includes a variety of extensions to this
+;; package.
 
 ;;; Code:
 (require 'rx)

@@ -1,8 +1,6 @@
 ;;; rw-inbox.el --- RW Inbox -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Richard Westhaver
-
-;; Author: Richard Westhaver <rwestha2@gdeb.com>
 ;; Version: "0.1.0"
 ;; Keywords: maint, tools, outlines, extensions
 

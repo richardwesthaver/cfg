@@ -1,8 +1,6 @@
 ;;; read.el --- RW reader mods -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Richard Westhaver
-
-;; Author: Richard Westhaver <rwestha2@gdeb.com>
 ;; Keywords: convenience, languages, lisp, internal
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -30,10 +28,6 @@
 
 ;; This implementation targets Emacs 27.2, but will run MUCH faster on
 ;; 28.2+ with native-compilation enabled.
-
-;; Modification of C source code is not a possibility at EB, so we're
-;; stuck with the slow impl. I am actively working on a Rust/C impl in
-;; my spare time which I'm happy to share notes on upon inquiry.
 
 ;; Elisp is decades old but has somehow managed to maintain its Lisp
 ;; status despite not having read macro support built-in. Our partial

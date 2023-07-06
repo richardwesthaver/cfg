@@ -2,7 +2,6 @@
 
 ;; Copyright (C) 2023  Richard Westhaver
 
-;; Author: Richard Westhaver <rwestha2@gdeb.com>
 ;; Keywords: tools, lisp
 
 ;; This program is free software; you can redistribute it and/or modify

@@ -1,8 +1,6 @@
 ;;; rw-macs.el --- RW macros -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Richard Westhaver
-
-;; Author: Richard Westhaver <rwestha2@gdeb.com>
 ;; Version: "0.1.0"
 ;; Keywords: languages, convenience, tools, data, internal
 

@@ -1,8 +1,6 @@
 ;;; rw-fu.el --- RW functions -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Richard Westhaver
-
-;; Author: Richard Westhaver <rwestha2@gdeb.com>
 ;; Keywords: internal
 
 ;; This program is free software; you can redistribute it and/or modify

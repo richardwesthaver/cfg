@@ -1,8 +1,6 @@
 ;;; rw/forth.el --- experimental forth compiler -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023  Richard Westhaver
-
-;; Author: Richard Westhaver <rwestha2@gdeb.com>
 ;; Keywords: languages
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -23,13 +21,6 @@
 ;; This is an elisp implementation of a FORTH compiler, a non-Flub
 ;; language which is also a Blub. Used by Doug Hoyte as an example of
 ;; how to make Lisp non-Flub.
-
-;; Forth and Artemis are cut from the same cloth, in some ways. In
-;; others, not so much.
-
-;; Forth and Artemis can both be considered fixnum machines, where they
-;; differ is in the core data structure - datasets in Artemis, stacks
-;; for Forth.
 
 ;;; Code:
 (require 'rw-macs "macs")
