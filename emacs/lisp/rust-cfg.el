@@ -24,8 +24,7 @@
 
 ;;; Code:
 (require 'default)
-(require 'fu)
-
+(require 'skel-cfg)
 (add-packages '(rust-mode ron-mode))
 
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin/"))

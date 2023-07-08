@@ -23,6 +23,21 @@
 
 (setq-default org-log-into-drawer t)
 
+(setq org-html-style-default ""
+      org-html-scripts ""
+      org-html-htmlize-output-type 'inline-css
+      org-export-htmlize-output-type 'inline-css
+      org-html-doctype "html5"
+      org-html-html5-fancy t
+      org-html-validation-link nil
+      org-src-fontify-natively t
+      make-backup-files nil
+      debug-on-error t)
+(setq org-html-postamble "<footer><div><p>created %d;<br>updated %C;</p></div></footer>")
+
+(setq org-html-head-include-default-style t
+      org-html-head-include-scripts t)
+
 (defun org-keys ()
   "add default keys to 'org-mode-map'"
   (define-key org-mode-map (kbd "C-c M-i") 'org-toggle-inline-images)

@@ -31,7 +31,10 @@
 (setq package-selected-packages '(async csound-mode ob-jq bqn-mode dyalog-mode k-mode))
 
 (require 'default)
-(require 'rw "rw/rw")
+
+(add-to-list 'load-path (expand-file-name "lisp/rw" user-emacs-directory))
+(require 'rw "rw")
+
 ;;; UI
 (require 'theme-cfg)
 

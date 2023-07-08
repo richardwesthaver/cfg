@@ -22,7 +22,6 @@
 ;; 
 
 ;;; Code:
-(require 'rw-cfg "rw/cfg")
 (require 'rw-read "read")
 (require 'rw-macs "macs")
 
@@ -31,10 +30,10 @@
   :group 'convenience)
 
 (using
-  rw-fu
-  rw-cfg
   rw-err
   rw-log
+  rw-fu
+  rw-cfg
   rw-sexp
   rw-obj
   rw-inbox
