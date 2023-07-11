@@ -1,0 +1,4 @@
+[submodule "vendor/pine64-arch"]
+	path = vendor/pine64-arch
+	url = ssh://git@github.com/dreemurrs-embedded/Pine64-Arch
+
