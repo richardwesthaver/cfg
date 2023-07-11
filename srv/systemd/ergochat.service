@@ -1,0 +1,23 @@
+[Unit]
+Description=ergochat
+After=network.target
+# If you are using MySQL for history storage, comment out the above line
+# and uncomment these two instead (you must independently install and configure
+# MySQL for your system):
+# Wants=mysql.service
+# After=network.target mysql.service
+
+[Service]
+Type=notify
+User=ergochat
+WorkingDirectory=/var/lib/ergochat
+ExecStart=/usr/bin/ergochat run --conf /etc/ergochat/ircd.yaml
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+LimitNOFILE=1048576
+NotifyAccess=main
+# Uncomment this for a hidden service:
+# PrivateNetwork=true
+
+[Install]
+WantedBy=multi-user.target
