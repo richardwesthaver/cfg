@@ -28,7 +28,7 @@
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
 
-(setq package-selected-packages '(async csound-mode ob-jq bqn-mode dyalog-mode k-mode))
+(setq package-selected-packages '(csound-mode ob-jq bqn-mode dyalog-mode k-mode))
 
 (require 'default)
 
@@ -47,13 +47,15 @@
 (require 'rust-cfg)
 (require 'python-cfg)
 (require 'nim-cfg)
+
 (require 'lisp-cfg)
+(slime-setup nil)
+
 ;;; Tools
 (require 'dired-cfg)
 (require 'completion-cfg)
 (require 'fmt-cfg)
 (require 'search-cfg)
-(dired-async-mode 1)
 
 ;;; Misc
 (require 'elfeed-cfg)

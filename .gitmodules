@@ -1,4 +1,0 @@
-[submodule "machine/pine64-arch"]
-	path = machine/pine64-arch
-	url = ssh://git@github.com/dreemurrs-embedded/Pine64-Arch
-

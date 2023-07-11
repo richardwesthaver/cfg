@@ -3,7 +3,7 @@
 ;; NOTE 2023-02-08: check out lisp-mnt.el for ideas
 ;; (add-to-list 'package-selected-packages 'lispy)
 (require 'default)
-(add-to-list 'package-selected-packages 'slime)
+(add-to-list 'package-selected-packages '(slime slime-repl-ansi-color))
 
 (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
 
@@ -26,7 +26,8 @@
     (global-log4slime-mode 1)))
 
 (setq quicklisp-slime-helper-dist "ultralisp")
-(load (expand-file-name "~/.emacs.d/site-lisp/slime-helper.el"))
+
+(load (expand-file-name "~/quicklisp/slime-helper.el") t nil)
 
 (setf slime-lisp-implementations
       `((sbcl    ("sbcl"))
