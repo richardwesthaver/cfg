@@ -1,0 +1,7 @@
+[user]
+	name = ellis
+	email = ellis@rwest.io
+[init]
+	defaultBranch = default
+[commit]
+	gpgsign = true

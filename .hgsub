@@ -1,1 +1,10 @@
 vendor/pine64-arch = [git]ssh://git@github.com/dreemurrs-embedded/Pine64-Arch
+vendor/arch-boxes = [git]https://gitlab.archlinux.org/archlinux/arch-boxes
+vendor/archivetools = [git]https://gitlab.archlinux.org/archlinux/archivetools
+vendor/mkinitcpio = [git]https://gitlab.archlinux.org/archlinux/mkinitcpio/mkinitcpio
+vendor/archiso = [git]https://gitlab.archlinux.org/archlinux/archiso
+vendor/archinstall = [git]https://gitlab.archlinux.org/archlinux/archinstall
+vendor/archlinux-docker = [git]https://gitlab.archlinux.org/archlinux/archlinux-docker
+vendor/devtools = [git]https://gitlab.archlinux.org/archlinux/devtools
+vendor/dbscripts = [git]https://gitlab.archlinux.org/archlinux/dbscripts
+vendor/releng = [git]https://gitlab.archlinux.org/archlinux/releng

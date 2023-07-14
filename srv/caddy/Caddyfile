@@ -1,0 +1,32 @@
+{
+	admin "unix//run/caddy/admin.socket"
+}
+
+http:// {
+  root * /mnt/w
+  file_server
+}
+
+www.rwest.io {
+  redir https://rwest.io{uri}
+}
+rwest.io {
+  root * /mnt/w/rwest.io file_server
+}
+lab.rwest.io {
+  reverse_proxy localhost:8080
+}
+# auth.rwest.io {
+}
+
+www.otom8.dev {
+  redir https://otom8.dev{uri}
+}
+otom8.dev {
+  reverse_proxy localhost:16080
+}
+chat.otom8.dev {
+  reverse_proxy localhost:6167
+}
+
+import /etc/caddy/conf.d/*

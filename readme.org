@@ -1,6 +1,6 @@
 #+TITLE: cfg
 #+AUTHOR: ellis
-Configuration files and other useful things.
+Configuration.
 
 As is customary, you should feel free to steal anything you find
 useful in this repo, but the really useful things are often refactored
@@ -18,13 +18,21 @@ is no =cfg= the library or API, although I've experimented with
 various ideas (=shed=, =babel=, =fig=) which could implement such
 functionality, I haven't arrived at a perfect solution.
 
-- [2023-06-13 Tue 22:45] \\
-  Right now, my focus is on portable, deployable, system distributions
-  of the Linux variety. The goal is to build custom Arch Linux images
-  and all the machinery involved to deploy images to the following
-  machines:
-  - PinePhone Pro (arm)
-  - Desktops/Laptops (on-site deploy, x86)
-  - Podman container
-  - QEMU (arm/x86 VM)
-  - AWS EC2
+* Log
+** [2023-07-14 Fri]
+- unlikely to use nushell as login shell
+- considering best way to build/test/deploy all these configs
+  - will likely leverage sxp and obj libraries
+- adding more subrepos.. many arch scripts.. eventually will not need
+  most of them
+- may not need private subrepo if we finish krypt cli..
+** [2023-06-13 Tue 22:45]
+Right now, my focus is on portable, deployable, system distributions
+of the Linux variety. The goal is to build custom Arch Linux images
+and all the machinery involved to deploy images to the following
+machines:
+- PinePhone Pro (arm)
+- Desktops/Laptops (on-site deploy, x86)
+- Podman container
+- QEMU (arm/x86 VM)
+- AWS EC2

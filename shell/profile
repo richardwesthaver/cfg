@@ -14,3 +14,4 @@ elif [ -n "$ZSH_VERSION" ]; then
     fi
 fi
 eval "$(pyenv init --path)"
+. "$HOME/bin/sh/ssh-agent-load.sh"

@@ -1,4 +1,31 @@
 [submodule "vendor/pine64-arch"]
 	path = vendor/pine64-arch
 	url = ssh://git@github.com/dreemurrs-embedded/Pine64-Arch
+[submodule "vendor/arch-boxes"]
+	path = vendor/arch-boxes
+	url = https://gitlab.archlinux.org/archlinux/arch-boxes
+[submodule "vendor/archivetools"]
+	path = vendor/archivetools
+	url = https://gitlab.archlinux.org/archlinux/archivetools
+[submodule "vendor/mkinitcpio"]
+	path = vendor/mkinitcpio
+	url = https://gitlab.archlinux.org/archlinux/mkinitcpio/mkinitcpio
+[submodule "vendor/archiso"]
+	path = vendor/archiso
+	url = https://gitlab.archlinux.org/archlinux/archiso
+[submodule "vendor/archinstall"]
+	path = vendor/archinstall
+	url = https://gitlab.archlinux.org/archlinux/archinstall
+[submodule "vendor/archlinux-docker"]
+	path = vendor/archlinux-docker
+	url = https://gitlab.archlinux.org/archlinux/archlinux-docker
+[submodule "vendor/devtools"]
+	path = vendor/devtools
+	url = https://gitlab.archlinux.org/archlinux/devtools
+[submodule "vendor/dbscripts"]
+	path = vendor/dbscripts
+	url = https://gitlab.archlinux.org/archlinux/dbscripts
+[submodule "vendor/releng"]
+	path = vendor/releng
+	url = https://gitlab.archlinux.org/archlinux/releng
 
