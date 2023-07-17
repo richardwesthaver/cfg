@@ -12,3 +12,4 @@
 	     asdf:*central-registry*))
 
 (push #P"~/dev/" ql:*local-project-directories*)
+(push #P"~/stash/" ql:*local-project-directories*)
