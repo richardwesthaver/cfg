@@ -20,14 +20,14 @@
 		eval-expression-minibuffer-setup-hook))
   (add-hook hook #'(lambda () )))
 
+(setq quicklisp-slime-helper-dist "ultralisp")
+
+(load (expand-file-name "~/quicklisp/slime-helper.el") t nil)
+
 (let ((setup (expand-file-name "~/quicklisp/log4slime-setup.el")))
   (when (file-exists-p setup)
     (load setup)
     (global-log4slime-mode 1)))
-
-(setq quicklisp-slime-helper-dist "ultralisp")
-
-(load (expand-file-name "~/quicklisp/slime-helper.el") t nil)
 
 (setf slime-lisp-implementations
       `((sbcl    ("sbcl"))
@@ -81,12 +81,28 @@ If you copy the HyperSpec to another location, customize the variable
 		    (error "The symbol `%s' is not defined in Common Lisp"
 			   symbol-name)))))
 
+
+(defvar slime-toggle nil)
+(defun slime-toggle ()
+  "toggle between lisp file and slime-repl"
+  (interactive)
+  (if (eq major-mode 'slime-repl-mode)
+      (setq slime-toggle (pop-to-buffer (or slime-toggle (read-buffer "lisp file: "))))
+    (progn
+      (setq slime-toggle (current-buffer))
+      (slime-repl))))
+
 (setq inferior-lisp-program "sbcl")
 (setq scheme-program-name "gsi")
 (setq guile-program "guile")
 (setq cmulisp-program "lisp")
 (setq scsh-program "scsh")
+(unbind-key (kbd "C-c x") 'slime-mode-map)
 
+(define-key lisp-mode-map (kbd "C-c SPC") #'slime-toggle)
+(define-key asd-mode-map (kbd "C-c SPC") #'slime-toggle)
+(define-key keys-map (kbd "C-c SPC") #'slime-toggle)
+(define-key prog-mode-map
 ;; (load (expand-file-name "~/.roswell/helper.el") t)
 
 ;;; Structural Editing
