@@ -1,4 +1,4 @@
-vendor/pine64-arch = [git]ssh://git@github.com/dreemurrs-embedded/Pine64-Arch
+vendor/pine64-arch = [git]https://git@github.com/dreemurrs-embedded/Pine64-Arch
 vendor/arch-boxes = [git]https://gitlab.archlinux.org/archlinux/arch-boxes
 vendor/archivetools = [git]https://gitlab.archlinux.org/archlinux/archivetools
 vendor/mkinitcpio = [git]https://gitlab.archlinux.org/archlinux/mkinitcpio/mkinitcpio

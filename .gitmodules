@@ -1,6 +1,6 @@
 [submodule "vendor/pine64-arch"]
 	path = vendor/pine64-arch
-	url = ssh://git@github.com/dreemurrs-embedded/Pine64-Arch
+	url = https://git@github.com/dreemurrs-embedded/Pine64-Arch
 [submodule "vendor/arch-boxes"]
 	path = vendor/arch-boxes
 	url = https://gitlab.archlinux.org/archlinux/arch-boxes
