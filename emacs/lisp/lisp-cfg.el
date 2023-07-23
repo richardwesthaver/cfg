@@ -100,9 +100,7 @@ If you copy the HyperSpec to another location, customize the variable
 (unbind-key (kbd "C-c x") 'slime-mode-map)
 
 (define-key lisp-mode-map (kbd "C-c SPC") #'slime-toggle)
-(define-key asd-mode-map (kbd "C-c SPC") #'slime-toggle)
 (define-key keys-map (kbd "C-c SPC") #'slime-toggle)
-(define-key prog-mode-map
 ;; (load (expand-file-name "~/.roswell/helper.el") t)
 
 ;;; Structural Editing
