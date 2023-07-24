@@ -34,7 +34,7 @@
   rw-log
   rw-fu
   rw-cfg
-  rw-sexp
+;;  rw-sexp
   rw-obj
   rw-inbox
   rw-rex)

@@ -24,7 +24,7 @@
 ;;; Code:
 (eval-when-compile (require 'cl-lib))
 (require 'rw-macs "macs")
-(using eieio rw-sexp)
+(using eieio)
 ;;; utils
 (defun oref-or (obj slot)
   "Get the value of object or class."

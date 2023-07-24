@@ -23,6 +23,37 @@
 ;; 
 
 ;;; Code:
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			 ("melpa" . "https://melpa.org/packages/")))
+(setq package-selected-packages nil)
+(require 'default)
+(require 'theme-cfg)
+(add-to-list 'load-path (expand-file-name "lisp/rw" user-emacs-directory))
+(require 'rw "rw")
+(require 'org-cfg)
+(require 'lob-cfg)
+(require 'prog-cfg)
+(require 'rust-cfg)
+(require 'python-cfg)
+(require 'lisp-cfg)
+(require 'dired-cfg)
+(require 'completion-cfg)
+(require 'fmt-cfg)
+(require 'search-cfg)
+;;; Misc
+(require 'elfeed-cfg)
+;; (require 'sclang-cfg)
+(require 'register-cfg)
+(require 'macro-cfg)
+(require 'mail-cfg)
+(require 'shell-cfg)
+(require 'skel-cfg)
+(require 'scratch-cfg)
+(require 'vc-cfg)
+(require 'emms-cfg)
+(require 'shell-cfg)
+(require 'eshell-cfg)
 
 (provide 'hyde-config)
 ;;; hyde-config.el ends here
