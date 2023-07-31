@@ -1,0 +1,10 @@
+LABEL=BOOT /boot vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+/dev/sda2 / btrfs rw,relatime,ssd,discard=async,space_cache,subvolid=5,subvol=/	0 0
+/dev/sda3 /home btrfs rw,relatime,ssd,discard=async,space_cache,subvolid=5,subvol=/ 0 0
+/dev/sda4 none swap defaults 0 0
+LABEL=x /mnt/x ext4 rw,relatime 0 2
+LABEL=z /mnt/z exfat rw,relatime,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro	0 2
+LABEL=y /mnt/y btrfs rw,relatime,ssd,discard=async,space_cache,subvolid=5,subvol=/ 0 0
+LABEL=a /mnt/a btrfs defaults 0 0
+LABEL=m /mnt/m ext4 rw,relatime,nofail 0 2
+LABEL=k /mnt/k ext4 rw,relatime,nofail 0 2
