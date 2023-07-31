@@ -10,7 +10,7 @@
 ;;                      :dont-close nil)
 (setf *mouse-focus-policy*    :click
       *float-window-modifier* :SUPER)
-
+(stumpwm:set-font
 ;; (mpd:mpd-connect)
 (setf *startup-message* "Greetings, stranger.")
 (setf *mode-line-border-width* 0)
@@ -39,10 +39,15 @@
 ;; (setf swm-gaps:*head-gaps-size*  0
 ;;       swm-gaps:*inner-gaps-size* 2
 ;;       swm-gaps:*outer-gaps-size* 1)
+(set-font "CommitMono")
 
 (defcommand firefox () ()
   "Run or raise Firefox."
   (sb-thread:make-thread (lambda () (run-or-raise "firefox" '(:class "Firefox") t nil))))
+
+(defcommand chromium () ()
+  "Run or raise Firefox."
+  (sb-thread:make-thread (lambda () (run-or-raise "chromium" '(:class "Chromium") t nil))))
 
 (defcommand nyxt () ()
   "Run or raise Nyxt."

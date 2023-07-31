@@ -37,7 +37,7 @@
 
 ;;; UI
 (require 'theme-cfg)
-
+(set-face-attribute 'default nil :font "CommitMono")
 ;;; Org
 (require 'org-cfg)
 (require 'lob-cfg)
