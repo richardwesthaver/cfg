@@ -303,7 +303,7 @@ are exported to a filename derived from the headline text."
 	org-outline-path-complete-in-steps nil)
   ;; todos
   (setq org-todo-keywords
-	'((type "TODO(t!)" "|" "DONE(D!)")
+	'((type "TBD(0)" "TODO(t!)" "|" "DONE(D!)")
 	  (sequence "FIND(q)" "|" "FOUND(!)")
 	  (sequence "RESEARCH(r)" "RECORD(e)" "|" "DONE(!)")
 	  (sequence "OUTLINE(o)" "RESEARCH(r)" "DRAFT(d)" "REVIEW(w)" "|" "DONE(D!)")
