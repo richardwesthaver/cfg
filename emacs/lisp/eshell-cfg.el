@@ -42,6 +42,8 @@
 (add-hook 'eshell-mode-hook
 	  (lambda () (progn
 		       (eshell/alias "d" "dired $1")
+		       (eshell/alias "ff" "find-file $1")
+		       (eshell/alias "hgfe" "~/bin/sh/hg-fast-export.sh")
 		       (eshell-syntax-highlighting-global-mode +1)
 		       (setup-esh-help-eldoc))))
 

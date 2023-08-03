@@ -489,6 +489,7 @@ outside of the file context they are exported as PFX-NAME."
 
 (defun reset-reader ()
   "Restore the OG values of `read' and `read-from-string'."
+  (interactive)
   (progn
     (fset 'read *read-og*)
     (fset 'read-from-string *read-from-string-og*)
