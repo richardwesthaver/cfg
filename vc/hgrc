@@ -12,7 +12,7 @@ from = demon <demon@rwest.io>
 
 [extensions]
 gpg = 
-fsmonitor = 
+#fsmonitor = 
 #hgext.convert = 
 #histedit =
 #rebase =
@@ -24,7 +24,7 @@ git =
 #hggit = ~/.hgext/hg-git/hggit
 #strip =
 #commitsigs = hgext/commitsigs/commitsigs.py
-logtoprocess = 
+#logtoprocess = 
 
 [subrepos]
 allowed = true
@@ -35,7 +35,6 @@ svn:allowed = true
 [fsmonitor]
 mode = on
 warn_when_unused = false
-
 
 [gpg]
 key = ellis
