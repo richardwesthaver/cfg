@@ -1,7 +1,11 @@
 #+TITLE: cfg
 #+AUTHOR: ellis
-Configuration.
+* Overview
+My System Configuration. Built on [[https://lab.rwest.io/ellis/cfg][lab.rwest.io/ellis/cfg]] and mirrored
+on [[https://github.com/richardwesthaver/cfg][github]].
+- VERSION :: 0.3.1
 
+** Introduction 
 As is customary, you should feel free to steal anything you find
 useful in this repo, but the really useful things are often refactored
 into libraries or programs.
@@ -12,13 +16,38 @@ added non-Emacs configs like bash,ssh,gpg and started using Nix for
 all my configuration. Eventually I abandoned Nix and resorted back to
 the 'standard' melting-pot system configuration methodology.
 
-Our current philosophy is to collect as many pieces of configuration
-that are necessary to get me a 'usable' system by my standards. There
-is no =cfg= the library or API, although I've experimented with
-various ideas (=shed=, =babel=, =fig=) which could implement such
-functionality, I haven't arrived at a perfect solution.
+* Index
+#+name: cfg-index
+|---------+---------------------------------------------------+-----------|
+| dir     | description                                       | tags      |
+|---------+---------------------------------------------------+-----------|
+| archiso | some basic archiso images                         | old,linux |
+| audio   | jack,mpd,pipewire(wip)                            | audio     |
+| emacs   | GNU Emacs configuration and goodies               | emacs     |
+| fstab   | default fstabs                                    | disk      |
+| lisp    | Lisp Compilers                                    | prog,lisp |
+| macos   | MacOS specific files                              | darwin    |
+| machine | Full system deployments                           | os        |
+| mail    | E-mail configuration with notmuch and offlineimap | mail      |
+| shell   | Shell profile and RC files                        | sh        |
+| srv     | proxy hosts (Caddy,Nginx)                         | net       |
+| term    | Graphic terminals                                 | term      |
+| vc      | Version control (Hg,Git)                          | vc        |
+| virt    | Virtualization (KVM,QEMU,etc)                     | virt      |
+| web     | Web browsers                                      | web       |
+| wm      | Window Managers,Desktop Environments,UI           | wm        |
+|---------+---------------------------------------------------+-----------|
 
 * Log
+** [2023-08-02 Wed] v0.4.0
+- not using the PPP much, will come back to it in the coming months
+- added a version. current version is 0.3.0, following the legacy of
+  Org->Nix->*melting-pot. We're working towards 0.4.0.
+- started a lisp system - will be used for configuration management,
+  deployment, and editing. See [[file:cfg.asd][cfg.asd]].
+- sbcl is a development dependency, shouldn't be necessary for
+  deployment (ship binaries and bundles)
+  - required cl libs: [[https://lab.rwest.io/ellis/macs][macs]],[[https://lab.rwest.io/ellis/sxp][sxp]]
 ** [2023-07-14 Fri]
 - unlikely to use nushell as login shell
 - considering best way to build/test/deploy all these configs
