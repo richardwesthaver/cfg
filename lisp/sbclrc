@@ -13,3 +13,8 @@
 
 (push #P"~/dev/" ql:*local-project-directories*)
 (push #P"~/stash/" ql:*local-project-directories*)
+
+(in-package cl-user)
+(defun add-local-project (path)
+  "Add PATH to the list of local-projects defined in ql:*local-project-directories*"
+  (push path ql:*local-project-directories*))

@@ -23,6 +23,9 @@
 ;; 
 
 ;;; Code:
+(require 'default)
+(require 'mercurial)
+(require 'mq)
 (defcustom default-vc-backend "hg"
   "the default vc-backend to use for version-control commands."
   :type '(string)
@@ -40,6 +43,12 @@
   (keymap-set keys-map "C-c v" #'vc-keys))
 
 ;; (setq vc-hg-global-switches "--noninteractive")
+
+;;; mercurial.el settings
+
+;; use rhg, fallback to hg. see hgrc
+(if (file-exists-p "~/.local/bin/rhg")
+    (setq hg-binary "~/.local/bin/rhg"))
 
 (provide 'vc-cfg)
 ;;; vc-cfg.el ends here

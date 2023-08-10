@@ -17,3 +17,5 @@ elif [ -n "$ZSH_VERSION" ]; then
 fi
 eval "$(pyenv init --path)"
 . "$HOME/bin/sh/ssh-agent-load.sh"
+
+if command -v rhg>>/dev/null; then alias hg='rhg';fi

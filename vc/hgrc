@@ -44,3 +44,8 @@ commandexception = echo "$MSG1" > /var/log/hg_exception.log
 
 [web]
 baseurl = https://hg.rwest.io
+
+[rhg]
+on-unsupported = fallback
+fallback-executable = /bin/hg
+allowed-extensions = clonebundles,git,gpg,highlight,notify

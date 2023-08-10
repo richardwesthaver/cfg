@@ -26,14 +26,13 @@
 (require 'default)
 (require 'skel-cfg)
 (add-packages '(rust-mode ron-mode))
-
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin/"))
+(add-hook 'rust-mode-hook 'eglot-ensure)
 
 (with-eval-after-load 'rust-mode
   (setq rust-indent-offset 2))
 (setq rust-rustfmt-switches nil)
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer"))))
+;; (add-to-list 'eglot-server-programs '(rust-mode . ("rust-analyzer")))
 
 (fu-define-skeleton rust-err
     "Insert default err.rs content"

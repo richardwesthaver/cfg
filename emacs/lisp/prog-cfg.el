@@ -27,6 +27,10 @@
 (require 'default)
 (add-packages '(eglot))
 
+(with-eval-after-load 'eglot
+  (require 'eglot-x)
+  (eglot-x-setup))
+
 (defcustom user-dev-directory (expand-file-name "~/dev/")
   "Directory containing dev projects."
   :type 'string

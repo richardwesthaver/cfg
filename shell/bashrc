@@ -17,20 +17,17 @@ export VISUAL='emacsclient -c'
 export FREESOUND_CONFIG="~/.config/freesound.json"
 
 # aliases
-macsman() {
+eman() {
     emacsclient -c -e "(man \"$1\")"
 }
 
-alias eman=macsman
-
-alias vi='emacsclient -t'
-alias vim='emacsclient -t'
 alias ec='emacsclient -c'
 alias et='emacsclient -t'
+
 alias hgpu='hg pull -u'
 alias hgc='hg ci -m'
 alias hgp='hg push'
-
+alias hgfe='~/bin/sh/hg-fast-export.sh'
 # VCS
 alias hgsub='find . -name ".hg" -type d | grep -v "\./\.hg" | xargs -n1 dirname | xargs -iREPO hg -R REPO'
 

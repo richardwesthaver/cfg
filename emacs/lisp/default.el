@@ -145,6 +145,7 @@
 		browse-url-browser-function 'browse-url-default-browser
 		eww-search-prefix "https://duckduckgo.com/html?q="
 		url-privacy-level '(email agent cookies lastloc)
+		view-read-only t
 		tramp-default-method "sshx")
 
   (when (string= system-type "darwin")       

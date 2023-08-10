@@ -19,10 +19,10 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
-(add-to-list 'package-selected-packages 'org-web-tools)
+(add-to-list 'package-selected-packages 'org-web-tools 'citeproc)
 
 (setq-default org-log-into-drawer t)
-
+(setq org-cite-export-processors '((t csl)))
 (setq org-html-style-default ""
       org-html-scripts ""
       org-html-htmlize-output-type 'inline-css
@@ -204,6 +204,34 @@ are exported to a filename derived from the headline text."
               (replace-regexp-in-string " " "_" (nth 4 (org-heading-components)))))
            (deactivate-mark)
            (org-org-export-to-org nil t)
+           (unless export-file (org-delete-property "EXPORT_FILE_NAME"))
+           (set-buffer-modified-p modifiedp)))
+       "-noexport" 'region-start-level))))
+
+;;;###autoload
+(defun org-export-headings-to-html ()
+  "Export all subtrees that are *not* tagged with :noexport: to
+separate files.
+
+Subtrees that do not have the :EXPORT_FILE_NAME: property set
+are exported to a filename derived from the headline text."
+  (interactive)
+  (save-buffer)
+  (let ((modifiedp (buffer-modified-p)))
+    (save-excursion
+      (goto-char (point-min))
+      (goto-char (re-search-forward "^*"))
+      (set-mark (line-beginning-position))
+      (goto-char (point-max))
+      (org-map-entries
+       (lambda ()
+         (let ((export-file (org-entry-get (point) "EXPORT_FILE_NAME")))
+           (unless export-file
+             (org-set-property
+              "EXPORT_FILE_NAME"
+              (replace-regexp-in-string " " "_" (nth 4 (org-heading-components)))))
+           (deactivate-mark)
+           (org-html-export-to-html nil t nil t)
            (unless export-file (org-delete-property "EXPORT_FILE_NAME"))
            (set-buffer-modified-p modifiedp)))
        "-noexport" 'region-start-level))))
