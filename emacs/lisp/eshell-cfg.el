@@ -24,16 +24,16 @@
 
 ;;; Code:
 (require 'default)
-(add-packages '(eshell-syntax-highlighting esh-help))
+;; (add-packages '(eshell-syntax-highlighting esh-help))
 
 (defun eshell-new()
   "Open a new instance of eshell."
   (interactive)
   (eshell 'Z))
 
-(setq eshell-scroll-to-bottom-on-input 'all
-      eshell-error-if-no-glob t
-      eshell-highlight-prompt nil
+(setq ;; eshell-scroll-to-bottom-on-input 'all
+      ;; eshell-error-if-no-glob t
+      eshell-highlight-prompt t
       eshell-hist-ignoredups t
       eshell-save-history-on-exit t
       eshell-prefer-lisp-functions nil

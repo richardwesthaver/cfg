@@ -25,7 +25,7 @@
 ;;; Code:
 ;;; Customization
 (require 'default)
-(add-packages '(eglot))
+(add-packages '(eglot sr-speedbar))
 
 (with-eval-after-load 'eglot
   (require 'eglot-x)
@@ -188,5 +188,28 @@ specified by `prog-comment-timestamp-format-verbose'."
 	    (keymap-set conf-toml-mode-map "C-c C-c C-u" #'rust-compile)
 	    (keymap-set conf-toml-mode-map "C-c C-c C-t" #'rust-test)))
 
+(keymap-set keys-map "C-c /" #'sr-speedbar-toggle)
+
+(defun speedbar-expand-all-lines ()
+  "Expand all items in the speedbar buffer.
+ But be careful: this opens all the files to parse them."
+  (interactive)
+  (cl-flet ((exp () (goto-char (point-min))
+			  (while (not (eobp))
+				(forward-line)
+				(speedbar-expand-line))
+			  (message "speedbar expanded.")))
+	(if (eq major-mode 'speedbar-mode)
+		(exp)
+	  (with-current-buffer (or speedbar-buffer (sr-speedbar-buffer-name)) (exp)))))
+
+(speedbar-add-supported-extension ".lisp")
+(speedbar-add-supported-extension ".json")
+(speedbar-add-supported-extension ".sh")
+(speedbar-add-supported-extension ".asd")
+(speedbar-add-supported-extension ".toml")
+(speedbar-add-supported-extension ".rs")
+(speedbar-add-supported-extension ".sxp")
+(speedbar-add-supported-extension ".s?css")
 (provide 'prog-cfg)
 ;;; prog-cfg.el ends here

@@ -67,7 +67,7 @@
 (require 'skel-cfg)
 (require 'scratch-cfg)
 (require 'vc-cfg)
-(require 'emms-cfg)
+;; (require 'emms-cfg)
 (require 'shell-cfg)
 (require 'eshell-cfg)
 (setq emms-source-file-default-directory "/mnt/x/audio/music")

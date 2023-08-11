@@ -1,0 +1,46 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("cfg"
+ (filename . "~/dev/cfg/")
+ (front-context-string . "  /home/ellis/de")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 25723 53858 946804 548000))
+("etc"
+ (filename . "/etc/")
+ (front-context-string . "adjtime\n  drwxr-")
+ (rear-context-string . "44 Mar 13 20:51 ")
+ (position . 185)
+ (last-modified 25640 59444 24818 435000))
+("otom8-org"
+ (filename . "/mnt/y/org/")
+ (front-context-string . "aws.org\n  -rw-r-")
+ (rear-context-string . "49 Apr  1 00:57 ")
+ (position . 152)
+ (last-modified 25640 59404 360709 129000))
+("w"
+ (filename . "/mnt/w/")
+ (front-context-string . "a\n  drwxr-xr-x 1")
+ (rear-context-string . "32 Mar 15 22:36 ")
+ (position . 157)
+ (last-modified 25640 59380 833327 200000))
+("z"
+ (filename . "/mnt/z/")
+ (front-context-string . "drive-download-2")
+ (rear-context-string . "67 Jan 28  2022 ")
+ (position . 163)
+ (last-modified 25640 59341 169377 336000))
+("y"
+ (filename . "/mnt/y/")
+ (front-context-string . "archlinux-x86_64")
+ (rear-context-string . "24 Aug 22  2021 ")
+ (position . 211)
+ (last-modified 25640 59330 233751 24000))
+("x"
+ (filename . "/mnt/x/")
+ (front-context-string . "audio\n  drwxr-xr")
+ (rear-context-string . "96 Feb 15  2022 ")
+ (position . 157)
+ (last-modified 25640 59323 1406 337000)))

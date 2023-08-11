@@ -41,5 +41,5 @@
 (when-sys= "jekyll" (require 'jekyll-config))
 (when-sys= "hyde" (require 'hyde-config))
 (when-sys= "boris" (require 'boris-config))
-
+(with-eval-after-load 'rw-read (reset-reader))
 ;;; init.el ends here

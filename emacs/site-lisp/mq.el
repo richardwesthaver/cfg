@@ -16,8 +16,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with mq.el, GNU Emacs, or XEmacs; see the file COPYING (`C-h
 ;; C-l').  If not, see <http://www.gnu.org/licenses/>.
-
-(eval-when-compile (require 'cl))
+(eval-when-compile (require 'cl-lib))
 (require 'mercurial)
 
 
@@ -407,11 +406,5 @@ the value of the ui.username item from your hgrc will be used."
       (if signed
 	  (mq-edit-finish)
 	(mq-edit-kill)))))
-
 
 (provide 'mq)
-
-
-;;; Local Variables:
-;;; prompt-to-byte-compile: nil
-;;; end:

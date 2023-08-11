@@ -1,10 +1,9 @@
 ;;; lisp-cfg
 ;; HACK 2023-02-08: the great movement refactor
 ;; NOTE 2023-02-08: check out lisp-mnt.el for ideas
-;; (add-to-list 'package-selected-packages 'lispy)
 (require 'default)
-(require 'slime)
 (add-to-list 'package-selected-packages '(slime slime-repl-ansi-color))
+(require 'slime)
 
 (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
 (set-default 'auto-mode-alist

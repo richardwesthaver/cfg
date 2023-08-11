@@ -39,7 +39,5 @@
   rw-inbox
   rw-rex)
 
-;; (install-reader:rr)
-
 (provide 'rw)
 ;;; rw.el ends here

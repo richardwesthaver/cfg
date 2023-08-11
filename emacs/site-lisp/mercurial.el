@@ -43,7 +43,6 @@
 
 
 ;;; Code:
-
 (eval-when-compile (require 'cl))
 (require 'diff-mode)
 (require 'easymenu)
@@ -1283,11 +1282,5 @@ If `F.~REV~' already exists, use it instead of checking it out again."
            (rename-file automatic-backup manual-backup nil)
          (hg-run0 "-q" "cat" "-r" version "-o" manual-backup file)))
      (find-file-other-window manual-backup)))
-
 
 (provide 'mercurial)
-
-
-;;; Local Variables:
-;;; prompt-to-byte-compile: nil
-;;; end:
