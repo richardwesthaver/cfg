@@ -13,7 +13,7 @@ from = demon <demon@rwest.io>
 [extensions]
 gpg = 
 #fsmonitor = 
-#hgext.convert = 
+convert = 
 #histedit =
 #rebase =
 #uncommit =

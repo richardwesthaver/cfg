@@ -32,6 +32,7 @@
       `((sbcl    ("sbcl"))
         (roswell ("ros" "-Q" "run"))))
 (setf slime-default-lisp 'sbcl)
+(slime-setup '(slime-fancy slime-asdf slime-quicklisp))
 
 (defun common-lisp-quickdoc (package)
   "Search for PACKAGE in QuickDocs."

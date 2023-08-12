@@ -49,7 +49,6 @@
 (require 'nim-cfg)
 
 (require 'lisp-cfg)
-(slime-setup nil)
 
 ;;; Tools
 (require 'dired-cfg)

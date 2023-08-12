@@ -203,13 +203,16 @@ specified by `prog-comment-timestamp-format-verbose'."
 		(exp)
 	  (with-current-buffer (or speedbar-buffer (sr-speedbar-buffer-name)) (exp)))))
 
-(speedbar-add-supported-extension ".lisp")
-(speedbar-add-supported-extension ".json")
-(speedbar-add-supported-extension ".sh")
-(speedbar-add-supported-extension ".asd")
-(speedbar-add-supported-extension ".toml")
-(speedbar-add-supported-extension ".rs")
-(speedbar-add-supported-extension ".sxp")
-(speedbar-add-supported-extension ".s?css")
+(with-eval-after-load 'speedbar
+  (speedbar-add-supported-extension ".lisp")
+  (speedbar-add-supported-extension ".json")
+  (speedbar-add-supported-extension ".sh")
+  (speedbar-add-supported-extension ".asd")
+  (speedbar-add-supported-extension ".toml")
+  (speedbar-add-supported-extension ".rs")
+  (speedbar-add-supported-extension ".sxp")
+  (speedbar-add-supported-extension ".s?css"))
+
+(global-ede-mode t)
 (provide 'prog-cfg)
 ;;; prog-cfg.el ends here
