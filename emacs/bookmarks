@@ -2,7 +2,25 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("cfg"
+(("m"
+ (filename . "/mnt/m/")
+ (front-context-string . "\n  drwxr-xr-x 2 ")
+ (rear-context-string)
+ (position . 10)
+ (last-modified 25816 11678 664293 427000))
+("a"
+ (filename . "/mnt/a/")
+ (front-context-string . "\n  drwxr-xr-x 1 ")
+ (rear-context-string)
+ (position . 10)
+ (last-modified 25816 11668 41360 949000))
+("k"
+ (filename . "/mnt/k/")
+ (front-context-string . "\n  drwxr-xr-x  7")
+ (rear-context-string)
+ (position . 10)
+ (last-modified 25816 11655 16366 949000))
+("cfg"
  (filename . "~/dev/cfg/")
  (front-context-string . "  /home/ellis/de")
  (rear-context-string)
