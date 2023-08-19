@@ -1,6 +1,6 @@
 ;;; zor-config.el --- Zor Configuration -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2023  anticorp
 
 ;; Author: Richard Westhaver <ellis@rwest.io>
 ;; Keywords: extensions, tools
@@ -28,12 +28,12 @@
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
 
-(setq package-selected-packages '(csound-mode ob-jq bqn-mode dyalog-mode k-mode))
+; (setq package-selected-packages '(csound-mode ob-jq bqn-mode dyalog-mode k-mode))
 
 (require 'default)
 
 (add-to-list 'load-path (expand-file-name "lisp/rw" user-emacs-directory))
-(require 'rw "rw")
+; (require 'rw "rw")
 
 ;;; UI
 (require 'theme-cfg)
@@ -69,7 +69,7 @@
 ;; (require 'emms-cfg)
 (require 'shell-cfg)
 (require 'eshell-cfg)
-(setq emms-source-file-default-directory "/mnt/x/audio/music")
+; (setq emms-source-file-default-directory "/mnt/x/audio/music")
 
 (provide 'zor-config)
 ;; zor-custom.el ends here
