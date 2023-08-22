@@ -1,8 +1,8 @@
-;;; shell-cfg.el --- Shell Config -*- lexical-binding: t; -*-
+;;; term-cfg.el --- terminal config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2023  anticorp
 
-;; Author: Richard Westhaver <ellis@rwest.io>
+;; Author: ellis <ellis@rwest.io>
 ;; Keywords: terminals
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -23,13 +23,10 @@
 ;; 
 
 ;;; Code:
-;; Don't whine if there is a terminal open.
-(defun set-no-process-query-on-exit ()
-  (let ((proc (get-buffer-process (current-buffer))))
-    (when (processp proc)
-      (set-process-query-on-exit-flag proc nil))))
+(require 'default)
+(require 'shell-cfg)
+(add-packages '(vterm))
+(add-hook 'term-exec-hook 'set-no-process-query-on-exit)
 
-(add-hook 'shell-mode-hook 'set-no-process-query-on-exit)
-
-(provide 'shell-cfg)
-;;; shell-cfg.el ends here
+(provide 'term-cfg)
+;;; term-cfg.el ends here

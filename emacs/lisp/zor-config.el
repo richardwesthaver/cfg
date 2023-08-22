@@ -69,6 +69,7 @@
 ;; (require 'emms-cfg)
 (require 'shell-cfg)
 (require 'eshell-cfg)
+(require 'term-cfg)
 ; (setq emms-source-file-default-directory "/mnt/x/audio/music")
 
 (provide 'zor-config)

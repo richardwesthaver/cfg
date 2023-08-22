@@ -25,8 +25,8 @@
 ;;; Code:
 (defvar lisp-dir "~/.emacs.d/lisp")
 (defvar site-lisp-dir "~/.emacs.d/site-lisp")
-(add-to-list 'load-path lisp-dir site-lisp-dir)
-
+(add-to-list 'load-path lisp-dir)
+(add-to-list 'load-path site-lisp-dir)
 (defvar system-names '("zor" "jekyll" "hyde" "boris")
   "Hostnames of systems available.")
 
