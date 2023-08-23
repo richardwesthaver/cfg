@@ -54,6 +54,7 @@
 	    ;; Shell
 	    (,(kbd "C-c x x") . async-shell-command)
 	    (,(kbd "C-c x SPC") . eshell)
+	    (,(kbd "C-c x c") . eshell-command)
 	    ;; Search
 	    (,(kbd "M-s w") . search-web)
 	    (,(kbd "M-s r") . rg)
