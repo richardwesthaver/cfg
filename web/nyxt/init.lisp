@@ -1,5 +1,20 @@
 (require :swank)
 (in-package :nyxt-user) ;; let slime know which package we're in
+
+;; by default, JS is not enabled.
+(define-configuration web-buffer
+  ((default-modes
+    (pushnew 'nyxt/mode/no-script:no-script-mode %slot-value%))))
+
+(define-configuration buffer
+  ((default-modes
+    (pushnew 'nyxt/mode/emacs:emacs-mode %slot-value%))))
+
+(define-configuration input-buffer
+  ((override-map
+    (let ((map (make-keymap "override-map")))
+      (define-key map "M-x" 'execute-command)))))
+
 (defun eval-in-emacs (&rest s-exps)
   "Evaluate S-exps with `emacsclient'."
   (let ((s-exps-string (cl-ppcre:regex-replace-all
