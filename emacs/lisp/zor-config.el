@@ -58,6 +58,7 @@
 
 ;;; Misc
 (require 'elfeed-cfg)
+(require 'erc-cfg)
 ;; (require 'sclang-cfg)
 (require 'register-cfg)
 (require 'macro-cfg)

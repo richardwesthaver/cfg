@@ -1,9 +1,9 @@
-;;; completion-cfg.el --- Completion Config          -*- lexical-binding: t; -*-
+;;; erc-cfg.el --- ERC config -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  anticorp
+;; Copyright (C) 2023  anticorp
 
 ;; Author: ellis <ellis@rwest.io>
-;; Keywords: tools, matching, convenience
+;; Keywords: comm
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,9 +24,20 @@
 
 ;;; Code:
 (require 'default)
-(add-packages '(marginalia orderless corfu))
-(corfu-mode 1)
-(marginalia-mode 1)
-(setq completion-styles '(orderless))
-(provide 'completion-cfg)
-;;; completion-cfg.el ends here
+(require 'tls)
+(require 'erc)
+ (defun start-erc ()
+   "Connect to IRC."
+   (interactive)
+   (erc-tls :server "irc.libera.chat" :port 6667
+	:client-certificate '("/mnt/k/krypt/libera.pem"))
+   (setq erc-autojoin-channels-alist '(("irc.libera.chat" "#emacs")
+				       ("irc.libera.chat" "#linux")
+				       ("irc.libera.chat" "#rust")
+				       ("irc.libera.chat" "#btrfs")
+				       ("irc.libera.chat" "#lisp")
+				       ("irc.libera.chat" "#sbcl")
+				       ("irc.oftc.net" "#llvm"))
+
+(provide 'erc-cfg)
+;;; erc-cfg.el ends here
