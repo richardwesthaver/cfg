@@ -25,6 +25,7 @@
 (eval-when-compile (require 'cl-lib))
 (require 'subr-x)
 (require 'seq)
+(require 'fu)
 (require 'rw-read "read")
 ;; ported from obsolete library cl.el
 (defmacro defsetf (name arg1 &rest args)
@@ -73,59 +74,6 @@ You can replace this form with `gv-define-setter'.
 ;; Macros for the macro programmer.
 
 ;; TODO 2023-04-21: (with-output-to-string (s) &rest body)
-
-(defun group (source n)
-  "This is Paul Graham's group utility from 'On Lisp'.
-
-Group a list of arguments SOURCE by any provided grouping amount
-N.
-
-For example:
-(group '(foo 2 bar 4) 2) ;=> ((foo 2) (bar 4))
-(group '(a b c d e f) 3) ;=> ((a b c) (d e f))
-"
-  (when (zerop n) (error "zero length"))
-  (cl-labels ((rec (source acc)
-                   (let ((rest (nthcdr n source)))
-                     (if (consp rest)
-                         (rec rest (cons
-                                    (cl-subseq source 0 n)
-                                    acc))
-                       (nreverse
-                        (cons source acc))))))
-    (when source (rec source nil))))
-
-(defun flatten (x)
-  "Paul Graham's flatten utility from 'On Lisp'.
-
-Given a tree X, return all the 'leaves' of the tree."
-  (cl-labels ((rec (x acc)
-                   (cond ((null x) acc)
-                         ((atom x) (cons x acc))
-                         (t (rec
-                             (car x)
-                             (rec (cdr x) acc))))))
-    (rec x nil)))
-
-(defun mkstr (&rest args)
-  "Paul Graham's mkstr utility from 'On Lisp'.
-
-Coerce ARGS into a single string and return it."
-  (let* ((s ""))
-    (dolist (a args)
-      (cond
-       ((null a) nil)
-       ((sequencep a) (setq s (concat s a)))
-       ((numberp a) (setq s(concat s (number-to-string a))))
-       ((symbolp a) (setq s(concat s (symbol-name a))))))
-    s))
-
-(defun symb (&rest args)
-  "Paul Graham's symb utility from 'On Lisp'.
-
-Concat ARGS and return a newly interned symbol."
-  (intern (apply #'mkstr args)))
-
 (defun g!-symbol-p (s)
   "Return t if S is a G-bang symbol."
   (and (symbolp s)

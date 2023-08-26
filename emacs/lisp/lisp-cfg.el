@@ -12,12 +12,16 @@
                        ("\\.ss$" . scheme-mode))
                      auto-mode-alist))
 
-(dolist (hook '(emacs-lisp-mode-hook
-		ielm-mode-hook
-		lisp-interaction-mode-hook
-		lisp-data-mode-hook
-		eval-expression-minibuffer-setup-hook))
-  (add-hook hook #'(lambda () )))
+
+(defvar default-lisp-mode-hooks '(emacs-lisp-mode-hook
+				  ielm-mode-hook
+				  lisp-interaction-mode-hook
+				  lisp-data-mode-hook
+				  eval-expression-minibuffer-setup-hook))
+(defun add-lisp-hook (hook)
+  "Add HOOK to each member of `default-lisp-mode-hooks'"
+  (dolist (l default-lisp-mode-hooks)
+    (add-hook l hook)))
 
 (setq quicklisp-slime-helper-dist "ultralisp")
 
