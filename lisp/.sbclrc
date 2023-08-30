@@ -8,6 +8,7 @@
 (setf asdf:*central-registry*
       (list* '*default-pathname-defaults*
 	     #p"~/lisp/systems/"
+	     #p"/mnt/y/data/lisp/systems/"
 	     #p"/usr/share/common-lisp/systems/"
 	     asdf:*central-registry*))
 

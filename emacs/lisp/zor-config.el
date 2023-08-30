@@ -33,6 +33,7 @@
 (require 'default)
 
 (add-to-list 'load-path (expand-file-name "lisp/rw" user-emacs-directory))
+(require 'rw-fu "fu")
 ; (require 'rw "rw")
 
 ;;; UI
@@ -59,6 +60,7 @@
 ;;; Misc
 (require 'elfeed-cfg)
 (require 'erc-cfg)
+(require 'zig-cfg)
 ;; (require 'sclang-cfg)
 (require 'register-cfg)
 (require 'macro-cfg)
