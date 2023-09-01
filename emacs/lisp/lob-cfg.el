@@ -46,6 +46,7 @@
  ;; TODO 2021-10-24: bqn, apl, k
  'org-babel-load-languages '((shell . t)
 			     (emacs-lisp . t)
+			     (lisp . t)
 			     (org . t)
 			     (eshell . t)
 			     (sed . t)
