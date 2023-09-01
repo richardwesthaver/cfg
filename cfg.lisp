@@ -1,7 +1,7 @@
 (require 'sb-bsd-sockets)
 
 (defpackage :cfg
-  (:use :cl :sxp :macs :organ :skel :krypt :uiop :cl-ppcre :sb-bsd-sockets)
+  (:use :cl :sxp :organ :skel :krypt :uiop :cl-ppcre :sb-bsd-sockets)
   (:export
    :*cfg-version*
    :*cfg-commit*

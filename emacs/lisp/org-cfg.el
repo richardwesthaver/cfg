@@ -363,6 +363,7 @@ are exported to a filename derived from the headline text."
 	'(("s" . "src")
 	  ("e" . "src emacs-lisp")
 	  ("x" . "src shell")
+	  ("l" . "src lisp")
 	  ("h" . "export html")
 	  ("p" . "src python")
 	  ("r" . "src rust")
