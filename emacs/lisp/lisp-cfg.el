@@ -12,6 +12,18 @@
                        ("\\.ss$" . scheme-mode))
                      auto-mode-alist))
 
+(with-eval-after-load 'auto-insert
+  (push `(("\\.asd\\'" . "ASDF Skeleton") 
+	  "System Name: "
+	  ";;; " (buffer-name)  "-*- mode: lisp; -*-
+"
+"(defsystem :" str "
+  :description " ?\" (read-string "Description: ") ?\"" 
+  :author \"" (user-full-name) " <" user-mail-address ">\" 
+  :licence \"" (read-string "License: ") "\" 
+  :version \"" (let ((v (read-string "Version: "))) (if (string-empty-p v) "0.1.0" v)) "\" 
+  :components (()))")
+	auto-insert-alist))
 
 (defvar default-lisp-mode-hooks '(emacs-lisp-mode-hook
 				  ielm-mode-hook

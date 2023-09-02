@@ -337,6 +337,7 @@ are exported to a filename derived from the headline text."
 	  (sequence "OUTLINE(o!)" "RESEARCH(r!)" "DRAFT(m!)" "REVIEW(w!)" "|")
 	  (sequence "FIX(i!)" "TEST(t!)" "|")
 	  (type "GOTO(g!)" "HACK(h!)" "NOTE(n!)" "CODE(c!)" "LINK(l!)" "|")
+	  (type "KLUDGE(k@!)" "|")
 	  (sequence "|" "DONE(d!)" "NOPE(x@!)" "FOUND(f@!)")))
   ;; captures
   (setq org-capture-templates
