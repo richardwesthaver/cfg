@@ -345,7 +345,8 @@ outside of the file context they are exported as PFX-NAME."
   (unless names (setq names '("")))
   `(eval-when-compile
      ,@(mapcar (lambda (n)
-                 `(read-make-prefixed ,n ,pfx)) names)))
+                 `(read-make-prefixed ,n ,pfx))
+	       names)))
 
 ;;; READ MACROS
 (def-reader-syntax ?#

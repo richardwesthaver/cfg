@@ -45,7 +45,8 @@
     (global-log4slime-mode 1)))
 
 (setf slime-lisp-implementations
-      `((sbcl    ("sbcl"))
+      `((sbcl    ("~/bin/sbcl"))
+	(sbcl-sys ("/usr/bin/sbcl"))
         (roswell ("ros" "-Q" "run"))))
 (setf slime-default-lisp 'sbcl)
 (slime-setup '(slime-fancy slime-asdf slime-quicklisp))
