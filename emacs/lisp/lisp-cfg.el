@@ -38,7 +38,7 @@
 (setq quicklisp-slime-helper-dist "ultralisp")
 
 (load (expand-file-name "~/quicklisp/slime-helper.el") t nil)
-
+(load "/home/ellis/quicklisp/clhs-use-local.el" t)
 (let ((setup (expand-file-name "~/quicklisp/log4slime-setup.el")))
   (when (file-exists-p setup)
     (load setup)

@@ -45,6 +45,7 @@
   :keymap `(
 	    ;; Outlines
 	    (,(kbd "M-TAB") . outline-cycle)
+	    (,(kbd "<backtab>") . outline-cycle-buffer)
 	    (,(kbd "M-n") . outline-next-visible-heading)
 	    (,(kbd "M-p") . outline-previous-visible-heading)
 	    ;; Speedbar  
