@@ -44,6 +44,7 @@
 (require 'lob-cfg)
 
 ;;; Prog
+(require 'outline-cfg)
 (require 'prog-cfg)
 (require 'rust-cfg)
 (require 'python-cfg)
