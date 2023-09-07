@@ -1,4 +1,4 @@
 xrdb .Xresources &
 xset r rate 200 40 &
-xset s off -dpms
+xset s off -dpms &
 exec sbcl --load ~/.stumpwm.d/start

@@ -53,6 +53,8 @@
 (require 'lisp-cfg)
 
 ;;; Tools
+(require 'which-key)
+(require 'repeat-cfg)
 (require 'dired-cfg)
 (require 'completion-cfg)
 (require 'fmt-cfg)
