@@ -473,7 +473,7 @@ This is not the most cost efficient design for many things, tread
                   '(this)
                   (let-binding-transform letargs))))
     `(let (,@letargs)
-       (setq this ,@(last body))
+       (setq this ,@(or (last body))) 
        ,@(butlast body)
        (dlambda
         (:pandoric-get (sym)
@@ -483,10 +483,13 @@ This is not the most cost efficient design for many things, tread
         (t (&rest args)
            (apply this args))))))
 
+
 (install-reader:rr) ;; TODO make this a compile switch
+
 (defun pandoriclet-get (letargs)
   "Doug Hoyte's pandoriclet-get from 'Let Over Lambda'."
   `(cl-case sym
+
      ,@(mapcar #`((,(car a1)) ,(car a1))
                letargs)
      (t (error
