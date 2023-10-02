@@ -7,9 +7,6 @@ export PATH="$HOME/go/bin:$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/.local/bin:$H
 export PATH="$HOME/bin/sh:$HOME/bin/py:$HOME/bin/hs:$HOME/bin/ps:$HOME/.roswell/bin:$PATH"
 export FREESOUND_CONFIG="$HOME/.config/freesound.json"
 
-source ~/.bashrc
-source ~/.bash_login
-
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
         . /usr/share/bash-completion/bash_completion
