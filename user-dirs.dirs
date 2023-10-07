@@ -1,0 +1,8 @@
+XDG_DESKTOP_DIR="$HOME/Desktop"
+XDG_DOCUMENTS_DIR="$HOME/stash/docs"
+XDG_DOWNLOAD_DIR="$HOME/stash/dl"
+XDG_MUSIC_DIR="$HOME/media/music"
+XDG_PICTURES_DIR="$HOME/media/pictures"
+XDG_PUBLICSHARE_DIR="$HOME/stash/public"
+XDG_TEMPLATES_DIR="$HOME/stash/templates"
+XDG_VIDEOS_DIR="$HOME/media/videos"

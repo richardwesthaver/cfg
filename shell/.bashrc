@@ -11,6 +11,19 @@ export ALTERNATE_EDITOR=''
 export EDITOR='emacsclient -t'
 export VISUAL='emacsclient -c'
 
+export XDG_CONFIG_HOME='$HOME/.config' 
+export XDG_CACHE_HOME='$HOME/.cache' 
+export XDG_DATA_HOME='$HOME/.data' 
+export XDG_STATE_HOME='$HOME/.state' 
+export XDG_STATE_HOME='$HOME/.state' 
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_DOCUMENTS_DIR="$HOME/stash/docs"
+export XDG_DOWNLOAD_DIR="$HOME/stash/dl"
+export XDG_MUSIC_DIR="$HOME/media/music"
+export XDG_PICTURES_DIR="$HOME/media/pictures"
+export XDG_PUBLICSHARE_DIR="$HOME/stash/public"
+export XDG_TEMPLATES_DIR="$HOME/stash/templates"
+export XDG_VIDEOS_DIR="$HOME/media/videos"
 # custom configs
 export FREESOUND_CONFIG="~/.config/freesound.json"
 
