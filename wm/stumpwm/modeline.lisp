@@ -4,7 +4,7 @@
     (substitute #\Space #\Newline ip)))
 
 (defun show-ip-address ()
-  (let ((ip (run-shell-command "ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" t)))
+  (let ((ip (run-shell-command "ip addr show dev wlan0 | grep 'inet ' | awk '{print $2 }'" t)))
     (substitute #\Space #\Newline ip)))
 
 (defun show-battery-charge ()
@@ -26,9 +26,7 @@
 (setf *screen-mode-line-format*
       (list
        '(:eval (show-hostname))
-       "| Battery:"
-       '(:eval (show-battery-charge))
-       '(:eval (show-battery-state))
+       " " '(:eval (show-kernel))
        "| IP " '(:eval (show-ip-address))
        "| " '(:eval (run-shell-command "ruby -e \"print Time.now\"" t))
        "| %g"))

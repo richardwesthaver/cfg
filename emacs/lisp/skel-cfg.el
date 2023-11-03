@@ -72,64 +72,62 @@ will be bound to default-skel-NAME."
 
 ;;; Autoinsert
 (with-eval-after-load 'autoinsert 
-     (add-to-list
-    'auto-insert-alist
-    '(("\\.el\\'" . "Emacs Lisp header") 
-    "Short description: " ";;; "
-    (file-name-nondirectory
-     (buffer-file-name))
-    " --- " str
-    " "
-    "-*- lexical-binding: t; -*-"
-    '(setq lexical-binding t)
-    "
+  (add-to-list
+   'auto-insert-alist
+   '(("\\.el\\'" . "Emacs Lisp header") 
+     "Short description: " ";;; "
+     (file-name-nondirectory
+      (buffer-file-name))
+     " --- " str
+     " "
+     "-*- lexical-binding: t; -*-"
+     '(setq lexical-binding t)
+     "
 
 ;; Copyright (C) "
-    (format-time-string "%Y")
-    "  "
-    (getenv "ORGANIZATION")
-    |
-    (progn user-full-name)
-    "
+     (format-time-string "%Y")
+     "  "
+     (getenv "ORGANIZATION")
+     "
 
 ;; Author: "
-    (user-full-name)
-    '(if
-	 (search-backward "&"
-			  (line-beginning-position)
-			  t)
-	 (replace-match
-	  (capitalize
-	   (user-login-name))
-	  t t))
-    '(end-of-line 1)
-    " <"
-    (progn user-mail-address)
-    ">
+     (user-full-name)
+     '(if
+	  (search-backward "&"
+			   (line-beginning-position)
+			   t)
+	  (replace-match
+	   (capitalize
+	    (user-login-name))
+	   t t))
+     '(end-of-line 1)
+     " <"
+     (progn user-mail-address)
+     ">
 ;; Keywords: "
-    '(require 'finder)
-    '(setq v1
-	   (mapcar
-	    (lambda
-	      (x)
-	      (list
-	       (symbol-name
-		(car x))))
-	    finder-known-keywords)
-	   v2
-	   (mapconcat
-	    (lambda
-	      (x)
-	      (format "%12s:  %s"
-		      (car x)
-		      (cdr x)))
-	    finder-known-keywords "
+     '(require 'finder)
+     '(setq v1
+	    (mapcar
+	     (lambda
+	       (x)
+	       (list
+		(symbol-name
+		 (car x))))
+	     finder-known-keywords)
+	    v2
+	    (mapconcat
+	     (lambda
+	       (x)
+	       (format "%12s:  %s"
+		       (car x)
+		       (cdr x)))
+	     finder-known-keywords "
 "))
-    ((let
-	 ((minibuffer-help-form v2))
-       (completing-read "Keyword, C-h: " v1 nil t))
-     str ", ")
-    & -2 "
+     ((let
+	  ((minibuffer-help-form v2))
+	(completing-read "Keyword, C-h: " v1 nil t))
+      str ", ")
+     & -2 "
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -153,13 +151,13 @@ will be bound to default-skel-NAME."
 
 
 (provide '"
-    (file-name-base
-     (buffer-file-name))
-    ")
+     (file-name-base
+      (buffer-file-name))
+     ")
 ;;; "
-    (file-name-nondirectory
-     (buffer-file-name))
-    " ends here
+     (file-name-nondirectory
+      (buffer-file-name))
+     " ends here
 "))
   (add-to-list 
    'auto-insert-alist 
@@ -257,33 +255,33 @@ The skeleton will be bound to fu-NAME."
   "name: " "# makefile --- " str \n ".PHONY: c" \n \n "c:;rm -rf o")
 
 (fu-define-skeleton local-variables
- "Insert a local variables section.  Use current comment syntax if any."  
- (completing-read "mode: " obarray                                        
-                  (lambda (symbol)
-		    (if (commandp symbol)
-			(string-match
-			 "-mode$" (symbol-name symbol)))) t)                                                        
- '(save-excursion                                                         
-    (if (re-search-forward page-delimiter nil t)                          
-      (error "Not on last page")))                                        
- comment-start comment-start " local-vars:" comment-end \n                          
- comment-start comment-start " - mode: " str                                               
- & -5 | '(kill-line 0) & -1 | comment-end \n                              
- ( (completing-read (format "var, %s: " skeleton-subprompt)          
-                  obarray                                                 
-                  (lambda (symbol)                                        
-                    (or (eq symbol 'eval)                                 
-                        (custom-variable-p symbol)))                      
-                  t)                                                      
-   comment-start comment-start " - " str ": "                                                 
-   (read-from-minibuffer "expr: " nil read-expression-map nil       
-                       'read-expression-history) | _                      
-   comment-end \n)                                                        
- resume:                                                                  
- \n)                                     
+    "Insert a local variables section.  Use current comment syntax if any."  
+  (completing-read "mode: " obarray                                        
+                   (lambda (symbol)
+		     (if (commandp symbol)
+			 (string-match
+			  "-mode$" (symbol-name symbol)))) t)                                                        
+  '(save-excursion                                                         
+     (if (re-search-forward page-delimiter nil t)                          
+	 (error "Not on last page")))                                        
+  comment-start comment-start " local-vars:" comment-end \n                          
+  comment-start comment-start " - mode: " str                                               
+  & -5 | '(kill-line 0) & -1 | comment-end \n                              
+  ( (completing-read (format "var, %s: " skeleton-subprompt)          
+                     obarray                                                 
+                     (lambda (symbol)                                        
+                       (or (eq symbol 'eval)                                 
+                           (custom-variable-p symbol)))                      
+                     t)                                                      
+    comment-start comment-start " - " str ": "                                                 
+    (read-from-minibuffer "expr: " nil read-expression-map nil       
+			  'read-expression-history) | _                      
+    comment-end \n)                                                        
+  resume:                                                                  
+  \n)                                     
 
 (fu-define-skeleton rust-fn
-  "Insert a Rust function."
+    "Insert a Rust function."
   nil > "fn " > _ "() {" \n \n "}")
 
 (define-abbrev-table 'fu-abbrev-table ()

@@ -31,5 +31,5 @@
   (sb-thread:make-thread
    (lambda ()
      (run-shell-command (if program
-                            (format nil "kitty ~A" program)
-                            "kitty")))))
+                            (format nil "alacritty -e ~A" program)
+                            "alacritty")))))

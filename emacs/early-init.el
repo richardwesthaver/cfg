@@ -29,16 +29,13 @@
 ;; 
 ;;; Code:
 (setq frame-inhibit-implied-resize t
-      inhibit-startup-echo-area-message "ellis"
-      inhibit-startup-screen t
       inhibit-startup-buffer-menu nil
-      inhibit-splash-screen t
       use-dialog-box t
-      use-file-dialog nil)
+      use-file-dialog nil
+      tool-bar-mode nil
+      menu-bar-mode nil
+      scroll-bar-mode t)
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
 (when (and (fboundp 'native-comp-available-p)
            (native-comp-available-p))
   (setq native-comp-async-report-warnings-errors nil
