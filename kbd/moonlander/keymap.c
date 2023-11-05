@@ -74,12 +74,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LSFT, KC_Z ,KC_X, KC_C, KC_V, KC_B,  
     KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_BSPC,
     // 5
-    KC_UP, KC_DOWN, KC_LBRC, KC_LPRN, KC_SPC, C(KC_C),
-    A(KC_X), KC_SPC, KC_RPRN, KC_RBRC, KC_LEFT, KC_RIGHT,
+    KC_UP, KC_DOWN, KC_LBRC, KC_LPRN, KC_SPC, LCTL,
+    LALT, KC_SPC, KC_RPRN, KC_RBRC, KC_LEFT, KC_RIGHT,
     // 6
-    CTL_T(KC_COPY), KC_BSPC, KC_LGUI,
+    A(KC_X), C(KC_C), KC_LGUI,
     ALT_T(KC_PASTE), RGB_MODE_FORWARD, QK_LOCK
   ),
+  // [MACRO]
+  // [LISP]
+  // [CTL]
+  // [CMD]
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {

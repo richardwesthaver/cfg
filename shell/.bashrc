@@ -10,7 +10,10 @@ export LANG=en_US.UTF-8
 export ALTERNATE_EDITOR=''
 export EDITOR='emacsclient -t'
 export VISUAL='emacsclient -c'
-export SSH_ASKPASS=/usr/bin/qt4-ssh-askpass
+# sudo pacman -Sy seahorse libgnome-keyring libsecret
+export SSH_ASKPASS=/usr/lib/seahorse/ssh-askpass
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
+git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
 export XDG_CONFIG_HOME='$HOME/.config' 
 export XDG_CACHE_HOME='$HOME/.cache' 
 export XDG_DATA_HOME='$HOME/.data' 
