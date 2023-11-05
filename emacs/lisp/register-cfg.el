@@ -44,7 +44,7 @@
 (with-eval-after-load 'default
   (keymap-set keys-map "C-c r" #'register-keys))
 
-(defun jump-to-register-action (register &optional delete)
+(defun jump-to-register% (register &optional delete)
   "Do what is the most sane thing to do for the thing stored in
    register. Either insert text (evt. a rectangle), move point to
    location stored in a register, a buffer stored in a register,
@@ -74,10 +74,10 @@
      ((and (consp val) (eq (car val) 'buffer))
       (switch-to-buffer (cdr val)))
      ((and (consp val) (eq (car val) 'macro))
-                                        ;appearently the only way to run a macro is by putting them in
-                                        ;last-kbd-macro (named keyboard macros can only (as far as I
-                                        ;know) be called interactively, but this works quite
-                                        ;unproblematically).
+      ;; appearently the only way to run a macro is by putting them in
+      ;; last-kbd-macro (named keyboard macros can only (as far as I
+      ;; know) be called interactively, but this works quite
+      ;; unproblematically).
       (let ((old-macro last-kbd-macro))
         (setq last-kbd-macro (cdr val))
         (call-last-kbd-macro)
@@ -101,7 +101,7 @@
 (defun jump-to-register (register &optional delete)
   (interactive (list (register-read-with-preview "Jump to register: ")
                      current-prefix-arg))
-  (jump-to-register-action register delete))
+  (jump-to-register% register delete))
 
 (defun save-registers-hook ()
   (add-hook 'kill-emacs-hook

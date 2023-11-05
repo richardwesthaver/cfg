@@ -1,0 +1,6 @@
+#!/bin/sh
+xrdb .Xresources &
+xset r rate 200 40 &
+xset s off -dpms &
+sh /home/ellis/bin/sh/zor-screenlayout-default.sh &
+exec ssh-agent dbus-launch sbcl --load /home/ellis/.stumpwm.d/start

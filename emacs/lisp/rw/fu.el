@@ -387,7 +387,7 @@ String using char Table."
         (udp (featurep 'make-network-process '(:type datagram))))
     (message "non-blocking: %s, unix: %s, udp: %s" non-blocking unix udp)))
 
-  ;;;###autoload
+;;;###autoload
 (defun random-integers (min max n)
   "Return N random integers between MIN (inclusive) and MAX (exclusive)."
   (let ((list ()))
@@ -395,7 +395,7 @@ String using char Table."
       (push (+ (cl-random (- max min)) min) list))
     list))
 
-  ;;;###autoload
+;;;###autoload
 (defun int-to-binary-string (i)
   "convert an integer into its binary representation in string format."
   (let ((res ""))
@@ -406,7 +406,7 @@ String using char Table."
         (setq res "0"))
     res))
 
-  ;;;###autoload
+;;;###autoload
 (defun read-elisp-file (file)
   "Read Elisp data from FILE."
   (with-temp-buffer

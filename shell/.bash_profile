@@ -17,5 +17,3 @@ fi
 
 eval "$(pyenv init --path)"
 if command -v rhg>>/dev/null; then alias hg='rhg';fi
-
-ssh-agent-load.sh

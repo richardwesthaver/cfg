@@ -25,7 +25,7 @@
 ;;; Code:
 (require 'default)
 (add-packages '(marginalia orderless corfu))
-(corfu-mode 1)
+(global-corfu-mode 1)
 (marginalia-mode 1)
 (setq completion-styles '(orderless))
 (provide 'completion-cfg)

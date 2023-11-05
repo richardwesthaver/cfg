@@ -10,7 +10,7 @@ export LANG=en_US.UTF-8
 export ALTERNATE_EDITOR=''
 export EDITOR='emacsclient -t'
 export VISUAL='emacsclient -c'
-
+export SSH_ASKPASS=/usr/bin/qt4-ssh-askpass
 export XDG_CONFIG_HOME='$HOME/.config' 
 export XDG_CACHE_HOME='$HOME/.cache' 
 export XDG_DATA_HOME='$HOME/.data' 

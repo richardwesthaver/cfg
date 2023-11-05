@@ -204,7 +204,7 @@ Format:
 
 ;;###autoload
 (defun org-adjust-tags-column-reset-tags ()
-  "In org-mode buffers it will reset tag position according to
+  "In org-mode buffers reset tag position according to
 `org-tags-column'."
   (when (and
          (not (string= (buffer-name) "*Remember*"))
